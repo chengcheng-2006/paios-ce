@@ -1,0 +1,68 @@
+name: Package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install "build>=1.2,<2" "twine>=5,<7"
+
+      - name: Build wheel and sdist
+        run: python -m build
+
+      - name: Check distributions
+        run: |
+          twine check dist/*
+
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+
+  install-test:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ['3.11', '3.12']
+
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v5
+        with:
+          name: distributions
+          path: dist
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install from wheel
+        run: |
+          python -m pip install --upgrade pip
+          python -c "import glob, sys, subprocess; wheels = glob.glob('dist/*.whl'); assert len(wheels) == 1, f'expected exactly one wheel, found {len(wheels)}: {wheels}'; subprocess.run([sys.executable, '-m', 'pip', 'install', wheels[0]], check=True)"
+
+      - name: Smoke test
+        run: |
+          paios-ce health
+          paios-ce --help

@@ -1,0 +1,136 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Secret pattern scan
+        run: |
+          python -c "
+          import os
+          import re
+          import sys
+
+          patterns = {
+              'OpenAI': r'sk-[a-zA-Z0-9]{20,}',
+              'GitHub_PAT': r'ghp_[a-zA-Z0-9]{36}',
+              'GitHub_Fine_Grained': r'github_pat_[a-zA-Z0-9]+',
+              'Google_API': r'AIza[a-zA-Z0-9_-]{35,}',
+              'AWS': r'AKIA[a-zA-Z0-9]{16}',
+              'Slack': r'xoxb-[a-zA-Z0-9-]+',
+          }
+
+          found = []
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ['.git', '__pycache__', '.venv', 'node_modules']]
+              for f in files:
+                  path = os.path.join(root, f)
+                  try:
+                      with open(path, 'r', errors='ignore') as fp:
+                          for i, line in enumerate(fp, 1):
+                              for name, pat in patterns.items():
+                                  if re.search(pat, line):
+                                      found.append(f'{path}:{i}:{name}')
+                  except:
+                      pass
+
+          if found:
+              print('SECRET_PATTERN_DETECTED:')
+              for f in found:
+                  print(f'  {f}')
+              sys.exit(1)
+
+          print('SECRET_SCAN_PASS: No patterns detected')
+          "
+
+  dependency-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Check dependencies
+        run: |
+          pip install "pip-audit>=2.7,<3"
+          # Policy: run full audit. If --only-fixed is ever used as a fallback,
+          # it is recorded but never the sole gate. Unfixed vulnerabilities must
+          # be triaged in SECURITY.md or CI fails.
+          pip-audit --format json > pip-audit.json || true
+          python -c "
+          import json
+          import sys
+
+          try:
+              with open('pip-audit.json') as f:
+                  data = json.load(f)
+              vulns = []
+              for r in data.get('dependencies', []):
+                  for v in r.get('vulns', []):
+                      vulns.append(f\"{r.get('name')}: {v.get('id')}\")
+              if vulns:
+                  print('VULNERABILITIES_FOUND:')
+                  for v in vulns:
+                      print(f'  {v}')
+                  print('POLICY: unfixed vulnerabilities require triage before merge (see SECURITY.md)')
+                  sys.exit(1)
+              print('DEPENDENCY_CHECK_PASS: No known vulnerabilities')
+          except Exception as e:
+              print(f'CHECK_ERROR: {e}')
+              sys.exit(1)
+          "
+
+  forbidden-content-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Scan for forbidden content
+        run: |
+          python -c "
+          import os
+          import sys
+
+          forbidden = [
+              '.env',
+              'credentials.json',
+              'secrets.json',
+              'private.key',
+              'id_rsa',
+              'policy.py.orig',
+          ]
+
+          found = []
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ['.git', '__pycache__', '.venv']]
+              for f in files:
+                  if f in forbidden:
+                      found.append(os.path.join(root, f))
+                  if f.endswith('.orig'):
+                      found.append(os.path.join(root, f))
+
+          if found:
+              print('FORBIDDEN_FILES_DETECTED:')
+              for f in found:
+                  print(f'  {f}')
+              sys.exit(1)
+
+          print('FORBIDDEN_CONTENT_SCAN_PASS')
+          "
