@@ -1,0 +1,17 @@
+{
+  "manifest_version": "0.1.0",
+  "task_id": "task_demo_example_01",
+  "request_id": "req_demo_example_01",
+  "origin": "cli",
+  "owner_identity": "owner:placeholder",
+  "intent": "summarize_document",
+  "risk_level": "low",
+  "requested_capabilities": ["TEXT_CHAT"],
+  "attachments": [
+    { "ref": "att:placeholder:01", "mime_class": "text/plain", "size_class": "small" }
+  ],
+  "constraints": { "max_actions": 3, "max_cost_class": "free", "scope_hints": ["read_only"] },
+  "deadline_optional": null,
+  "approval_state": "not_required",
+  "trace_id": "trace_redacted_01"
+}

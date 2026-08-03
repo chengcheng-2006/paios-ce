@@ -1,0 +1,45 @@
+# PAIOS CE public project config example (Phase 3).
+# Reproducible across machines. No secret values — SecretRef references only.
+# Placeholders: example.invalid / 127.0.0.1 / not-a-valid-provider-token.
+schema: "https://paios.ce/schemas/public-config/v0.1.json"
+profile: minimal
+runtime_profile: lite
+
+defaults:
+  listen: 127.0.0.1
+  public_bind: false
+  public_bind_risk_acknowledged: false
+  dm_only: true
+  group_execution: false
+  group_execution_risk_acknowledged: false
+  owner_allowlist_required: true
+  high_risk_confirmation: true
+  raw_audio_storage: false
+  temp_audio_delete: true
+  cloud_asr: opt_in_only
+  remote_execution: false
+
+capabilities:
+  providers:
+    - id: mock
+      support_level: v0_1_supported
+    - id: openai_compatible
+      support_level: planned
+      credential_ref:
+        backend: env
+        ref:
+          env_var: PAIOS_PROVIDER_OPENAI_COMPAT_API_KEY
+  channels:
+    - id: cli
+      support_level: v0_1_supported
+  speech: []
+
+audit:
+  redact_secret_values: true
+  redact_paths: true
+  redact_endpoints: true
+  transcript_retention_days: 0
+
+installer:
+  selected_profile: minimal
+  optional_components_eligible: []

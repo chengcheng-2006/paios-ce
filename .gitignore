@@ -1,0 +1,41 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Phase 4R publication hygiene: no audit evidence, no Git metadata
+# (candidate archives exclude .git; the published repo uses a new clean-room Git history;
+#  see PUBLIC_RELEASE_BOUNDARY.md)
+.git/
+/audit/
+*.audit.jsonl

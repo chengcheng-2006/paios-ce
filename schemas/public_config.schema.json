@@ -1,0 +1,344 @@
+{
+  "$defs": {
+    "AuditConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "redact_secret_values": {
+          "default": true,
+          "title": "Redact Secret Values",
+          "type": "boolean"
+        },
+        "redact_paths": {
+          "default": true,
+          "title": "Redact Paths",
+          "type": "boolean"
+        },
+        "redact_endpoints": {
+          "default": true,
+          "title": "Redact Endpoints",
+          "type": "boolean"
+        },
+        "transcript_retention_days": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Transcript Retention Days",
+          "type": "integer"
+        }
+      },
+      "title": "AuditConfig",
+      "type": "object"
+    },
+    "CapabilitiesConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/ProviderEntry"
+          },
+          "title": "Providers",
+          "type": "array"
+        },
+        "channels": {
+          "items": {
+            "$ref": "#/$defs/ChannelEntry"
+          },
+          "title": "Channels",
+          "type": "array"
+        },
+        "speech": {
+          "items": {
+            "$ref": "#/$defs/SpeechEntry"
+          },
+          "title": "Speech",
+          "type": "array"
+        }
+      },
+      "title": "CapabilitiesConfig",
+      "type": "object"
+    },
+    "ChannelEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "support_level": {
+          "default": "planned",
+          "enum": [
+            "v0_1_supported",
+            "experimental",
+            "planned",
+            "community"
+          ],
+          "title": "Support Level",
+          "type": "string"
+        },
+        "credential_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SecretRefDecl"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "ChannelEntry",
+      "type": "object"
+    },
+    "DefaultsConfig": {
+      "additionalProperties": false,
+      "description": "Frozen security defaults (public config).",
+      "properties": {
+        "listen": {
+          "default": "127.0.0.1",
+          "title": "Listen",
+          "type": "string"
+        },
+        "public_bind": {
+          "default": false,
+          "title": "Public Bind",
+          "type": "boolean"
+        },
+        "public_bind_risk_acknowledged": {
+          "default": false,
+          "title": "Public Bind Risk Acknowledged",
+          "type": "boolean"
+        },
+        "dm_only": {
+          "default": true,
+          "title": "Dm Only",
+          "type": "boolean"
+        },
+        "group_execution": {
+          "default": false,
+          "title": "Group Execution",
+          "type": "boolean"
+        },
+        "group_execution_risk_acknowledged": {
+          "default": false,
+          "title": "Group Execution Risk Acknowledged",
+          "type": "boolean"
+        },
+        "owner_allowlist_required": {
+          "default": true,
+          "title": "Owner Allowlist Required",
+          "type": "boolean"
+        },
+        "high_risk_confirmation": {
+          "default": true,
+          "title": "High Risk Confirmation",
+          "type": "boolean"
+        },
+        "raw_audio_storage": {
+          "default": false,
+          "title": "Raw Audio Storage",
+          "type": "boolean"
+        },
+        "temp_audio_delete": {
+          "default": true,
+          "title": "Temp Audio Delete",
+          "type": "boolean"
+        },
+        "cloud_asr": {
+          "default": "opt_in_only",
+          "enum": [
+            "opt_in_only",
+            "disabled"
+          ],
+          "title": "Cloud Asr",
+          "type": "string"
+        },
+        "remote_execution": {
+          "default": false,
+          "title": "Remote Execution",
+          "type": "boolean"
+        }
+      },
+      "title": "DefaultsConfig",
+      "type": "object"
+    },
+    "InstallerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "selected_profile": {
+          "anyOf": [
+            {
+              "enum": [
+                "minimal",
+                "standard",
+                "full",
+                "custom"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Profile"
+        },
+        "optional_components_eligible": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Components Eligible",
+          "type": "array"
+        }
+      },
+      "title": "InstallerConfig",
+      "type": "object"
+    },
+    "ProviderEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "support_level": {
+          "default": "planned",
+          "enum": [
+            "v0_1_supported",
+            "experimental",
+            "planned",
+            "community"
+          ],
+          "title": "Support Level",
+          "type": "string"
+        },
+        "credential_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SecretRefDecl"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "ProviderEntry",
+      "type": "object"
+    },
+    "SecretRefDecl": {
+      "additionalProperties": false,
+      "description": "A SecretRef *declaration* (never a value).",
+      "properties": {
+        "backend": {
+          "enum": [
+            "env",
+            "oskeyring",
+            "dpapi",
+            "file",
+            "external_manager",
+            "prompt_once"
+          ],
+          "title": "Backend",
+          "type": "string"
+        },
+        "ref": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Ref",
+          "type": "object"
+        }
+      },
+      "required": [
+        "backend"
+      ],
+      "title": "SecretRefDecl",
+      "type": "object"
+    },
+    "SpeechEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "support_level": {
+          "default": "planned",
+          "enum": [
+            "v0_1_supported",
+            "experimental",
+            "planned",
+            "unavailable"
+          ],
+          "title": "Support Level",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "SpeechEntry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Public project config \u2014 reproducible, no secrets, references only.",
+  "properties": {
+    "schema": {
+      "const": "https://paios.ce/schemas/public-config/v0.1.json",
+      "default": "https://paios.ce/schemas/public-config/v0.1.json",
+      "title": "Schema",
+      "type": "string"
+    },
+    "profile": {
+      "default": "minimal",
+      "enum": [
+        "minimal",
+        "standard",
+        "full",
+        "custom"
+      ],
+      "title": "Profile",
+      "type": "string"
+    },
+    "runtime_profile": {
+      "default": "lite",
+      "enum": [
+        "lite",
+        "standard",
+        "distributed_optional"
+      ],
+      "title": "Runtime Profile",
+      "type": "string"
+    },
+    "defaults": {
+      "$ref": "#/$defs/DefaultsConfig"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/CapabilitiesConfig"
+    },
+    "audit": {
+      "$ref": "#/$defs/AuditConfig"
+    },
+    "installer": {
+      "$ref": "#/$defs/InstallerConfig"
+    }
+  },
+  "title": "PublicConfig",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/publicconfig/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
