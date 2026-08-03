@@ -1,4 +1,4 @@
-"""Redaction helpers (Phase 2 REDACTION_AND_ERROR_POLICY + Phase 3R closure).
+"""Redaction helpers (Phase 2 REDACTION_AND_ERROR_POLICY + security closure closure).
 
 Rules:
   - redact() must not leak length, prefix, or suffix of a secret.
@@ -10,7 +10,7 @@ Rules:
   - redact_value() is the single deep-redaction entry point used by the Audit
     Logger, Health/Diagnostics, and safe_exception (defense in depth).
 
-Phase 3R defense-in-depth guarantees:
+security closure defense-in-depth guarantees:
   - str / bytes / Mapping / list / tuple / set / nested containers / Exception /
     unknown object / None are handled safely.
   - Secret-like keys are matched case-insensitively and across underscore,
@@ -23,7 +23,7 @@ Phase 3R defense-in-depth guarantees:
   - Exception __cause__/__context__ chains are walked but never leak values.
   - Mapping keys and values are both redacted.
 
-Phase 3R-R1 security invariants (see REDACTION_SECURITY_INVARIANT.md):
+R1 closure security invariants (see REDACTION_SECURITY_INVARIANT.md):
   - RAW_SECRET_IN_AUDIT_INPUT = FORBIDDEN. SecretRef values never enter the
     audit models; secret-like fields are rejected by the schemas (extra="forbid")
     and by forbidden_fields_in().
@@ -191,7 +191,7 @@ def redact_value(value: Any, mapping: Mapping[str, str] | None = None,
     placeholder; recursive containers are walked with an id-based seen-set and a
     maximum depth.
 
-    ``require_mapping`` (Phase 3R-R1): when True, an external raw secret that is
+    ``require_mapping`` (R1 closure): when True, an external raw secret that is
     not a secret pattern and not covered by ``mapping`` raises
     RedactionNotGuaranteedError instead of being passed through. Callers that
     may pass external raw secrets MUST provide an explicit literal-value
@@ -261,7 +261,7 @@ def redact_mapping(data: Mapping[str, Any], mapping: Mapping[str, str] | None = 
     placeholder, so an arbitrary secret value under a non-secret key name is
     redacted even when the key itself is not secret-like.
 
-    ``require_mapping`` (Phase 3R-R1): when True, a bare non-pattern secret
+    ``require_mapping`` (R1 closure): when True, a bare non-pattern secret
     under a non-secret key with no matching mapping entry raises
     RedactionNotGuaranteedError.
     """
@@ -276,7 +276,7 @@ def safe_exception(exc: BaseException, mapping: Mapping[str, str] | None = None,
     replaced with "***". The exception type name is preserved (non-secret).
     ``__cause__``/``__context__`` chains are walked and redacted too.
 
-    ``require_mapping`` (Phase 3R-R1): when True, an external raw secret in the
+    ``require_mapping`` (R1 closure): when True, an external raw secret in the
     exception message that is neither a secret pattern nor covered by
     ``mapping`` raises RedactionNotGuaranteedError.
     """
@@ -302,7 +302,7 @@ def forbidden_fields_in(event: MutableMapping[str, Any]) -> list[str]:
 def redaction_guaranteed(value: Any, mapping: Mapping[str, str] | None = None) -> bool:
     """True if redaction of ``value`` is guaranteed under ``mapping``.
 
-    Phase 3R-R1 security invariant: a generic redactor CANNOT recognize an
+    R1 closure security invariant: a generic redactor CANNOT recognize an
     arbitrary non-pattern bare secret inside list/tuple/set/exception without a
     caller-provided literal-value mapping. This predicate returns True only
     when every secret-shaped string in the structure is provably covered:

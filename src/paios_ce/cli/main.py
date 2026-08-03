@@ -68,7 +68,7 @@ def _cmd_validate_config(args: argparse.Namespace) -> int:
 
 
 def _cmd_run_action(data: dict) -> int:
-    """Run a single ActionRequest through the PermissionEngine (Phase 3R-R1).
+    """Run a single ActionRequest through the PermissionEngine (R1 closure).
 
     Used by ``run-task`` when the fixture is an ActionRequest JSON. Emits the
     decision, stable error code (E_UNKNOWN_ACTION for unknown actions),
@@ -143,7 +143,7 @@ def _cmd_run_task(args: argparse.Namespace) -> int:
         _emit({"command": "run-task", "status": "error", "reason": f"invalid JSON: {exc}"})
         return _EXIT_CONFIG
 
-    # Phase 3R-R1: an ActionRequest-shaped fixture (has action_id + operation)
+    # R1 closure: an ActionRequest-shaped fixture (has action_id + operation)
     # is authorized directly through the PermissionEngine, so unknown actions
     # can be exercised from the CLI and are explicitly rejected.
     if "action_id" in data and "operation" in data:
@@ -194,7 +194,7 @@ def _cmd_run_task(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="paios-ce",
-        description="PAIOS CE clean-room public core (Phase 3). Mock Provider only; no network; no real secrets.",
+        description="PAIOS CE clean-room public core (the release candidate). Mock Provider only; no network; no real secrets.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

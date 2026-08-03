@@ -1,4 +1,4 @@
-"""Minimal Orchestrator (Phase 3 prompt section 15).
+"""Minimal Orchestrator (contract section 15).
 
 Receives a TaskEnvelope, validates config, runs the Risk engine, selects the
 Mock Provider, generates the provider request, processes the result, routes

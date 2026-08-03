@@ -1,7 +1,7 @@
 # Contributing to PAIOS CE
 
-Thank you for your interest in contributing to PAIOS CE. This project is currently in
-Phase 3/4 clean-room scaffold development and is not yet a public release.
+Thank you for your interest in contributing to PAIOS CE. This project is currently a
+local pre-release candidate (clean-room scaffold) and is not yet a public release.
 
 ## Current Status
 

@@ -1,7 +1,7 @@
-"""Provider skeleton stubs (Phase 3 OPTIONAL — interface only).
+"""Provider skeleton stubs (OPTIONAL — interface only).
 
 OpenAI-Compatible, Local HTTP, and Ollama provider adapters are declared as
-interface skeletons. They are NEVER connected live in Phase 3: no live
+interface skeletons. They are NEVER connected live in the current release candidate: no live
 credential, no live network, no API call. Their methods raise
 UnsupportedCapability or NotImplementedError to make that explicit.
 
@@ -30,13 +30,13 @@ from .base import (
 class OpenAiCompatibleSkeleton(Provider):
     """Interface skeleton for an OpenAI-compatible provider.
 
-    NOT implemented in Phase 3. Any call raises UnsupportedCapability.
+    NOT implemented in the current release candidate. Any call raises UnsupportedCapability.
     """
 
     provider_id = "openai_compatible"
 
     def list_models(self) -> List[Dict[str, Any]]:
-        raise UnsupportedCapability("MODELS", "openai_compatible is a Phase 3 skeleton; not connectable")
+        raise UnsupportedCapability("MODELS", "openai_compatible is a the release candidate skeleton; not connectable")
 
     def validate_configuration(self) -> ValidationResult:
         return ValidationResult(valid=False, errors=["openai_compatible skeleton not implemented"])
@@ -58,19 +58,19 @@ class OpenAiCompatibleSkeleton(Provider):
 
     def health_check(self) -> ProviderHealth:
         return ProviderHealth(component="openai_compatible", status="down",
-                              reason="Phase 3 skeleton; no live connection")
+                              reason="the release candidate skeleton; no live connection")
 
 
 class LocalHttpSkeleton(Provider):
     """Interface skeleton for a local HTTP provider (loopback only).
 
-    NOT implemented in Phase 3.
+    NOT implemented in the current release candidate.
     """
 
     provider_id = "local_http"
 
     def list_models(self) -> List[Dict[str, Any]]:
-        raise UnsupportedCapability("MODELS", "local_http is a Phase 3 skeleton; not connectable")
+        raise UnsupportedCapability("MODELS", "local_http is a the release candidate skeleton; not connectable")
 
     def validate_configuration(self) -> ValidationResult:
         return ValidationResult(valid=False, errors=["local_http skeleton not implemented"])
@@ -92,4 +92,4 @@ class LocalHttpSkeleton(Provider):
 
     def health_check(self) -> ProviderHealth:
         return ProviderHealth(component="local_http", status="down",
-                              reason="Phase 3 skeleton; no live connection")
+                              reason="the release candidate skeleton; no live connection")

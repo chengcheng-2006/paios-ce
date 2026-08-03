@@ -1,4 +1,4 @@
-# PAIOS CE private local config example (Phase 3).
+# PAIOS CE private local config example (the release candidate).
 # NEVER committed to any repository. Secret values never appear; only SecretRef
 # references. Placeholders only.
 schema: "https://paios.ce/schemas/private-config/v0.1.json"

@@ -206,9 +206,9 @@ class TaskResult(BaseModel):
 
 
 class AuditEvent(BaseModel):
-    """Redacted audit record (Phase 3 prompt section 16 + protocol section 9).
+    """Redacted audit record (contract section 16 + protocol section 9).
 
-    Mandatory fields follow the Phase 3 execution prompt. Forbidden content
+    Mandatory fields follow the the contract execution prompt. Forbidden content
     (secret values, raw tokens, cookies, authorization headers, raw audio,
     private paths, owner identity detail) is structurally absent: no such
     field exists on this model and extra="forbid" rejects any attempt to add one.

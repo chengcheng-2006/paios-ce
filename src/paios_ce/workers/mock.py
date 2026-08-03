@@ -1,4 +1,4 @@
-"""MockWorker — deterministic local worker for the Phase 3 closed loop.
+"""MockWorker — deterministic local worker for the local closed loop.
 
 The MockWorker NEVER executes real shell, PowerShell, file deletion, or
 network writes. It simulates operations in-process and returns redacted

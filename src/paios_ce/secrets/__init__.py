@@ -1,6 +1,6 @@
 """SecretRef interface and backends (Phase 2 SECRETREF_ARCHITECTURE).
 
-Phase 3 implements the abstract SecretRef interface plus two backends:
+The release candidate implements the abstract SecretRef interface plus two backends:
 EnvSecretRef (portable default) and InMemorySecretRef (tests/demo). No secret
 value is ever stored in config, logged, serialized, or placed in protocol
 envelopes.

@@ -1,4 +1,4 @@
-"""PAIOS CE — clean-room public core scaffold (Phase 3).
+"""PAIOS CE — clean-room public core scaffold (the release candidate).
 
 This package is NEWLY_WRITTEN_FROM_PHASE2_CONTRACTS. It contains no legacy
 PAIOS / OpenClaw / Hermes source, no real secrets, no Owner PII, and no

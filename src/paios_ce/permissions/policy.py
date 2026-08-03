@@ -1,11 +1,11 @@
 """Action classification and risk policy (deny-by-default).
 
-Action classes follow the Phase 3 execution prompt section 12:
+Action classes follow the contract execution prompt section 12:
 READ_LOCAL, WRITE_LOCAL, DELETE_LOCAL, NETWORK_READ, NETWORK_WRITE,
 PROCESS_EXEC, ADMIN_ELEVATION, SECRET_ACCESS, EXTERNAL_MESSAGE,
 FINANCIAL_ACTION, IDENTITY_ACTION.
 
-UNKNOWN_ACTION is the explicit rejection class (Phase 3R-R1): an operation
+UNKNOWN_ACTION is the explicit rejection class (R1 closure): an operation
 that matches no classifier keyword is UNKNOWN_ACTION, NEVER mapped to a
 known action, NEVER coerced to PROCESS_EXEC. It is hard-blocked with the
 stable error code E_UNKNOWN_ACTION and risk NOT_APPLICABLE.
@@ -56,9 +56,9 @@ class PolicyDecision:
 
 @dataclass
 class ActionRiskPolicy:
-    """Static risk table for the Phase 3 action classes.
+    """Static risk table for the the release candidate action classes.
 
-    CRITICAL actions are hard-blocked in Phase 3 (no real execution is
+    CRITICAL actions are hard-blocked in the current release candidate (no real execution is
     permitted). ADMIN_ELEVATION and arbitrary PROCESS_EXEC are hard-blocked.
     """
 
@@ -76,7 +76,7 @@ class ActionRiskPolicy:
             ),
             ActionClass.DELETE_LOCAL: PolicyDecision(
                 ActionClass.DELETE_LOCAL, RiskLevel.CRITICAL, True, ConfirmationKind.OWNER_APPROVAL,
-                True, True, "critical: local delete hard-blocked in Phase 3",
+                True, True, "critical: local delete hard-blocked in the current release candidate",
             ),
             ActionClass.NETWORK_READ: PolicyDecision(
                 ActionClass.NETWORK_READ, RiskLevel.LOW, False, ConfirmationKind.NONE,
@@ -88,11 +88,11 @@ class ActionRiskPolicy:
             ),
             ActionClass.PROCESS_EXEC: PolicyDecision(
                 ActionClass.PROCESS_EXEC, RiskLevel.HIGH, True, ConfirmationKind.CHANNEL_PROMPT,
-                False, True, "process execution hard-blocked in Phase 3 (no real exec)",
+                False, True, "process execution hard-blocked in the current release candidate (no real exec)",
             ),
             ActionClass.ADMIN_ELEVATION: PolicyDecision(
                 ActionClass.ADMIN_ELEVATION, RiskLevel.CRITICAL, True, ConfirmationKind.OWNER_APPROVAL,
-                True, True, "admin elevation hard-blocked in Phase 3",
+                True, True, "admin elevation hard-blocked in the current release candidate",
             ),
             ActionClass.SECRET_ACCESS: PolicyDecision(
                 ActionClass.SECRET_ACCESS, RiskLevel.MEDIUM, False, ConfirmationKind.NONE,
@@ -104,13 +104,13 @@ class ActionRiskPolicy:
             ),
             ActionClass.FINANCIAL_ACTION: PolicyDecision(
                 ActionClass.FINANCIAL_ACTION, RiskLevel.CRITICAL, True, ConfirmationKind.OWNER_APPROVAL,
-                True, True, "critical: financial action hard-blocked in Phase 3",
+                True, True, "critical: financial action hard-blocked in the current release candidate",
             ),
             ActionClass.IDENTITY_ACTION: PolicyDecision(
                 ActionClass.IDENTITY_ACTION, RiskLevel.HIGH, True, ConfirmationKind.OWNER_APPROVAL,
-                True, True, "identity action hard-blocked in Phase 3",
+                True, True, "identity action hard-blocked in the current release candidate",
             ),
-            # Phase 3R-R1: UNKNOWN_ACTION is EXPLICIT_REJECT. It is NOT mapped
+            # R1 closure: UNKNOWN_ACTION is EXPLICIT_REJECT. It is NOT mapped
             # to PROCESS_EXEC or any other known action, is NOT overridable by
             # owner/approval/capability/config, and carries risk NOT_APPLICABLE.
             ActionClass.UNKNOWN_ACTION: PolicyDecision(
@@ -140,7 +140,7 @@ class ActionRiskPolicy:
 
     @staticmethod
     def _token_match(target: str, keywords) -> bool:
-        """Token-based keyword matching (Phase 3R-R1A Advisory-C fix).
+        """Token-based keyword matching (R1A closure Advisory-C fix).
 
         A keyword matches if and only if every token of the keyword is present
         as a token in the target string. This prevents substring false-positives:
@@ -171,7 +171,7 @@ class ActionRiskPolicy:
         Heuristic, deterministic, deny-biased. An operation that matches NO
         keyword is classified as ActionClass.UNKNOWN_ACTION and explicitly
         rejected — it is NEVER mapped to PROCESS_EXEC or any other known
-        action (Phase 3R-R1 UNKNOWN_ACTION = EXPLICIT_REJECT).
+        action (R1 closure UNKNOWN_ACTION = EXPLICIT_REJECT).
 
           - admin / elevate / install_service -> ADMIN_ELEVATION
           - shell / exec / run / spawn / powershell / cmd / bash -> PROCESS_EXEC
@@ -184,7 +184,7 @@ class ActionRiskPolicy:
           - write / append / create / overwrite / save -> WRITE_LOCAL
           - default: UNKNOWN_ACTION (explicit reject, E_UNKNOWN_ACTION)
         """
-        # Phase 3R-R1A (Advisory-C fix): keyword matching uses TOKEN-based
+        # R1A closure (Advisory-C fix): keyword matching uses TOKEN-based
         # comparison, not substring. This prevents false-positive coercion where
         # a read keyword like "load" matches the substring inside "upload", or
         # "read" matches inside "already_done". A keyword matches only when its
@@ -206,7 +206,7 @@ class ActionRiskPolicy:
             return ActionClass.IDENTITY_ACTION
         if ActionRiskPolicy._token_match(operation, ("send", "notify", "message", "post", "publish", "email")):
             return ActionClass.EXTERNAL_MESSAGE
-        # Phase 3R-R1 (independent-validator finding): the network-mode shortcut
+        # R1 closure (independent-validator finding): the network-mode shortcut
         # MUST NOT fire before the unknown-action fallback, or an operation that
         # matches no keyword is coerced to NETWORK_WRITE under cloud_egress.
         # The network mode is applied to KEYWORD-MATCHED read/write operations
@@ -217,5 +217,5 @@ class ActionRiskPolicy:
             return ActionClass.NETWORK_READ if network_mode != "none" else ActionClass.READ_LOCAL
         if ActionRiskPolicy._token_match(operation, ("write", "append", "create", "overwrite", "save", "put", "store")):
             return ActionClass.NETWORK_WRITE if network_mode == "cloud_egress" else ActionClass.WRITE_LOCAL
-        # Phase 3R-R1: unknown action is EXPLICIT_REJECT, never mapped to a known action.
+        # R1 closure: unknown action is EXPLICIT_REJECT, never mapped to a known action.
         return ActionClass.UNKNOWN_ACTION

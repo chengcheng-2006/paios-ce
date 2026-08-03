@@ -1,6 +1,6 @@
 """Provider contract and Mock Provider (Phase 2 MODEL_PROVIDER_CONTRACT).
 
-Phase 3 implements the Mock Provider (P0) only. OpenAI-Compatible, Local HTTP,
+The release candidate implements the Mock Provider (P0) only. OpenAI-Compatible, Local HTTP,
 and Ollama remain interface skeletons / PLANNED, never live connections.
 
 SPDX-License-Identifier: Apache-2.0

@@ -1,6 +1,6 @@
 """MockProvider — deterministic, fully-local provider for demo/tests.
 
-Facts (Phase 3 execution prompt section 13):
+Facts (contract execution prompt section 13):
   - CURRENT_EVIDENCE_STATUS = ABSENT -> IMPLEMENTED after tests pass
   - CURRENT_PUBLIC_SUPPORT_LABEL = PLANNED -> EXPERIMENTAL
   - PHASE_3_PRIORITY = P0

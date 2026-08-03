@@ -1,4 +1,4 @@
-"""State adapter interface (Phase 3 OPTIONAL).
+"""State adapter interface (OPTIONAL).
 
 SQLiteStateAdapterSkeleton declares the interface only; it does NOT open a
 real SQLite database, does NOT persist anything, and requires no credentials.
@@ -31,7 +31,7 @@ class StateAdapter(abc.ABC):
 
 
 class SQLiteStateAdapterSkeleton(StateAdapter):
-    """Interface skeleton. Does NOT open a real database in Phase 3."""
+    """Interface skeleton. Does NOT open a real database in the current release candidate."""
 
     def __init__(self, path: Optional[str] = None) -> None:
         self._path = path
@@ -42,13 +42,13 @@ class SQLiteStateAdapterSkeleton(StateAdapter):
         return self._opened
 
     def get(self, key: str) -> Optional[Dict[str, Any]]:
-        raise NotImplementedError("SQLite state adapter is a Phase 3 skeleton; not implemented")
+        raise NotImplementedError("SQLite state adapter is a skeleton in the current release candidate; not implemented")
 
     def put(self, key: str, value: Dict[str, Any]) -> None:
-        raise NotImplementedError("SQLite state adapter is a Phase 3 skeleton; not implemented")
+        raise NotImplementedError("SQLite state adapter is a skeleton in the current release candidate; not implemented")
 
     def delete(self, key: str) -> bool:
-        raise NotImplementedError("SQLite state adapter is a Phase 3 skeleton; not implemented")
+        raise NotImplementedError("SQLite state adapter is a skeleton in the current release candidate; not implemented")
 
 
 class NoopStateAdapter(StateAdapter):

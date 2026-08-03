@@ -1,4 +1,4 @@
-"""Security: redaction defense-in-depth (Phase 3R F-W01 closure).
+"""Security: redaction defense-in-depth (security closure F-W01 closure).
 
 Covers deep, cycle-safe, depth-limited redaction of arbitrary Python values:
 mappings, sequences, bytes, unknown objects, exception chains, case-insensitive

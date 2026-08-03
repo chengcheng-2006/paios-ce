@@ -2,7 +2,7 @@
 
 A worker executes a single ActionRequest under a bounded scope. Workers are
 deny-by-default: they hold only the capabilities explicitly granted for the
-task. Phase 3 implements MockWorker only.
+task. The current release candidate implements MockWorker only.
 
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng

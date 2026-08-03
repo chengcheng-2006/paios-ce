@@ -1,4 +1,4 @@
-"""Security: redaction invariants (Phase 3R-R1 R3).
+"""Security: redaction invariants (R1 closure R3).
 
 Mandated invariants:
   - RAW_SECRET_IN_AUDIT_INPUT = FORBIDDEN

@@ -38,7 +38,7 @@ class RedactedAuditLogger:
     ``secret_mapping`` (F-W01) maps known literal secret values to a fixed
     placeholder, so an external raw secret under a neutral key is redacted.
 
-    ``require_mapping`` (Phase 3R-R1): when True, a bare non-pattern secret in
+    ``require_mapping`` (R1 closure): when True, a bare non-pattern secret in
     the redacted details that is neither pattern-redacted nor covered by
     ``secret_mapping`` raises RedactionNotGuaranteedError instead of being
     silently passed through. Default internal paths (False) do not receive raw

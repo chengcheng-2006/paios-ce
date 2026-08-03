@@ -1,4 +1,4 @@
-"""Security: IDENTITY_ACTION explicit hard block (Phase 3R F-W02 closure).
+"""Security: IDENTITY_ACTION explicit hard block (security closure F-W02 closure).
 
 The risk policy declares IDENTITY_ACTION as hard_blocked=True. This suite proves
 the engine's single authoritative hard-block entry (_hard_block_reason) blocks

@@ -28,7 +28,7 @@ PROHIBITED_PATTERNS = [
 ]
 
 # Allowlisted placeholder tokens (these are not secrets).
-# Phase 4R: every key-shaped fixture is reconstructed at runtime from separated
+# publication hygiene: every key-shaped fixture is reconstructed at runtime from separated
 # fragments in tests/_keyshape_fixtures.py, so no contiguous key-shaped literal
 # exists anywhere in the public tree.  The allowlist therefore only needs to
 # cover non-key-shaped placeholder tokens; key-shaped entries have been removed

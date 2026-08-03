@@ -25,7 +25,7 @@
       "type": "string"
     },
     "RiskLevel": {
-      "description": "Engine risk level used by the Permission/Risk engine (uppercase).\n\nNOT_APPLICABLE marks decisions that carry no actionable risk \u2014 most notably\nthe explicit UNKNOWN_ACTION rejection (Phase 3R-R1). It is never an\nactionable risk tier and never licenses execution.",
+      "description": "Engine risk level used by the Permission/Risk engine (uppercase).\n\nNOT_APPLICABLE marks decisions that carry no actionable risk \u2014 most notably\nthe explicit UNKNOWN_ACTION rejection (R1 closure). It is never an\nactionable risk tier and never licenses execution.",
       "enum": [
         "LOW",
         "MEDIUM",
@@ -38,7 +38,7 @@
     }
   },
   "additionalProperties": false,
-  "description": "Redacted audit record (Phase 3 prompt section 16 + protocol section 9).\n\nMandatory fields follow the Phase 3 execution prompt. Forbidden content\n(secret values, raw tokens, cookies, authorization headers, raw audio,\nprivate paths, owner identity detail) is structurally absent: no such\nfield exists on this model and extra=\"forbid\" rejects any attempt to add one.",
+  "description": "Redacted audit record (contract section 16 + protocol section 9).\n\nMandatory fields follow the the contract execution prompt. Forbidden content\n(secret values, raw tokens, cookies, authorization headers, raw audio,\nprivate paths, owner identity detail) is structurally absent: no such\nfield exists on this model and extra=\"forbid\" rejects any attempt to add one.",
   "properties": {
     "event_id": {
       "maxLength": 128,

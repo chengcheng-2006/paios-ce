@@ -65,13 +65,19 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Check dependencies
+      - name: Install project runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Check dependencies (project dependency environment)
         run: |
           pip install "pip-audit>=2.7,<3"
-          # Policy: run full audit. If --only-fixed is ever used as a fallback,
-          # it is recorded but never the sole gate. Unfixed vulnerabilities must
-          # be triaged in SECURITY.md or CI fails.
-          pip-audit --format json > pip-audit.json || true
+          # Policy: audit the INSTALLED PAIOS CE dependency set (--local), not
+          # just the runner environment. If --only-fixed is ever used as a
+          # fallback it is recorded but never the sole gate. Unfixed
+          # vulnerabilities must be triaged in SECURITY.md or CI fails.
+          pip-audit --local --format json > pip-audit.json || true
           python -c "
           import json
           import sys

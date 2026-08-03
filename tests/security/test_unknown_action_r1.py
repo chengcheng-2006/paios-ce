@@ -1,4 +1,4 @@
-"""Security: UNKNOWN_ACTION = EXPLICIT_REJECT (Phase 3R-R1).
+"""Security: UNKNOWN_ACTION = EXPLICIT_REJECT (R1 closure).
 
 Mandated semantics (R2):
   - UNKNOWN_ACTION is explicitly rejected

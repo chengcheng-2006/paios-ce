@@ -1,10 +1,1 @@
 blank_issues_enabled: false
-contact_links:
-  - name: Security Issue
-    url: mailto:190455391+chengcheng-2006@users.noreply.github.com
-    about: |
-      Report security vulnerabilities privately.
-      DO NOT open public issues for security vulnerabilities.
-  - name: Documentation
-    url: https://github.com/paios-ce/paios-ce/blob/main/README.md
-    about: Read the README for quick start and usage instructions

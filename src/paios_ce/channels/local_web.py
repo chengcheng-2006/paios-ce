@@ -1,6 +1,6 @@
-"""Local Web Chat skeleton (Phase 3 OPTIONAL — interface only).
+"""Local Web Chat skeleton (OPTIONAL — interface only).
 
-Declares the local web chat adapter shape. NOT implemented in Phase 3: no
+Declares the local web chat adapter shape. NOT implemented in the current release candidate: no
 server, no port, no public bind, no frontend persistence. Loopback only by
 default; public_bind is explicit opt-in (and still not implemented here).
 
@@ -31,10 +31,10 @@ class LocalWebChatSkeleton(Channel):
 
     def validate_message(self, message: InboundMessage) -> Optional[str]:
         if self._public_bind:
-            return "local_web skeleton does not support public bind in Phase 3"
+            return "local_web skeleton does not support public bind in the current release candidate"
         if message.origin.value != "web":
             return "unsupported origin for local_web"
         return None
 
     def deliver(self, message: OutboundMessage) -> None:
-        raise NotImplementedError("local_web skeleton is not implemented in Phase 3")
+        raise NotImplementedError("local_web skeleton is not implemented in the current release candidate")

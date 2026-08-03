@@ -1,6 +1,6 @@
-"""Security: unknown-action explicit reject (Phase 3R-R1 correction).
+"""Security: unknown-action explicit reject (R1 closure correction).
 
-Phase 3R-R1 reverses the Phase 3R F-W03 adjudication (ACCEPTED_SAFE_STRICTNESS):
+R1 closure reverses the security closure F-W03 adjudication (ACCEPTED_SAFE_STRICTNESS):
 UNKNOWN_ACTION must be EXPLICIT_REJECT, never mapped to PROCESS_EXEC, never
 mapped to any known action, with the stable error code E_UNKNOWN_ACTION, risk
 NOT_APPLICABLE, and no execution attempt.

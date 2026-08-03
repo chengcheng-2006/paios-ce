@@ -1,4 +1,4 @@
-"""MinimalOrchestrator — runs the Phase 3 closed loop.
+"""MinimalOrchestrator — runs the local closed loop.
 
 Flow:
   TaskEnvelope
@@ -161,7 +161,7 @@ class MinimalOrchestrator:
                     summary=f"mock tool call executed: {ar.outcome.get('summary_class', 'ok')}",
                 )
             else:
-                # Phase 3R-R1: an unknown action is recorded as
+                # R1 closure: an unknown action is recorded as
                 # UNKNOWN_ACTION_REJECTED (distinct from a generic denial), with
                 # the stable error code and the sanitized action id — never the
                 # raw operation text (which may carry a secret).

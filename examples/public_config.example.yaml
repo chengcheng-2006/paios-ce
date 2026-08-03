@@ -1,4 +1,4 @@
-# PAIOS CE public project config example (Phase 3).
+# PAIOS CE public project config example (the release candidate).
 # Reproducible across machines. No secret values — SecretRef references only.
 # Placeholders: example.invalid / 127.0.0.1 / not-a-valid-provider-token.
 schema: "https://paios.ce/schemas/public-config/v0.1.json"

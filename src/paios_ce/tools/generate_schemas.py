@@ -1,6 +1,6 @@
 """Generate JSON Schemas from the pydantic protocol/config models.
 
-Outputs the Phase 3 schema files (config + protocol). The protocol schemas
+Outputs the public schema files (config + protocol). The protocol schemas
 are structurally consistent with the Phase 2 JSON Schemas because the models
 use the same field names, enums, and extra="forbid".
 

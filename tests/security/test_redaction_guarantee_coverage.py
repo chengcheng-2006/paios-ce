@@ -1,6 +1,6 @@
-"""Security: redaction_guaranteed predicate — full branch coverage (Phase 3R-R1).
+"""Security: redaction_guaranteed predicate — full branch coverage (R1 closure).
 
-The Phase 3R-R1 redaction invariant adds ``redaction_guaranteed`` and
+The R1 closure redaction invariant adds ``redaction_guaranteed`` and
 ``RedactionNotGuaranteedError``. This suite drives every branch of the
 predicate so the invariant is exercised, not just defined.
 

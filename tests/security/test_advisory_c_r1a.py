@@ -1,6 +1,6 @@
-"""Security: Advisory-C closure -- token-based keyword matching (Phase 3R-R1A).
+"""Security: Advisory-C closure -- token-based keyword matching (R1A closure).
 
-Phase 3R-R1 Advisory-C: upload_* classified to NETWORK_READ because load
+R1 closure Advisory-C: upload_* classified to NETWORK_READ because load
 matched as substring inside upload. Fixed by token-based matching.
 
 SPDX-License-Identifier: Apache-2.0

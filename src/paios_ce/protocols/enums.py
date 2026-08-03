@@ -2,7 +2,7 @@
 
 Values follow the Phase 2 JSON Schemas and the TASK_AND_ACTION_PROTOCOL.md
 structural contracts. Risk/action taxonomy used by the Permission/Risk engine
-matches ACTION_RISK_TAXONOMY.csv and the Phase 3 execution prompt.
+matches ACTION_RISK_TAXONOMY.csv and the the contract execution prompt.
 
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng
@@ -24,7 +24,7 @@ class RiskLevel(str, Enum):
     """Engine risk level used by the Permission/Risk engine (uppercase).
 
     NOT_APPLICABLE marks decisions that carry no actionable risk — most notably
-    the explicit UNKNOWN_ACTION rejection (Phase 3R-R1). It is never an
+    the explicit UNKNOWN_ACTION rejection (R1 closure). It is never an
     actionable risk tier and never licenses execution.
     """
 

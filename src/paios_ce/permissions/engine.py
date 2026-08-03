@@ -7,7 +7,7 @@ Design notes (ADR-007 + WORKER_PERMISSION_MODEL):
     granted scope.
   - HIGH-risk actions require confirmation (channel_prompt or owner_approval).
   - CRITICAL actions, admin elevation, arbitrary shell, and process execution
-    are hard-blocked in Phase 3.
+    are hard-blocked in the current release candidate.
   - Replay detection: request_id uniqueness. Idempotency: idempotency_key
     may be used to replay safely (returns cached result).
 
@@ -198,17 +198,17 @@ class PermissionEngine:
     # -- hard blocks --------------------------------------------------------
 
     # Stable, auditable error code for identity-role actions. Fixed value so
-    # callers and audits can rely on it across releases (Phase 3R F-W02).
+    # callers and audits can rely on it across releases (security closure F-W02).
     IDENTITY_HARD_BLOCK_ERROR_CODE = "E_IDENTITY_HARD_BLOCKED"
 
-    # Stable, auditable error code for unknown actions (Phase 3R-R1).
+    # Stable, auditable error code for unknown actions (R1 closure).
     # UNKNOWN_ACTION is an EXPLICIT_REJECT: never mapped to PROCESS_EXEC or any
     # other known action, never downgraded, never overridable.
     UNKNOWN_ACTION_ERROR_CODE = "E_UNKNOWN_ACTION"
 
     def _hard_block_reason(self, request: ActionRequest, match: RuleMatch) -> Optional[PermissionResult]:
         op = (request.operation or "").lower()
-        # Phase 3R-R1: UNKNOWN_ACTION is EXPLICIT_REJECT. It is rejected BEFORE
+        # R1 closure: UNKNOWN_ACTION is EXPLICIT_REJECT. It is rejected BEFORE
         # any known-action policy, any capability grant, any approval/owner
         # check, and any confirmation channel. It must NEVER create PROCESS_EXEC,
         # never create any known action, never be coerced or downgraded, and
@@ -228,19 +228,19 @@ class PermissionEngine:
         # identity / allowlist / owner_allowlist / credential-rotation actions:
         # explicit hard block, independent of owner status, capabilities, or the
         # confirmation channel. Must never be downgraded to a high-risk
-        # owner-check path (Phase 3R F-W02).
+        # owner-check path (security closure F-W02).
         if match.action_class == ActionClass.IDENTITY_ACTION:
             return self._block(
-                f"{self.IDENTITY_HARD_BLOCK_ERROR_CODE}: identity action hard-blocked in Phase 3",
+                f"{self.IDENTITY_HARD_BLOCK_ERROR_CODE}: identity action hard-blocked in the current release candidate",
                 match.action_class, match.risk_level,
             )
         if match.action_class == ActionClass.ADMIN_ELEVATION:
             return self._block("admin elevation hard-blocked", match.action_class, match.risk_level)
         if match.action_class == ActionClass.PROCESS_EXEC:
-            return self._block("process execution hard-blocked in Phase 3",
+            return self._block("process execution hard-blocked in the current release candidate",
                                match.action_class, match.risk_level)
         if match.action_class == ActionClass.FINANCIAL_ACTION:
-            return self._block("financial action hard-blocked in Phase 3",
+            return self._block("financial action hard-blocked in the current release candidate",
                                match.action_class, match.risk_level)
         if match.risk_level == RiskLevel.CRITICAL:
             return self._block(f"critical action hard-blocked: {match.action_class.value}",
@@ -314,7 +314,7 @@ class PermissionEngine:
                 return self._deny("owner-only action denied (not owner)",
                                   match.action_class, match.risk_level,
                                   confirm=match.confirmation_kind)
-            # Phase 3 has no real confirmation channel; HIGH actions require
+            # the release candidate has no real confirmation channel; HIGH actions require
             # explicit confirmation flag carried on the request.
             if not request.approval_required and match.risk_level == RiskLevel.HIGH:
                 return PermissionResult(

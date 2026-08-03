@@ -1,4 +1,4 @@
-"""CliChannel — local terminal channel (Phase 3 P0).
+"""CliChannel — local terminal channel (the release candidate P0).
 
 Default DM-only, owner allowlist enforced by the orchestrator, loopback only,
 structured redacted output. Does not require any secret or network.

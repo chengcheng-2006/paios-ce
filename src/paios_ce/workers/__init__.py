@@ -1,6 +1,6 @@
 """Worker contract and MockWorker (Phase 2 WORKER_PERMISSION_MODEL).
 
-Phase 3 workers only use MockWorker. No real shell, PowerShell, file deletion,
+Workers in this release candidate only use MockWorker. No real shell, PowerShell, file deletion,
 or network write is ever executed.
 
 SPDX-License-Identifier: Apache-2.0

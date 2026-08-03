@@ -1,6 +1,6 @@
-"""State adapter interface (Phase 3 OPTIONAL — interface only).
+"""State adapter interface (OPTIONAL — interface only).
 
-The SQLite state adapter is declared as an interface stub. Phase 3 does NOT
+The SQLite state adapter is declared as an interface stub. the release candidate does NOT
 connect to any production database. A NoopStateAdapter is provided for tests.
 
 SPDX-License-Identifier: Apache-2.0

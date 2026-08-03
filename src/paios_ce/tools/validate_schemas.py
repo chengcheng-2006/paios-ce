@@ -1,4 +1,4 @@
-"""Schema + contract parity validation (Phase 3 prompt sections 11, 24).
+"""Schema + contract parity validation (contract sections 11, 24).
 
 Checks:
   1. Every generated JSON Schema is itself valid against the JSON Schema

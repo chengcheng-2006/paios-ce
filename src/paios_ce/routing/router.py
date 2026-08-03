@@ -1,9 +1,9 @@
 """MinimalRouter — routes a TaskEnvelope to a Provider.
 
-Phase 3 policy:
+Current policy:
   - default provider: mock (no API key, no network)
   - "openai_compatible", "local_http", "ollama" are recognized provider IDs
-    but are NOT connectable in Phase 3 (interface skeletons only).
+    but are NOT connectable in the current release candidate (interface skeletons only).
   - unknown provider -> routing decision "unsupported".
 
 SPDX-License-Identifier: Apache-2.0
@@ -28,7 +28,7 @@ class RoutingDecision:
 
 
 class MinimalRouter:
-    """Routes only to the Mock Provider in Phase 3."""
+    """Routes only to the Mock Provider in the current release candidate."""
 
     def __init__(self, provider: Optional[Provider] = None) -> None:
         self._provider = provider or MockProvider()
@@ -44,7 +44,7 @@ class MinimalRouter:
         if pid in {"openai_compatible", "local_http", "ollama"}:
             return RoutingDecision(
                 pid, capability, False,
-                f"{pid} is a Phase 3 interface skeleton only; not connectable in Phase 3",
+                f"{pid} is a the release candidate interface skeleton only; not connectable in the current release candidate",
             )
         return RoutingDecision(pid, capability, False, "unknown provider id")
 

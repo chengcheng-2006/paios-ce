@@ -1,6 +1,6 @@
 """Runtime-assembled key-shaped fixtures for security/redaction tests.
 
-Phase 4R publication hygiene requires that no contiguous key-shaped value
+publication hygiene publication hygiene requires that no contiguous key-shaped value
 appears as a repository literal (regex set: ``sk-[A-Za-z0-9_-]{8,}`` and
 siblings).  The security intent of the redaction tests, however, depends on
 feeding key-shaped inputs to the redaction engine to prove it strips them.
@@ -39,7 +39,7 @@ _BODY_1234 = "1234567890" + "abcdef"          # 16 chars
 #
 # These values exist only at runtime.  They are intentionally NOT written as
 # contiguous literals anywhere in the repository; a static byte scan of the
-# public tree finds zero matches against the Phase 4R key-shaped regex set.
+# public tree finds zero matches against the publication hygiene key-shaped regex set.
 # ---------------------------------------------------------------------------
 SK_LONG = _PFX_SK + _BODY_ABC12345678         # 16-char sk-shaped body
 SK_SHORT = _PFX_SK + _BODY_ABC1234            # 12-char sk-shaped body

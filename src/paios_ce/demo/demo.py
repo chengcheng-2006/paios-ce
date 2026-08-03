@@ -1,6 +1,6 @@
 """Demo workflow implementation.
 
-End-to-end Phase 3 closed loop, fully local and deterministic. The demo
+End-to-end local closed loop, fully local and deterministic. The demo
 accepts a user input string, builds a TaskEnvelope, runs the orchestrator with
 the Mock Provider, and returns a structured result plus redacted audit output.
 
