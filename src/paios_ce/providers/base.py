@@ -1,4 +1,4 @@
-"""Provider contract (Phase 2 MODEL_PROVIDER_CONTRACT).
+"""Provider contract (model provider contract).
 
 A provider adapter MUST implement all required methods. Optional capabilities
 are exposed via *_optional methods that return UnsupportedCapability rather

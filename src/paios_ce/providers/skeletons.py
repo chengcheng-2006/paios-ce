@@ -36,7 +36,7 @@ class OpenAiCompatibleSkeleton(Provider):
     provider_id = "openai_compatible"
 
     def list_models(self) -> List[Dict[str, Any]]:
-        raise UnsupportedCapability("MODELS", "openai_compatible is a the release candidate skeleton; not connectable")
+        raise UnsupportedCapability("MODELS", "openai_compatible is a release candidate skeleton; not connectable")
 
     def validate_configuration(self) -> ValidationResult:
         return ValidationResult(valid=False, errors=["openai_compatible skeleton not implemented"])
@@ -70,7 +70,7 @@ class LocalHttpSkeleton(Provider):
     provider_id = "local_http"
 
     def list_models(self) -> List[Dict[str, Any]]:
-        raise UnsupportedCapability("MODELS", "local_http is a the release candidate skeleton; not connectable")
+        raise UnsupportedCapability("MODELS", "local_http is a release candidate skeleton; not connectable")
 
     def validate_configuration(self) -> ValidationResult:
         return ValidationResult(valid=False, errors=["local_http skeleton not implemented"])

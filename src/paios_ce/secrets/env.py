@@ -1,4 +1,4 @@
-"""EnvSecretRef — portable default backend (Phase 2 section 4.1).
+"""EnvSecretRef — portable default backend (secretref architecture).
 
 The config holds only the environment variable NAME; the value is read from
 the process environment at resolve time and never stored in config, logs, or

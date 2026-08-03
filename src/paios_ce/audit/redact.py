@@ -1,4 +1,4 @@
-"""Redaction helpers (Phase 2 REDACTION_AND_ERROR_POLICY + security closure closure).
+"""Redaction helpers (public redaction policy + security closure).
 
 Rules:
   - redact() must not leak length, prefix, or suffix of a secret.
@@ -23,7 +23,7 @@ security closure defense-in-depth guarantees:
   - Exception __cause__/__context__ chains are walked but never leak values.
   - Mapping keys and values are both redacted.
 
-R1 closure security invariants (see REDACTION_SECURITY_INVARIANT.md):
+R1 closure security invariants (see SECURITY.md):
   - RAW_SECRET_IN_AUDIT_INPUT = FORBIDDEN. SecretRef values never enter the
     audit models; secret-like fields are rejected by the schemas (extra="forbid")
     and by forbidden_fields_in().

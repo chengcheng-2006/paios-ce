@@ -33,7 +33,7 @@ coverage.xml
 .DS_Store
 Thumbs.db
 
-# publication hygiene publication hygiene: no audit evidence, no Git metadata
+# publication hygiene: no audit evidence, no Git metadata
 # (candidate archives exclude .git; the published repo uses a new clean-room Git history;
 #  see PUBLIC_RELEASE_BOUNDARY.md)
 .git/

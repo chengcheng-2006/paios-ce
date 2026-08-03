@@ -1,4 +1,4 @@
-"""Provider contract and Mock Provider (Phase 2 MODEL_PROVIDER_CONTRACT).
+"""Provider contract and Mock Provider (model provider contract).
 
 The release candidate implements the Mock Provider (P0) only. OpenAI-Compatible, Local HTTP,
 and Ollama remain interface skeletons / PLANNED, never live connections.

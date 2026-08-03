@@ -176,7 +176,7 @@ class PrivateConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     schema: Literal["https://paios.ce/schemas/private-config/v0.1.json"] = PRIVATE_CONFIG_SCHEMA
-    # Phase 2 schema: owner_allowlist is required and minItems 1.
+    # public schema: owner_allowlist is required and minItems 1.
     owner_allowlist: List[str] = Field(default_factory=list, min_length=1)
     providers: Dict[str, PrivateProviderEntry] = Field(default_factory=dict)
     channels: PrivateChannels = Field(default_factory=PrivateChannels)

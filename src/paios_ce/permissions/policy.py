@@ -56,7 +56,7 @@ class PolicyDecision:
 
 @dataclass
 class ActionRiskPolicy:
-    """Static risk table for the the release candidate action classes.
+    """Static risk table for the release candidate action classes.
 
     CRITICAL actions are hard-blocked in the current release candidate (no real execution is
     permitted). ADMIN_ELEVATION and arbitrary PROCESS_EXEC are hard-blocked.

@@ -30,9 +30,9 @@ are listed. Unused components are NOT listed.
 
 These three packages are borrowed read-only for the **offline build only**
 (network OFF). They are NOT runtime dependencies, are NOT included in the wheel
-(0 members), and are NOT included in the the release candidate Handoff package (0 members).
+(0 members), and are NOT included in the release candidate Handoff package (0 members).
 They appear in the Delivery ZIP only as build-environment evidence, with their
-license files intact. See `BUILD_TOOLS_FINAL_BOUNDARY.csv`.
+license files intact. See the build-time table above.
 
 ## Not introduced in the current release candidate
 

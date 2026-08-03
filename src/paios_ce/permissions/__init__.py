@@ -1,4 +1,4 @@
-"""Permission / Risk engine (Phase 2 ADR-007 + ACTION_RISK_TAXONOMY).
+"""Permission / Risk engine (permission and risk model).
 
 Deny-by-default, capability allowlist, filesystem/network/process scopes,
 HIGH-risk confirmation, CRITICAL/admin/shell hard blocks, idempotency and

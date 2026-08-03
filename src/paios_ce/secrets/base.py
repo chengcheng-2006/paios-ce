@@ -1,4 +1,4 @@
-"""SecretRef abstract interface (Phase 2 SECRETREF_ARCHITECTURE section 3).
+"""SecretRef abstract interface (secretref architecture).
 
 Invariants enforced by design:
   INVARIANT-1  No secret value in any config file.

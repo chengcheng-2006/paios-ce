@@ -1,4 +1,4 @@
-"""Configuration models and loader (Phase 2 CONFIGURATION_MODEL).
+"""Configuration models and loader (configuration model).
 
 Precedence (highest wins): CLI flags -> process environment -> private local
 config -> public project config -> built-in safe defaults.

@@ -20,7 +20,7 @@
       "type": "object"
     },
     "FsScopeMode": {
-      "description": "ActionRequest.filesystem_scope.mode (Phase 2 schema).",
+      "description": "ActionRequest.filesystem_scope.mode (public schema).",
       "enum": [
         "none",
         "read",
@@ -50,7 +50,7 @@
       "type": "object"
     },
     "NetworkScopeMode": {
-      "description": "ActionRequest.network_scope.mode (Phase 2 schema).",
+      "description": "ActionRequest.network_scope.mode (public schema).",
       "enum": [
         "none",
         "loopback",
@@ -75,7 +75,7 @@
       "type": "object"
     },
     "WorkerType": {
-      "description": "ActionRequest.worker_type (Phase 2 schema).",
+      "description": "ActionRequest.worker_type (public schema).",
       "enum": [
         "tool",
         "local_llm",

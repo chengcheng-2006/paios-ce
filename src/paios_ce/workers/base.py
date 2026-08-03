@@ -1,4 +1,4 @@
-"""Worker contract (Phase 2 WORKER_PERMISSION_MODEL).
+"""Worker contract (worker permission model).
 
 A worker executes a single ActionRequest under a bounded scope. Workers are
 deny-by-default: they hold only the capabilities explicitly granted for the

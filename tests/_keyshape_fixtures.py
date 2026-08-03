@@ -1,6 +1,6 @@
 """Runtime-assembled key-shaped fixtures for security/redaction tests.
 
-publication hygiene publication hygiene requires that no contiguous key-shaped value
+publication hygiene requires that no contiguous key-shaped value
 appears as a repository literal (regex set: ``sk-[A-Za-z0-9_-]{8,}`` and
 siblings).  The security intent of the redaction tests, however, depends on
 feeding key-shaped inputs to the redaction engine to prove it strips them.

@@ -46,6 +46,6 @@ for the authoritative status table.
 
 ## Clean-room boundary
 
-- All source is `NEWLY_WRITTEN_FROM_PHASE2_CONTRACTS`; `LEGACY_CODE_COPIED = NO`.
+- All source is `NEWLY_WRITTEN_FROM_PUBLIC_CONTRACTS`; `LEGACY_CODE_COPIED = NO`.
 - No `.git`, no public repository, no remote write in the current release
   candidate (publication deferred to a later phase).

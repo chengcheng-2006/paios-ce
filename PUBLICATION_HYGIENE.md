@@ -1,5 +1,5 @@
 # Publication Hygiene
 
-This repository candidate is derived from the accepted the accepted public tree (E2)
-Public Tree RC2. Local Git history is fresh and isolated from production.
-GitHub publication is deferred to Phase 6 (Owner decision).
+This repository candidate is derived from the accepted public tree
+(public tree RC2). Local Git history is fresh and isolated from production.
+GitHub publication is deferred pending Owner decision.

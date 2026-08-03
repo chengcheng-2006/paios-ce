@@ -1,4 +1,4 @@
-"""Demo workflow (Phase 2 ADR-013 Mock Provider Demo Mode).
+"""Demo workflow (mock provider demo mode).
 
 Runs the full closed loop entirely locally: user input -> TaskEnvelope ->
 Risk evaluation -> Mock Provider -> Mock Worker (optional) -> TaskResult ->

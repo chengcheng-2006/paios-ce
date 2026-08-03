@@ -1,8 +1,8 @@
 """Pydantic models for the PAIOS CE Task/Action protocol.
 
-These models are consistent with the Phase 2 JSON Schemas
+These models are consistent with the public JSON Schemas
 (task_envelope / action_request / action_result / error_envelope) and the
-structural contracts in TASK_AND_ACTION_PROTOCOL.md (TaskPlan,
+structural contracts in the task/action protocol (TaskPlan,
 ApprovalRequest, TaskResult, AuditEvent). All models use extra="forbid".
 
 SPDX-License-Identifier: Apache-2.0
@@ -208,7 +208,7 @@ class TaskResult(BaseModel):
 class AuditEvent(BaseModel):
     """Redacted audit record (contract section 16 + protocol section 9).
 
-    Mandatory fields follow the the contract execution prompt. Forbidden content
+    Mandatory fields follow the contract execution prompt. Forbidden content
     (secret values, raw tokens, cookies, authorization headers, raw audio,
     private paths, owner identity detail) is structurally absent: no such
     field exists on this model and extra="forbid" rejects any attempt to add one.

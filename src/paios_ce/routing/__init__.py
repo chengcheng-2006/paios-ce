@@ -1,4 +1,4 @@
-"""Minimal router (Phase 2 PROVIDER_ROUTING_AND_FALLBACK_POLICY).
+"""Minimal router (provider routing and fallback policy).
 
 Routing in the release candidate only to the Mock Provider. OpenAI-Compatible, Local HTTP, and
 Ollama provider IDs are reserved interface slots (never connected live).

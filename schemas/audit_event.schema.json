@@ -1,7 +1,7 @@
 {
   "$defs": {
     "EventKind": {
-      "description": "AuditEvent.event_type (TASK_AND_ACTION_PROTOCOL section 9).",
+      "description": "AuditEvent.event_type (audit protocol contract).",
       "enum": [
         "message_received",
         "identity_denied",
@@ -38,7 +38,7 @@
     }
   },
   "additionalProperties": false,
-  "description": "Redacted audit record (contract section 16 + protocol section 9).\n\nMandatory fields follow the the contract execution prompt. Forbidden content\n(secret values, raw tokens, cookies, authorization headers, raw audio,\nprivate paths, owner identity detail) is structurally absent: no such\nfield exists on this model and extra=\"forbid\" rejects any attempt to add one.",
+  "description": "Redacted audit record (contract section 16 + protocol section 9).\n\nMandatory fields follow the contract execution prompt. Forbidden content\n(secret values, raw tokens, cookies, authorization headers, raw audio,\nprivate paths, owner identity detail) is structurally absent: no such\nfield exists on this model and extra=\"forbid\" rejects any attempt to add one.",
   "properties": {
     "event_id": {
       "maxLength": 128,

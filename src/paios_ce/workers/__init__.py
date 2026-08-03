@@ -1,4 +1,4 @@
-"""Worker contract and MockWorker (Phase 2 WORKER_PERMISSION_MODEL).
+"""Worker contract and MockWorker (worker permission model).
 
 Workers in this release candidate only use MockWorker. No real shell, PowerShell, file deletion,
 or network write is ever executed.

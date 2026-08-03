@@ -1,4 +1,4 @@
-"""Redacted audit logging (Phase 2 ADR-015 + REDACTION_AND_ERROR_POLICY).
+"""Redacted audit logging (audit redaction policy).
 
 Structured JSONL audit events with mandatory redaction. Secret values, raw
 tokens, cookies, authorization headers, raw audio, full private paths, and

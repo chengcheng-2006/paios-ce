@@ -44,7 +44,7 @@ class MinimalRouter:
         if pid in {"openai_compatible", "local_http", "ollama"}:
             return RoutingDecision(
                 pid, capability, False,
-                f"{pid} is a the release candidate interface skeleton only; not connectable in the current release candidate",
+                f"{pid} is a release candidate interface skeleton only; not connectable in the current release candidate",
             )
         return RoutingDecision(pid, capability, False, "unknown provider id")
 

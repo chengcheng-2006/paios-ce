@@ -5,8 +5,8 @@ Checks:
      metaschema (draft 2020-12).
   2. Code models round-trip: a model instance's model_dump validates against
      the generated JSON Schema for the same model.
-  3. Phase 2 authoritative valid examples validate against the generated
-     schemas; structurally-invalid Phase 2 examples are rejected.
+  3. authoritative valid examples validate against the generated
+     schemas; structurally-invalid examples are rejected.
 
 Run:  python -m paios_ce.tools.validate_schemas --schemas <dir> [--phase2 <dir>]
 
@@ -18,8 +18,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import jsonschema
 
@@ -146,15 +147,15 @@ def check_phase2_examples(gen_name: str, generated: dict, phase2: dict) -> Tuple
         val = {k: v for k, v in iex.items() if k != "description"}
         try:
             jsonschema.validate(val, generated)
-            # Phase 2 also structurally accepts some semantic-only invalids;
+            # The reference set also structurally accepts some semantic-only invalids;
             # treat as a documented note, not a failure.
-            notes.append(f"semantic-only invalid accepted (Phase 2 parity): {iex.get('description','')[:60]}")
+            notes.append(f"semantic-only invalid accepted (public contract parity): {iex.get('description','')[:60]}")
         except jsonschema.ValidationError:
             rejected += 1
     return passed, rejected, notes
 
 
-def run(schemas_dir: Path, phase2_dir: Path) -> dict:
+def run(schemas_dir: Path, phase2_dir: Optional[Path]) -> dict:
     results: List[dict] = []
     for filename in sorted(SCHEMA_MODELS):
         schema = json.loads((schemas_dir / filename).read_text(encoding="utf-8"))
@@ -166,25 +167,49 @@ def run(schemas_dir: Path, phase2_dir: Path) -> dict:
             "code_model_roundtrip": "PASS" if rt_ok else "FAIL",
             "notes": meta_err or rt_err,
         }
-        p2 = phase2_dir / filename
-        if p2.exists():
-            phase2 = json.loads(p2.read_text(encoding="utf-8"))
-            passed, rejected, notes = check_phase2_examples(filename, schema, phase2)
-            row["phase2_valid_examples_passed"] = passed
-            row["phase2_structural_invalid_rejected"] = rejected
-            if notes:
-                row["notes"] = " | ".join(notes)
+        if phase2_dir is not None:
+            p2 = phase2_dir / filename
+            if p2.exists():
+                phase2 = json.loads(p2.read_text(encoding="utf-8"))
+                passed, rejected, notes = check_phase2_examples(filename, schema, phase2)
+                row["phase2_valid_examples_passed"] = passed
+                row["phase2_structural_invalid_rejected"] = rejected
+                if notes:
+                    row["notes"] = " | ".join(notes)
         results.append(row)
     all_ok = all(r["metaschema_valid"] == "PASS" and r["code_model_roundtrip"] == "PASS" for r in results)
     return {"results": results, "all_pass": all_ok}
 
 
+def resolve_phase2_dir(explicit: Optional[Path]) -> Optional[Path]:
+    """Resolve the reference contracts root without falling back to machine paths.
+
+    Resolution order:
+      1. explicit ``--phase2`` argument
+      2. ``PAIOS_CONTRACTS_ROOT`` environment variable
+      3. repository-relative public directory (none currently shipped)
+      4. ``None`` -> caller reports a clear error (never a local default)
+    """
+    if explicit is not None:
+        return explicit
+    env_root = os.environ.get("PAIOS_CONTRACTS_ROOT")
+    if env_root:
+        return Path(env_root)
+    return None
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--schemas", type=Path, default=Path("schemas"))
-    parser.add_argument("--phase2", type=Path, default=Path(""))
+    parser.add_argument("--phase2", type=Path, default=None)
     args = parser.parse_args()
-    out = run(args.schemas, args.phase2)
+    phase2_dir = resolve_phase2_dir(args.phase2)
+    if phase2_dir is not None and not phase2_dir.is_dir():
+        print(f"ERROR: phase2 directory does not exist: {phase2_dir}")
+        raise SystemExit(2)
+    out = run(args.schemas, phase2_dir)
+    if phase2_dir is None:
+        out["phase2_checks"] = "SKIPPED: pass --phase2 <dir> or set PAIOS_CONTRACTS_ROOT"
     print(json.dumps(out, indent=2, ensure_ascii=True))
     print("ALL_PASS" if out["all_pass"] else "FAILURES_PRESENT")
 

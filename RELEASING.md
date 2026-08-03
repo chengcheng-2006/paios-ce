@@ -19,18 +19,18 @@ PAIOS CE follows [Semantic Versioning](https://semver.org/):
 - `MAJOR.MINOR.PATCH-rc.N` for release candidates
 - `MAJOR.MINOR.PATCH.devN` for development versions
 
-## Release Steps (Phase 6)
+## Release Steps (publication gate)
 
 1. Update version in `pyproject.toml`
 2. Update `CHANGELOG.md`
 3. Create annotated tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
-4. Push tag to remote (Phase 6 only, requires Owner authorization)
-5. Create GitHub Release (Phase 6 only)
-6. Upload to PyPI (Phase 6 only, requires Owner authorization)
+4. Push tag to remote (requires Owner authorization)
+5. Create GitHub Release (requires Owner authorization)
+6. Upload to PyPI (requires Owner authorization)
 
-## Current Phase
+## Current Status
 
-PAIOS CE is currently in Phase 5: Local Public Repository Candidate.
+PAIOS CE is a local private release candidate.
 
 No remote operations, GitHub releases, or PyPI uploads are authorized yet.
 

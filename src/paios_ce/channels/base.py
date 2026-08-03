@@ -1,4 +1,4 @@
-"""Channel contract (Phase 2 CHANNEL_ADAPTER_CONTRACT).
+"""Channel contract (channel adapter contract).
 
 A channel adapter validates inbound messages, resolves identity, quarantines
 attachments, and delivers outbound messages. Channels are subject to the

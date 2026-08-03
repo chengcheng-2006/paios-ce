@@ -1,8 +1,9 @@
-"""Enums for the PAIOS CE Task/Action protocol (Phase 2 parity).
+"""Enums for the PAIOS CE Task/Action protocol (public contract parity).
 
-Values follow the Phase 2 JSON Schemas and the TASK_AND_ACTION_PROTOCOL.md
-structural contracts. Risk/action taxonomy used by the Permission/Risk engine
-matches ACTION_RISK_TAXONOMY.csv and the the contract execution prompt.
+Values follow the public JSON Schemas (schemas/) and the task/action
+protocol contracts. Risk/action taxonomy used by the Permission/Risk engine
+matches the risk table in the permission policy and the contract execution
+prompt.
 
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng
@@ -12,7 +13,7 @@ from enum import Enum
 
 
 class TaskRiskLevel(str, Enum):
-    """Task envelope risk level (lowercase, Phase 2 schema parity)."""
+    """Task envelope risk level (lowercase, public schema parity)."""
 
     LOW = "low"
     MEDIUM = "medium"
@@ -36,7 +37,7 @@ class RiskLevel(str, Enum):
 
 
 class Capability(str, Enum):
-    """Provider capability enum (MODEL_PROVIDER_CONTRACT, Phase 2 schema)."""
+    """Provider capability enum (MODEL_PROVIDER_CONTRACT, public schema)."""
 
     TEXT_CHAT = "TEXT_CHAT"
     REASONING = "REASONING"
@@ -52,7 +53,7 @@ class Capability(str, Enum):
 
 
 class ActionOrigin(str, Enum):
-    """TaskEnvelope.origin (Phase 2 schema)."""
+    """TaskEnvelope.origin (public schema)."""
 
     VOICE = "voice"
     TEXT = "text"
@@ -62,7 +63,7 @@ class ActionOrigin(str, Enum):
 
 
 class ApprovalState(str, Enum):
-    """TaskEnvelope.approval_state (Phase 2 schema)."""
+    """TaskEnvelope.approval_state (public schema)."""
 
     NOT_REQUIRED = "not_required"
     PENDING = "pending"
@@ -72,7 +73,7 @@ class ApprovalState(str, Enum):
 
 
 class WorkerType(str, Enum):
-    """ActionRequest.worker_type (Phase 2 schema)."""
+    """ActionRequest.worker_type (public schema)."""
 
     TOOL = "tool"
     LOCAL_LLM = "local_llm"
@@ -82,7 +83,7 @@ class WorkerType(str, Enum):
 
 
 class FsScopeMode(str, Enum):
-    """ActionRequest.filesystem_scope.mode (Phase 2 schema)."""
+    """ActionRequest.filesystem_scope.mode (public schema)."""
 
     NONE = "none"
     READ = "read"
@@ -91,7 +92,7 @@ class FsScopeMode(str, Enum):
 
 
 class NetworkScopeMode(str, Enum):
-    """ActionRequest.network_scope.mode (Phase 2 schema)."""
+    """ActionRequest.network_scope.mode (public schema)."""
 
     NONE = "none"
     LOOPBACK = "loopback"
@@ -99,7 +100,7 @@ class NetworkScopeMode(str, Enum):
 
 
 class ActionStatus(str, Enum):
-    """ActionResult.status (Phase 2 schema)."""
+    """ActionResult.status (public schema)."""
 
     SUCCESS = "success"
     FAILURE = "failure"
@@ -109,7 +110,7 @@ class ActionStatus(str, Enum):
 
 
 class RollbackStatus(str, Enum):
-    """ActionResult.rollback_status (Phase 2 schema)."""
+    """ActionResult.rollback_status (public schema)."""
 
     NOT_REQUIRED = "not_required"
     SUCCEEDED = "succeeded"
@@ -118,7 +119,7 @@ class RollbackStatus(str, Enum):
 
 
 class ErrorClass(str, Enum):
-    """ErrorEnvelope.error_class (Phase 2 schema)."""
+    """ErrorEnvelope.error_class (public schema)."""
 
     UNSUPPORTED_CAPABILITY = "unsupported_capability"
     RATE_LIMITED = "rate_limited"
@@ -136,7 +137,7 @@ class ErrorClass(str, Enum):
 
 
 class TaskStatus(str, Enum):
-    """TaskResult.status (TASK_AND_ACTION_PROTOCOL section 7)."""
+    """TaskResult.status (task protocol contract)."""
 
     SUCCESS = "success"
     PARTIAL = "partial"
@@ -146,7 +147,7 @@ class TaskStatus(str, Enum):
 
 
 class EventKind(str, Enum):
-    """AuditEvent.event_type (TASK_AND_ACTION_PROTOCOL section 9)."""
+    """AuditEvent.event_type (audit protocol contract)."""
 
     MESSAGE_RECEIVED = "message_received"
     IDENTITY_DENIED = "identity_denied"

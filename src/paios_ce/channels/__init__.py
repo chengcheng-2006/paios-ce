@@ -1,4 +1,4 @@
-"""Channel contract and CLI channel (Phase 2 CHANNEL_ADAPTER_CONTRACT).
+"""Channel contract and CLI channel (channel adapter contract).
 
 The release candidate implements the CLI channel (local, DM-only, loopback). No real
 external channels (WeChat/Feishu/Telegram/Slack/Discord) are implemented.

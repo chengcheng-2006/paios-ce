@@ -1,4 +1,4 @@
-"""SecretRef interface and backends (Phase 2 SECRETREF_ARCHITECTURE).
+"""SecretRef interface and backends (secretref architecture).
 
 The release candidate implements the abstract SecretRef interface plus two backends:
 EnvSecretRef (portable default) and InMemorySecretRef (tests/demo). No secret

@@ -1,7 +1,7 @@
 {
   "$defs": {
     "ErrorClass": {
-      "description": "ErrorEnvelope.error_class (Phase 2 schema).",
+      "description": "ErrorEnvelope.error_class (public schema).",
       "enum": [
         "unsupported_capability",
         "rate_limited",

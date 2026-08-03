@@ -1,7 +1,7 @@
 {
   "$defs": {
     "ActionStatus": {
-      "description": "ActionResult.status (Phase 2 schema).",
+      "description": "ActionResult.status (public schema).",
       "enum": [
         "success",
         "failure",
@@ -13,7 +13,7 @@
       "type": "string"
     },
     "ErrorClass": {
-      "description": "ErrorEnvelope.error_class (Phase 2 schema).",
+      "description": "ErrorEnvelope.error_class (public schema).",
       "enum": [
         "unsupported_capability",
         "rate_limited",
@@ -83,7 +83,7 @@
       "type": "object"
     },
     "RollbackStatus": {
-      "description": "ActionResult.rollback_status (Phase 2 schema).",
+      "description": "ActionResult.rollback_status (public schema).",
       "enum": [
         "not_required",
         "succeeded",

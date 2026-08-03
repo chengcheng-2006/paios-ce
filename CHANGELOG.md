@@ -9,13 +9,13 @@ for its release tags. The in-tree development version is `0.1.0.dev0`.
 ## [Unreleased] - 0.1.0.dev0
 
 ### Added
-- Clean-room public core scaffold implementing the the accepted contract.
+- Clean-room public core scaffold implementing the accepted contract.
 - Permission engine, redaction engine, audit logger, SecretRef abstraction.
 - CLI entry point `paios-ce` with `health`, `validate-config`, `demo`, and
   `run-task` subcommands.
 - JSON Schemas for task envelope, action request/result, error envelope,
   audit event, and public/private runtime config.
-- publication hygiene publication hygiene: runtime-assembled key-shaped test fixtures
+- publication hygiene: runtime-assembled key-shaped test fixtures
   (no contiguous key-shaped literal in the public tree).
 - publication hygiene governance files: `.gitignore`, `.gitattributes`,
   `CODE_OF_CONDUCT.md`, `CHANGELOG.md`, `PUBLIC_RELEASE_BOUNDARY.md`,

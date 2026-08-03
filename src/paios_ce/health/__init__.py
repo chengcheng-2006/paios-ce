@@ -1,4 +1,4 @@
-"""Health and diagnostics (Phase 2 HEALTH_AND_DIAGNOSTICS_CONTRACT).
+"""Health and diagnostics (health and diagnostics contract).
 
 Outputs component / status / reason / safe_details. Never outputs secrets,
 full environment, real tokens, or user private paths. Never auto-networks.

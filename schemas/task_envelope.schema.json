@@ -1,7 +1,7 @@
 {
   "$defs": {
     "ActionOrigin": {
-      "description": "TaskEnvelope.origin (Phase 2 schema).",
+      "description": "TaskEnvelope.origin (public schema).",
       "enum": [
         "voice",
         "text",
@@ -13,7 +13,7 @@
       "type": "string"
     },
     "ApprovalState": {
-      "description": "TaskEnvelope.approval_state (Phase 2 schema).",
+      "description": "TaskEnvelope.approval_state (public schema).",
       "enum": [
         "not_required",
         "pending",
@@ -56,7 +56,7 @@
       "type": "object"
     },
     "Capability": {
-      "description": "Provider capability enum (MODEL_PROVIDER_CONTRACT, Phase 2 schema).",
+      "description": "Provider capability enum (MODEL_PROVIDER_CONTRACT, public schema).",
       "enum": [
         "TEXT_CHAT",
         "REASONING",
@@ -124,7 +124,7 @@
       "type": "string"
     },
     "TaskRiskLevel": {
-      "description": "Task envelope risk level (lowercase, Phase 2 schema parity).",
+      "description": "Task envelope risk level (lowercase, public schema parity).",
       "enum": [
         "low",
         "medium",

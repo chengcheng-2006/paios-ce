@@ -8,8 +8,8 @@ no other documentation may overclaim support beyond what is listed here.
 
 | Python version | Status | Notes |
 | --- | --- | --- |
-| 3.11 | **Required** (validated) | Reference runtime for the public tree. All 203 tests pass and coverage gates are met in a truly isolated Python 3.11 venv. |
-| 3.12 | **Validated** (Windows) | Validated on Windows Python 3.12.13 in Phase 5R evidence: 203 tests pass, coverage gates met, CLI and package build PASS. Ubuntu 3.12 remains pending remote CI. |
+| 3.11 | **Validated** (Windows) | Reference runtime for the public tree. All 203 tests pass and coverage gates are met in a truly isolated Windows Python 3.11 venv. Ubuntu 3.11 remains pending remote CI. |
+| 3.12 | **Validated** (Windows) | Validated on Windows Python 3.12.13 in prior validation evidence: 203 tests pass, coverage gates met, CLI and package build PASS. Ubuntu 3.12 remains pending remote CI. |
 | 3.13 | Supplementary only | Validated opportunistically; not a release gate. |
 
 The `requires-python` field in `pyproject.toml` is `>=3.11`.

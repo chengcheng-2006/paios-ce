@@ -1,7 +1,7 @@
 """Generate JSON Schemas from the pydantic protocol/config models.
 
 Outputs the public schema files (config + protocol). The protocol schemas
-are structurally consistent with the Phase 2 JSON Schemas because the models
+are structurally consistent with the public JSON Schemas because the models
 use the same field names, enums, and extra="forbid".
 
 Run:  python -m paios_ce.tools.generate_schemas --out <dir>

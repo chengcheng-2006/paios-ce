@@ -28,7 +28,7 @@ ship:
 - Legacy source code from any prior implementation.
 - Model weights, audio, video, or database files.
 - Git metadata: candidate archives exclude `.git`. The published
-  GitHub repository (Phase 6) will instead use a new clean-room Git
+  GitHub repository will instead use a new clean-room Git
   history built from this same tree.
 - `policy.py.orig` or any other merge/policy conflict artifact.
 
@@ -52,8 +52,6 @@ A static byte scan of the public tree satisfies:
 - Release candidate: **RC2** (publication hygiene remediation of RC1).
 - Historical candidates (RC1 and the original Handoff) are preserved
   unmodified as audit evidence and are **not** part of this public release.
-- The public tree is sealed as `PAIOS_CE_PUBLIC_TREE_RC2.zip` before
-  independent Validator execution and is not rebuilt afterwards.
 
 ## No production claims
 
