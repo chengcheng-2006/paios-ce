@@ -1,0 +1,63 @@
+# Roadmap
+
+This roadmap describes intended areas of work. It is not a support promise.
+
+## Stage 1 — Public-core quality
+
+- improve documentation and onboarding;
+- strengthen protocol and schema examples;
+- expand negative permission tests;
+- improve redaction and diagnostics tests;
+- keep Windows and Ubuntu validation green on Python 3.11 and 3.12.
+
+## Stage 2 — Adapter acceptance framework
+
+Before any live adapter, define reusable gates for:
+
+- credential references and rotation;
+- network destination allowlists;
+- capability declarations;
+- action risk classification;
+- explicit confirmation;
+- timeout, retry, and idempotency behavior;
+- redaction;
+- rollback;
+- clean-machine validation;
+- support-matrix updates.
+
+## Stage 3 — Narrow experimental adapters
+
+Only after the acceptance framework is frozen, consider one narrowly scoped
+experimental adapter at a time.
+
+An adapter remains experimental until its end-to-end evidence passes. Its
+existence in a branch or skeleton does not mean it is supported.
+
+## Stage 4 — Operational hardening
+
+Potential future work:
+
+- durable state-adapter contracts;
+- stronger provenance and artifact signing;
+- reproducible release assets;
+- expanded platform testing;
+- structured migration and rollback tools;
+- documented incident-response procedures.
+
+## Explicit non-goals for the current candidate
+
+- broad provider marketplaces;
+- unrestricted tool execution;
+- arbitrary shell;
+- public-by-default listeners;
+- hidden credential propagation;
+- production multi-user hosting;
+- claims of fully autonomous operation.
+
+## Versioning
+
+The current public release is `v0.1.0-rc.1`.
+
+Documentation improvements merged after that tag do not change the historical
+source archive of `v0.1.0-rc.1`. A future release may include those improvements
+under a new tag after separate Owner authorization and validation.
