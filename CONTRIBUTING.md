@@ -1,12 +1,14 @@
 # Contributing to PAIOS CE
 
-Thank you for your interest in contributing to PAIOS CE. This project is currently a
-local pre-release candidate (clean-room scaffold) and is not yet a public release.
+Thank you for your interest in contributing to PAIOS CE. This project is a
+release candidate (clean-room scaffold) hosted in a private repository until
+the Owner authorizes publication.
 
 ## Current Status
 
 PAIOS CE is a clean-room public core scaffold for a privacy-preserving personal AI
-orchestrator. At this stage, contributions are not yet being solicited publicly.
+orchestrator. Bug reports, documentation corrections, tests, and narrowly scoped
+PRs are welcome. New live integrations require prior design/security discussion.
 
 ## Code of Conduct
 

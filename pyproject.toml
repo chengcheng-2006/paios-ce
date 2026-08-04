@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paios-ce"
-version = "0.1.0.dev0"
-description = "PAIOS CE clean-room public core scaffold - local pre-release candidate"
+version = "0.1.0rc1"
+description = "PAIOS CE clean-room public core scaffold for a privacy-preserving personal AI orchestrator"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
@@ -35,6 +35,12 @@ dev = [
 
 [project.scripts]
 paios-ce = "paios_ce.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/chengcheng-2006/paios-ce"
+Repository = "https://github.com/chengcheng-2006/paios-ce"
+Issues = "https://github.com/chengcheng-2006/paios-ce/issues"
+Documentation = "https://github.com/chengcheng-2006/paios-ce/tree/main/docs"
 
 [tool.setuptools.packages.find]
 where = ["src"]

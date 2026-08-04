@@ -4,9 +4,11 @@ All notable changes to PAIOS CE are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
-for its release tags. The in-tree development version is `0.1.0.dev0`.
+for its release tags.
 
-## [Unreleased] - 0.1.0.dev0
+## [Unreleased]
+
+## [0.1.0-rc.1] - 2026-08-04
 
 ### Added
 - Clean-room public core scaffold implementing the accepted contract.

@@ -8,11 +8,19 @@ no other documentation may overclaim support beyond what is listed here.
 
 | Python version | Status | Notes |
 | --- | --- | --- |
-| 3.11 | **Validated** (Windows) | Reference runtime for the public tree. All 203 tests pass and coverage gates are met in a truly isolated Windows Python 3.11 venv. Ubuntu 3.11 remains pending remote CI. |
-| 3.12 | **Validated** (Windows) | Validated on Windows Python 3.12.13 in prior validation evidence: 203 tests pass, coverage gates met, CLI and package build PASS. Ubuntu 3.12 remains pending remote CI. |
+| 3.11 | **Validated** (Windows + Ubuntu) | Reference runtime for the public tree. All 203 tests pass and coverage gates are met on Windows and Ubuntu (remote CI matrix). |
+| 3.12 | **Validated** (Windows + Ubuntu) | Validated on Windows and Ubuntu in remote CI: 203 tests pass, coverage gates met, CLI and package build PASS. |
 | 3.13 | Supplementary only | Validated opportunistically; not a release gate. |
 
 The `requires-python` field in `pyproject.toml` is `>=3.11`.
+
+## CI validation
+
+Remote CI runs on GitHub Actions for every push to `main`:
+
+- 4 matrix jobs (Windows + Ubuntu × Python 3.11 + 3.12) × 203 tests,
+  0 failures / 0 errors / 0 skipped.
+- line coverage 86.39%, branch coverage 73.50% (gates: 86.2% / 66.7%).
 
 ## Capability support status
 
@@ -50,9 +58,10 @@ The `requires-python` field in `pyproject.toml` is `>=3.11`.
 - No network egress is performed by the scaffold; the `mock` provider is the
   default and only bundled provider.
 - No raw audio storage, no remote execution, no group execution by default.
-- This package is NOT a public release: no capability is labeled
-  `production ready`, `stable`, or `fully supported`, and no live WeChat,
-  live Feishu, production Hermes, or production OpenClaw support is claimed.
+- This is a release candidate; the repository is currently private and publication
+  is Owner-gated. No capability is labeled `production ready`, `stable`, or `fully
+  supported`, and no live WeChat, live Feishu, production Hermes, or production
+  OpenClaw support is claimed.
 
 ## Overclaim prevention
 

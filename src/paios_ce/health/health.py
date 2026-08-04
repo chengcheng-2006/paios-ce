@@ -79,7 +79,7 @@ def diagnostics(provider: Optional[Provider] = None,
         "secret_like_env_present": False,
     }
     return redact_value({
-        "version": "0.1.0.dev0",
+        "version": "0.1.0rc1",
         "components": [c.to_dict() for c in checks],
         "environment": env_categories,
         "network_default": {"loopback_only": True, "public_bind": False, "live_connections": 0},

@@ -19,6 +19,11 @@ PAIOS CE follows [Semantic Versioning](https://semver.org/):
 - `MAJOR.MINOR.PATCH-rc.N` for release candidates
 - `MAJOR.MINOR.PATCH.devN` for development versions
 
+Version mapping for the current candidate:
+
+- Git tag / human version: `0.1.0-rc.1`
+- Python package version (PEP 440): `0.1.0rc1`
+
 ## Release Steps (publication gate)
 
 1. Update version in `pyproject.toml`
@@ -30,11 +35,12 @@ PAIOS CE follows [Semantic Versioning](https://semver.org/):
 
 ## Current Status
 
-PAIOS CE is a local private release candidate.
+The current candidate tag is `v0.1.0-rc.1`; the tag exists on the private remote.
 
-No remote operations, GitHub releases, or PyPI uploads are authorized yet.
+GitHub Release has not been created. PyPI and Zenodo are not authorized.
 
-The current candidate tag is `v0.1.0-rc.1` (local only).
+Publication actions (public transition, GitHub Release, PyPI, Zenodo) require
+explicit Owner authorization.
 
 ## Security Requirements
 

@@ -4,9 +4,10 @@ PAIOS CE is a clean-room public core scaffold for a privacy-preserving personal 
 orchestrator. It implements the public skeleton, interface contracts, and a minimal
 local demo closed loop from scratch, in full compliance with the frozen architecture.
 
-> **Status:** This is a **local pre-release candidate** (not yet published).
-> No Provider, Channel, or Speech capability is labeled SUPPORTED. The Mock Provider and
-> CLI are `EXPERIMENTAL`. Linux remote CI remains pending.
+> **Status:** Release candidate `v0.1.0-rc.1`.
+> No live Provider, live Channel, Speech, Hermes, or OpenClaw integration is shipped.
+> The Mock Provider and CLI are `EXPERIMENTAL`.
+> Python 3.11 and 3.12 are validated on Windows and Ubuntu.
 
 ## Highlights
 

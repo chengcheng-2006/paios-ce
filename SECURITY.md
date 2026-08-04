@@ -2,10 +2,9 @@
 
 ## Reporting
 
-This project is a local release candidate (RC) prepared for public
-publication in a later phase. Security findings should be reported
-privately to the owner (Cheng Cheng) and not disclosed publicly until
-the project is actually published.
+This project is a release candidate. Do not open public issues for
+vulnerabilities. Use GitHub Security Advisories / private vulnerability
+reporting when available.
 
 ## Security defaults (frozen)
 
@@ -47,5 +46,6 @@ for the authoritative status table.
 ## Clean-room boundary
 
 - All source is `NEWLY_WRITTEN_FROM_PUBLIC_CONTRACTS`; `LEGACY_CODE_COPIED = NO`.
-- No `.git`, no public repository, no remote write in the current release
-  candidate (publication deferred to a later phase).
+- No `.git` inside published artifacts. The source lives in a PRIVATE
+  repository; publication actions (public transition, GitHub Release,
+  PyPI, Zenodo) require explicit Owner authorization.

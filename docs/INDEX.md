@@ -46,9 +46,20 @@ pytest
 paios-ce health
 ```
 
+## CI / Testing
+
+- CI runs on GitHub Actions for every push to `main`: Windows and Ubuntu,
+  Python 3.11 and 3.12 (4 matrix jobs × 203 tests, coverage gates).
+- Package build/install and Security (secret scan, dependency audit) workflows also run.
+
+## Release candidate
+
+- Current release candidate: `v0.1.0-rc.1` (Python package version `0.1.0rc1`).
+
 ## Security
 
 - Never include real secrets or production data
 - Use placeholders in all examples
 - Follow the deny-by-default permission model
-- Report security issues privately
+- Do not open public issues for vulnerabilities; use GitHub Security
+  Advisories / private vulnerability reporting when available

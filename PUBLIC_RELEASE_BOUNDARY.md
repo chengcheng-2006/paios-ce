@@ -49,9 +49,10 @@ A static byte scan of the public tree satisfies:
 
 ## Release candidate identification
 
-- Release candidate: **RC2** (publication hygiene remediation of RC1).
-- Historical candidates (RC1 and the original Handoff) are preserved
-  unmodified as audit evidence and are **not** part of this public release.
+- Release candidate: `v0.1.0-rc.1`.
+- Candidate generation: `git archive` of the final main commit.
+- Internal RC1/RC2 audit history is preserved as internal audit evidence and
+  must not be presented as user-facing release versions.
 
 ## No production claims
 

@@ -73,33 +73,55 @@ jobs:
       - name: Check dependencies (project dependency environment)
         run: |
           pip install "pip-audit>=2.7,<3"
-          # Policy: audit the INSTALLED PAIOS CE dependency set (--local), not
-          # just the runner environment. If --only-fixed is ever used as a
-          # fallback it is recorded but never the sole gate. Unfixed
-          # vulnerabilities must be triaged in SECURITY.md or CI fails.
-          pip-audit --local --format json > pip-audit.json || true
+          pip-audit --version
+          pip freeze > pip-freeze.txt
+          set +e
+          pip-audit --local --format json > pip-audit.json
+          audit_exit=$?
+          set -e
+          export AUDIT_EXIT=$audit_exit
           python -c "
           import json
+          import os
           import sys
 
           try:
               with open('pip-audit.json') as f:
                   data = json.load(f)
-              vulns = []
-              for r in data.get('dependencies', []):
-                  for v in r.get('vulns', []):
-                      vulns.append(f\"{r.get('name')}: {v.get('id')}\")
-              if vulns:
-                  print('VULNERABILITIES_FOUND:')
-                  for v in vulns:
-                      print(f'  {v}')
-                  print('POLICY: unfixed vulnerabilities require triage before merge (see SECURITY.md)')
-                  sys.exit(1)
-              print('DEPENDENCY_CHECK_PASS: No known vulnerabilities')
           except Exception as e:
               print(f'CHECK_ERROR: {e}')
               sys.exit(1)
+          vulns = []
+          for r in data.get('dependencies', []):
+              for v in r.get('vulns', []):
+                  vulns.append(f\"{r.get('name')}: {v.get('id')}\")
+          summary = 'pip-audit --local --format json'
+          summary += '\\nexit code: ' + str(os.environ.get('AUDIT_EXIT'))
+          summary += '\\nknown vulnerabilities: ' + str(len(vulns))
+          with open('pip-audit-summary.txt', 'w') as f:
+              f.write(summary + '\\n')
+          print(summary)
+          if data.get('meta', {}).get('error') is not None:
+              print('CHECK_ERROR: pip-audit tool error')
+              sys.exit(1)
+          if vulns:
+              print('VULNERABILITIES_FOUND:')
+              for v in vulns:
+                  print(f'  {v}')
+              print('POLICY: unfixed vulnerabilities require triage before merge (see SECURITY.md)')
+              sys.exit(1)
+          print('DEPENDENCY_CHECK_PASS: No known vulnerabilities')
           "
+
+      - name: Upload security audit evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-audit-python-3.11
+          path: |
+            pip-audit.json
+            pip-freeze.txt
+            pip-audit-summary.txt
 
   forbidden-content-scan:
     runs-on: ubuntu-latest
