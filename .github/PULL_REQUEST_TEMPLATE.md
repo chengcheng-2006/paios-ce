@@ -1,35 +1,38 @@
-# Pull Request
+## Summary
 
-## Description
+Describe the narrow problem and the proposed change.
 
-<!-- Describe your changes -->
+## Scope
 
-## Type of Change
+- [ ] Documentation only
+- [ ] Tests only
+- [ ] Behavior change with tests
+- [ ] Security-sensitive change discussed before implementation
+- [ ] Live adapter proposal discussed before implementation
 
-- [ ] Bug fix (non-breaking change that fixes an issue)
-- [ ] New feature (non-breaking change that adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
+## Validation
 
-## Testing
+List the commands and environments used.
 
-- [ ] All tests pass: `pytest`
-- [ ] Coverage gate met: `pytest --cov=paios_ce`
-- [ ] New tests added for new functionality
+```text
+python -m pytest -ra -q
+paios-ce health
+paios-ce demo
+```
 
-## Security Checklist
+## Security and privacy checklist
 
-- [ ] **Redact before submitting**: remove/replace any real secrets, tokens, cookies, or
-      environment variable values with placeholders (`example.invalid`, `not-a-valid-token`)
-- [ ] No real secrets, tokens, or production data included
-- [ ] Example values use placeholders (`example.invalid`, `not-a-valid-token`)
-- [ ] No production configuration or paths
-- [ ] Changes respect the deny-by-default permission model
+- [ ] No secret, token, cookie, private key, or real credential is included.
+- [ ] No personal data, production data, private path, or production log is included.
+- [ ] Examples use placeholders only.
+- [ ] Support claims do not exceed `SUPPORT_MATRIX.md`.
+- [ ] Live Provider, Channel, Speech, Hermes, or OpenClaw support is not implied unless separately accepted.
+- [ ] Redaction and deny-by-default behavior are preserved.
+- [ ] Documentation links and Markdown render correctly.
 
-## Breaking Changes
+## Release impact
 
-<!-- If this PR includes breaking changes, describe them here -->
+- [ ] No release required
+- [ ] Candidate for a future release after separate Owner authorization
 
-## Related Issues
-
-<!-- Link any related issues here -->
+Do not move an existing tag or publish PyPI/Zenodo as part of this pull request.
