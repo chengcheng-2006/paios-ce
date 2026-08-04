@@ -1,8 +1,8 @@
 # Contributing to PAIOS CE
 
 Thank you for your interest in contributing to PAIOS CE. This project is a
-release candidate (clean-room scaffold) hosted in a private repository until
-the Owner authorizes publication.
+release candidate (clean-room scaffold). Publication and release actions
+remain Owner-gated.
 
 ## Current Status
 

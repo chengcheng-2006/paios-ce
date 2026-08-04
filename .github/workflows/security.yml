@@ -110,8 +110,17 @@ jobs:
                   print(f'  {v}')
               print('POLICY: unfixed vulnerabilities require triage before merge (see SECURITY.md)')
               sys.exit(1)
+          audit_exit = int(os.environ.get('AUDIT_EXIT', '255'))
+          if audit_exit != 0:
+              print(f'CHECK_ERROR: pip-audit exited with {audit_exit}')
+              sys.exit(1)
           print('DEPENDENCY_CHECK_PASS: No known vulnerabilities')
           "
+
+      - name: Validate security workflow invariants
+        run: |
+          python tools/validate_security_workflow.py
+          echo "SECURITY_WORKFLOW_INVARIANTS_PASS"
 
       - name: Upload security audit evidence
         uses: actions/upload-artifact@v4

@@ -35,7 +35,7 @@ Version mapping for the current candidate:
 
 ## Current Status
 
-The current candidate tag is `v0.1.0-rc.1`; the tag exists on the private remote.
+The current candidate tag is `v0.1.0-rc.1`; the candidate tag exists in the repository.
 
 GitHub Release has not been created. PyPI and Zenodo are not authorized.
 

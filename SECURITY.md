@@ -46,6 +46,6 @@ for the authoritative status table.
 ## Clean-room boundary
 
 - All source is `NEWLY_WRITTEN_FROM_PUBLIC_CONTRACTS`; `LEGACY_CODE_COPIED = NO`.
-- No `.git` inside published artifacts. The source lives in a PRIVATE
-  repository; publication actions (public transition, GitHub Release,
-  PyPI, Zenodo) require explicit Owner authorization.
+- No `.git` inside published artifacts. The source is maintained in a clean-room
+  Git repository. Repository visibility and release actions are governed
+  separately by the Owner.

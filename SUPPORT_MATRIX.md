@@ -58,8 +58,8 @@ Remote CI runs on GitHub Actions for every push to `main`:
 - No network egress is performed by the scaffold; the `mock` provider is the
   default and only bundled provider.
 - No raw audio storage, no remote execution, no group execution by default.
-- This is a release candidate; the repository is currently private and publication
-  is Owner-gated. No capability is labeled `production ready`, `stable`, or `fully
+- This is a release candidate. Publication and release actions remain
+  Owner-gated. No capability is labeled `production ready`, `stable`, or `fully
   supported`, and no live WeChat, live Feishu, production Hermes, or production
   OpenClaw support is claimed.
 
