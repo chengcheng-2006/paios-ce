@@ -1,0 +1,44 @@
+name: Documentation improvement
+description: Suggest a correction or improvement to public documentation
+title: "[Docs]: "
+labels:
+  - documentation
+body:
+  - type: dropdown
+    id: document
+    attributes:
+      label: Document
+      options:
+        - README.md
+        - README.zh-CN.md
+        - docs/ARCHITECTURE.md
+        - docs/SECURITY_MODEL.md
+        - docs/DEMO.md
+        - docs/FAQ.md
+        - docs/ROADMAP.md
+        - SUPPORT_MATRIX.md
+        - SECURITY.md
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is unclear or incorrect?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed wording or structure
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundary confirmation
+      options:
+        - label: The proposal does not claim a live integration or production readiness.
+          required: true
+        - label: The proposal contains no secrets, personal data, or private paths.
+          required: true

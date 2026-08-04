@@ -1,83 +1,73 @@
-name: Bug Report
-description: Report a bug in PAIOS CE
-labels: ["bug"]
+name: Bug report
+description: Report a reproducible defect in the public release candidate
+title: "[Bug]: "
+labels:
+  - bug
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting a bug! Please fill out the sections below.
-        
-        **Security Notice:** DO NOT paste real API keys, tokens, passwords, or production data.
-        Use placeholders like `sk-EXAMPLE`, `your-token-here`, or `example.invalid` instead.
-
-  - type: textarea
-    id: description
+        Thank you for reporting a defect. Do not include secrets, private paths,
+        production data, or vulnerability details. Security issues must use
+        private vulnerability reporting.
+  - type: dropdown
+    id: component
     attributes:
-      label: Bug Description
-      description: A clear description of what the bug is.
-      placeholder: "When I run `paios-ce demo`, I see..."
+      label: Component
+      options:
+        - CLI
+        - Configuration
+        - Protocols / schemas
+        - Permission engine
+        - SecretRef
+        - Mock Provider
+        - Mock Worker
+        - Audit / redaction
+        - Health / diagnostics
+        - Packaging
+        - Documentation
+        - Other
     validations:
       required: true
-
-  - type: textarea
-    id: steps
+  - type: input
+    id: version
     attributes:
-      label: Steps to Reproduce
-      description: Steps to reproduce the behavior.
-      placeholder: |
-        1. Run `paios-ce demo`
-        2. See error
+      label: Version
+      placeholder: v0.1.0-rc.1 or commit SHA
     validations:
       required: true
-
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Windows 11 / Ubuntu 24.04, Python 3.11 or 3.12
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Use placeholders only. Remove usernames and absolute private paths.
+    validations:
+      required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected Behavior
-      description: What you expected to happen.
+      label: Expected behavior
     validations:
       required: true
-
   - type: textarea
     id: actual
     attributes:
-      label: Actual Behavior
-      description: What actually happened.
+      label: Actual behavior
     validations:
       required: true
-
-  - type: input
-    id: python-version
-    attributes:
-      label: Python Version
-      description: The Python version you are using.
-      placeholder: "3.11.x"
-    validations:
-      required: true
-
-  - type: input
-    id: os
-    attributes:
-      label: Operating System
-      description: Your operating system.
-      placeholder: "Windows 11 / Ubuntu 22.04 / macOS 14"
-    validations:
-      required: true
-
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant Log Output
-      description: |
-        Paste any relevant log output. DO NOT include real secrets or production data.
-        
-        **Important:** Redact any sensitive information before pasting.
-      render: shell
-
   - type: checkboxes
-    id: security
+    id: safety
     attributes:
-      label: Security Confirmation
+      label: Safety confirmation
       options:
-        - label: I have not included any real API keys, tokens, passwords, or production data
+        - label: I removed secrets, tokens, personal data, and private paths.
+          required: true
+        - label: This is not a vulnerability disclosure.
           required: true

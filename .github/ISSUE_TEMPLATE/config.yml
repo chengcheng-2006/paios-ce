@@ -1,1 +1,8 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/chengcheng-2006/paios-ce/security
+    about: Report vulnerabilities privately. Do not disclose security details in a public issue.
+  - name: Support and release boundary
+    url: https://github.com/chengcheng-2006/paios-ce/blob/main/SUPPORT_MATRIX.md
+    about: Check what the current release candidate does and does not support.
