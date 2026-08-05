@@ -31,6 +31,14 @@ tasks, logs, errors, or audit events.
 Arbitrary shell and administrator elevation are hard-blocked in the current
 release candidate.
 
+## Can it transcribe local audio?
+
+On the Phase 9A development line, `paios-ce transcribe FILE` can transcribe a
+local audio file through the optional faster-whisper adapter (install with
+`pip install -e ".[dev,speech]"`). Speech is disabled by default
+(`speech.enabled = false`) and defaults to local-files-only. See
+[docs/LOCAL_ASR.md](LOCAL_ASR.md).
+
 ## Does it support WeChat, Feishu, Hermes, or OpenClaw?
 
 No production integration is shipped. Those areas are planned adapter

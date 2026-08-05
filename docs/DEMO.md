@@ -82,6 +82,30 @@ Use the repository's negative fixtures and tests to verify that:
 - out-of-scope filesystem or network targets deny execution;
 - replayed actions are detected according to policy.
 
+## Local ASR preview (Phase 9A development line)
+
+Install the optional speech dependency:
+
+```bash
+pip install -e ".[dev,speech]"
+```
+
+Enable the capability in a private configuration (`speech.enabled: true`) and
+transcribe a local file with a cached model:
+
+```bash
+paios-ce transcribe sample.wav \
+  --model tiny \
+  --language en \
+  --device cpu \
+  --compute-type int8
+```
+
+Speech is disabled by default and defaults to `local_files_only`. The
+transcript is returned to the caller only; audit events carry metadata
+(counts, language, model label), never transcript text. See
+[`docs/LOCAL_ASR.md`](LOCAL_ASR.md).
+
 ## Test suite
 
 ```bash

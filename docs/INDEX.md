@@ -18,6 +18,11 @@ AI orchestration.
 - [Support matrix](../SUPPORT_MATRIX.md)
 - [Public release boundary](../PUBLIC_RELEASE_BOUNDARY.md)
 
+## Capabilities
+
+- [Local ASR (Phase 9A)](LOCAL_ASR.md)
+- [Capability admission](../docs/CAPABILITY_ADMISSION.md)
+
 ## Project governance
 
 - [Roadmap](ROADMAP.md)
@@ -33,6 +38,7 @@ AI orchestration.
 Current public pre-release:
 [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1).
 
-The release candidate includes a Mock Provider and CLI. It does not ship live
-providers, live channels, speech, shell execution, remote execution, or
-production Hermes/OpenClaw integration.
+The release candidate includes a Mock Provider and CLI, plus an optional
+Local ASR capability on the Phase 9A development line. It does not ship live
+providers, live channels, production speech, shell execution, remote
+execution, or production Hermes/OpenClaw integration.

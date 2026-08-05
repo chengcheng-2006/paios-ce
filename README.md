@@ -1,10 +1,12 @@
-<div align="center">
+﻿<div align="center">
 
 # PAIOS CE
 
-### A security-first, clean-room Python scaffold for privacy-preserving personal AI orchestration
+### Build a personal AI runtime one capability at a time
 
-**Local by default · Deny by default · Secrets by reference**
+**Run a local task loop today. Add speech, channels, providers and workers only
+when each capability has a typed contract, explicit permission and auditable
+result.**
 
 [![CI](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml)
 [![Package](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml)
@@ -14,158 +16,50 @@
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 
 [简体中文](README.zh-CN.md) ·
-[Quick start](#quick-start) ·
-[Architecture](#architecture) ·
-[Security model](#security-model) ·
-[Documentation](#documentation) ·
-[Release](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1)
+[Try it](#try-it-in-60-seconds) ·
+[What works today](#what-works-today) ·
+[How it grows](#how-paios-ce-grows) ·
+[Documentation](#documentation)
 
 </div>
 
-> [!IMPORTANT]
-> **Current release: `v0.1.0-rc.1`**
->
-> PAIOS CE is an experimental public-core scaffold, not a production personal
-> assistant. The release candidate ships a deterministic local Mock Provider,
-> a CLI, typed contracts, configuration and secret-reference abstractions,
-> permission controls, redacted audit events, and safe diagnostics.
->
-> It does **not** ship live model providers, live messaging channels, speech,
-> browser automation, shell execution, remote execution, production databases,
-> or production Hermes/OpenClaw integration.
+> [!NOTE]
+> The latest published source release is
+> [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1).
+> The `main` branch is the development line for the next candidate and may
+> contain newer experimental capabilities.
 
 ---
 
-## Why PAIOS CE?
+## What can you do with it?
 
-A personal AI system may eventually connect models, tools, files, credentials,
-channels, and automations. The difficult part is not only producing an answer.
-It is controlling:
+PAIOS CE is a small, runnable foundation for building a personal AI system
+without starting from an unrestricted agent.
 
-- what the system is allowed to do;
-- which data may cross a boundary;
-- how credentials are represented;
-- how risky actions are denied or confirmed;
-- how retries and replays are handled; and
-- what redacted evidence remains afterward.
+Today you can:
 
-PAIOS CE makes those concerns explicit and testable. Instead of beginning with
-broad tool access and attempting to add safety later, it begins with a small
-public core and conservative defaults.
+- run a deterministic local text-task loop with no API key;
+- validate public and private configuration precedence;
+- submit typed task and action fixtures through the CLI;
+- observe permission decisions and redacted audit events;
+- transcribe a local audio file through the optional Local ASR adapter
+  **when using the Phase 9A development branch or a later release**.
 
-### Design principles
+The point is not to expose every tool at once. The point is to provide a clean
+path from a local demo to a useful personal assistant:
 
-| Principle | Meaning in this release candidate |
-| --- | --- |
-| **Local by default** | The bundled Mock Provider is deterministic, offline, and requires no API key. |
-| **Deny by default** | Workers begin with zero capabilities; actions must be explicitly allowed and scoped. |
-| **Secrets by reference** | Configuration and protocols carry `SecretRef` identifiers, never raw secret values. |
-| **Typed boundaries** | Tasks, actions, approvals, results, errors, and audit events are validated models. |
-| **Fail closed** | Unknown, critical, administrative, and arbitrary-shell actions do not silently proceed. |
-| **Redacted evidence** | Audit and diagnostic output is structured to avoid secret and private-path disclosure. |
-| **Clean-room public core** | The published tree contains newly written public-core code and excludes production data and legacy source. |
-
-## What is included?
-
-| Area | Included in `v0.1.0-rc.1` | Status |
-| --- | --- | --- |
-| Configuration | Public, private, and runtime configuration models with strict precedence | Experimental |
-| Secrets | `SecretRef`, `EnvSecretRef`, and `InMemorySecretRef` | Experimental |
-| Protocols | Typed task, action, approval, result, error, and audit models plus JSON Schemas | Experimental |
-| Permissions | Capability, scope, risk, confirmation, idempotency, and replay controls | Experimental |
-| Provider | Deterministic local Mock Provider | Experimental |
-| Channel | CLI entry point | Experimental |
-| Worker | Mock Worker and worker contract | Scaffold |
-| Routing | Minimal router that selects the bundled Mock Provider | Scaffold |
-| Orchestration | Minimal local task/action loop | Scaffold |
-| Audit | Structured JSONL audit events with mandatory redaction | Experimental |
-| Health | Safe health checks and diagnostics | Experimental |
-
-### Intentionally not shipped
-
-The public release does not include:
-
-- real cloud or local-model provider adapters;
-- WeChat, Feishu, browser, or other live channels;
-- speech, raw-audio storage, or cloud ASR;
-- arbitrary shell execution or administrator elevation;
-- remote execution or public-network binding;
-- production databases, model weights, personal data, or real credentials;
-- production Hermes or OpenClaw integration;
-- internal audit packages, coverage databases, or validator archives.
-
-The authoritative scope is defined by
-[`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md) and
-[`PUBLIC_RELEASE_BOUNDARY.md`](PUBLIC_RELEASE_BOUNDARY.md).
-
-## Architecture
-
-```mermaid
-flowchart LR
-    USER["CLI input"] --> CHANNEL["CLI Channel"]
-    CHANNEL --> TASK["TaskEnvelope"]
-    TASK --> ORCH["Minimal Orchestrator"]
-
-    CONFIG["Runtime Config"] --> ORCH
-    SECRET["SecretRef<br/>reference only"] -. "no raw values" .-> CONFIG
-
-    ORCH --> ROUTER["Minimal Router"]
-    ROUTER --> MOCK["Mock Provider"]
-
-    MOCK -->|"chat / structured output"| RESULT["TaskResult"]
-    MOCK -->|"optional ActionRequest"| POLICY["Permission & Risk Engine"]
-
-    POLICY -->|"allowed and in scope"| WORKER["Mock Worker"]
-    POLICY -->|"deny / confirm / hard block"| AUDIT["Redacted AuditEvent"]
-    WORKER --> RESULT
-
-    RESULT --> AUDIT
-    ORCH --> AUDIT
+```text
+local task loop
+→ local speech input
+→ one live Provider
+→ one owner-only messaging channel
+→ reversible tools
+→ carefully scoped workers
 ```
 
-The current router targets only the bundled Mock Provider. Future adapters must
-preserve the same protocol, `SecretRef`, permission, and audit boundaries.
+Each step must remain explicit and independently testable.
 
-A longer explanation is available in
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
-
-## Security model
-
-PAIOS CE uses conservative defaults for the public release candidate:
-
-| Control | Default |
-| --- | --- |
-| Listener address | Loopback only: `127.0.0.1` |
-| Public binding | Disabled |
-| Group execution | Disabled |
-| Owner allowlist | Required for owner-only actions |
-| Worker capabilities | Empty / deny by default |
-| High-risk actions | Explicit confirmation required |
-| Critical actions | Hard-blocked |
-| Arbitrary shell and admin elevation | Hard-blocked |
-| Credential handling | `SecretRef` only |
-| Raw audio storage | Disabled |
-| Cloud ASR | Opt-in only |
-| Bundled provider | Mock only; no network and no API key |
-| Audit output | Structured and redacted |
-
-> [!CAUTION]
-> Do not report vulnerabilities through a public issue. Use GitHub private
-> vulnerability reporting or Security Advisories as described in
-> [`SECURITY.md`](SECURITY.md).
-
-See [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md) for the threat boundaries
-and non-goals of this candidate.
-
-## Quick start
-
-### Requirements
-
-- Python 3.11 or 3.12
-- Windows or Ubuntu (validated); macOS or WSL may work but are not release-gated
-- No API key for the bundled demo
-
-### Clone and create an environment
+## Try it in 60 seconds
 
 ```bash
 git clone https://github.com/chengcheng-2006/paios-ce.git
@@ -173,206 +67,224 @@ cd paios-ce
 python -m venv .venv
 ```
 
-Activate the environment.
-
 Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-macOS, Linux, or WSL:
+Ubuntu:
 
 ```bash
 source .venv/bin/activate
 ```
 
-Install the project for local development:
+Install and run:
 
 ```bash
 python -m pip install --upgrade pip
 pip install -e ".[dev]"
-```
 
-Run the safe local checks:
-
-```bash
 paios-ce health
 paios-ce demo
 paios-ce validate-config
 paios-ce run-task examples/demo_task.json
 ```
 
-## CLI
+No API key is required for the bundled Mock Provider.
 
-| Command | Purpose |
-| --- | --- |
-| `paios-ce health` | Run safe local component diagnostics |
-| `paios-ce demo` | Execute the deterministic local demo loop |
-| `paios-ce validate-config` | Validate configuration and display the redacted effective configuration |
-| `paios-ce run-task <file.json>` | Validate and run a task fixture or evaluate an action fixture |
+### Local speech preview
 
-The demo does not require a network connection, a provider credential, or a
-real secret.
+On the Phase 9A development line, install the optional speech dependency:
 
-### Expected behavior
+```bash
+pip install -e ".[dev,speech]"
+```
 
-A normal local task can complete through the Mock Provider:
+Then transcribe an audio file using a local or cached model:
+
+```bash
+paios-ce transcribe sample.wav \
+  --model tiny \
+  --language en \
+  --device cpu \
+  --compute-type int8
+```
+
+Speech is disabled by default (`speech.enabled = false`). The default speech
+path is local-files-only: a model identifier succeeds only when the model is
+already cached locally. Model weights and audio files are not committed to the
+repository.
+
+## Two concrete workflows
+
+### 1. Local text task
 
 ```text
 CLI input
 → TaskEnvelope validation
-→ permission/risk evaluation
+→ Router
 → Mock Provider
 → TaskResult
 → redacted AuditEvent
 ```
 
-An unknown or forbidden action fails closed:
+### 2. Local audio transcription
 
 ```text
-ActionRequest
-→ policy lookup
-→ deny / hard block
-→ execution_attempted = false
-→ redacted AuditEvent
+local audio file
+→ audio policy validation
+→ SPEECH_TRANSCRIBE_LOCAL capability check
+→ FasterWhisperAdapter
+→ typed TranscriptionResult
+→ metadata-only AuditEvent
 ```
 
-For reproducible command examples, see [`docs/DEMO.md`](docs/DEMO.md).
+The transcript is returned to the requesting user. It is not written into the
+audit event by default.
 
-## Configuration precedence
+## What works today?
 
-PAIOS CE resolves configuration in this order:
+| Capability | Status | Default | What it means |
+| --- | --- | --- | --- |
+| Local text demo | Experimental | On | Deterministic Mock Provider; no network or API key |
+| Typed tasks and actions | Experimental | On | Validated public contracts and JSON Schemas |
+| Permission and risk decisions | Experimental | On | Unknown and forbidden actions fail closed |
+| Secret references | Experimental | On | Secrets are represented by reference, not payload |
+| Local file ASR | Experimental | Off | Optional faster-whisper adapter; no live channel; disabled by default |
+| Live model Provider | Planned | Off | Not shipped |
+| Feishu owner DM | Planned | Off | Next channel candidate; not shipped |
+| WeCom / WeChat | Research | Off | No support claim |
+| TTS | Planned | Off | Not shipped |
+| Browser and system workers | Planned | Off | Must be narrowly scoped |
+| Arbitrary shell / administrator | Blocked | Off | Not a general capability |
 
-```text
-CLI flags
-  → process environment
-  → private local configuration
-  → public project configuration
-  → built-in safe defaults
+The authoritative status is maintained in
+[`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md).
+
+## How PAIOS CE grows
+
+PAIOS CE uses **progressive capability admission**:
+
+```mermaid
+flowchart LR
+    L0["L0<br/>Local mock"] --> L1["L1<br/>Read-only input"]
+    L1 --> L2["L2<br/>Low-risk output"]
+    L2 --> L3["L3<br/>Scoped tools"]
+    L3 --> L4["L4<br/>Reversible external writes"]
+    L4 --> L5["L5<br/>High-risk structured workers"]
 ```
 
-Example configuration files:
+A new capability is not accepted merely because it works once. It must define:
 
-- [`examples/public_config.example.yaml`](examples/public_config.example.yaml)
-- [`examples/private_config.example.yaml`](examples/private_config.example.yaml)
+1. a typed contract;
+2. required capabilities and scopes;
+3. default-off configuration;
+4. secret and network behavior;
+5. failure and rollback behavior;
+6. redacted audit evidence;
+7. deterministic tests;
+8. clean-machine validation; and
+9. an honest support status.
 
-Credentials are represented by `SecretRef`. The secret value itself must not be
-serialized into public configuration, task payloads, logs, errors, or audit
-events.
+See [`docs/CAPABILITY_ADMISSION.md`](docs/CAPABILITY_ADMISSION.md).
 
-## Protocol boundaries
+## Architecture
 
-The public protocol layer provides validated models for:
+```mermaid
+flowchart LR
+    INPUT["CLI / future channel"] --> CONTRACT["Typed input contract"]
+    CONTRACT --> ORCH["Orchestrator"]
+    CONFIG["Runtime config"] --> ORCH
+    SREF["SecretRef"] -. "reference only" .-> CONFIG
 
-- `TaskEnvelope`
-- `ActionRequest`
-- `ApprovalRequest`
-- `ActionResult`
-- `TaskResult`
-- `ErrorEnvelope`
-- `AuditEvent`
+    ORCH --> ROUTER["Router"]
+    ROUTER --> MOCK["Mock Provider"]
+    ROUTER --> SPEECH["Optional Local ASR"]
 
-Generated JSON Schemas live in [`schemas/`](schemas/). Protocol models reject
-unexpected fields, which helps prevent silent contract expansion.
+    MOCK --> RESULT["Typed result"]
+    SPEECH --> RESULT
+
+    ORCH --> POLICY["Capability & risk policy"]
+    POLICY -->|"allow within scope"| WORKER["Scoped worker"]
+    POLICY -->|"deny / confirm / block"| AUDIT["Redacted audit"]
+
+    WORKER --> RESULT
+    RESULT --> AUDIT
+```
+
+## Product boundaries
+
+The current project is a release candidate and a public-core scaffold. It does
+not ship:
+
+- live WeChat or Feishu channels;
+- a production cloud-model Provider;
+- microphone streaming;
+- TTS;
+- browser automation;
+- arbitrary shell or administrator elevation;
+- remote desktop control;
+- production Hermes/OpenClaw integration.
+
+Those are future adapters, not current support claims.
+
+Detailed trust boundaries live in
+[`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md). The README keeps the safety
+summary short so the runnable experience remains visible.
+
+## CLI
+
+| Command | Purpose |
+| --- | --- |
+| `paios-ce health` | Safe local diagnostics |
+| `paios-ce demo` | Deterministic local text-task loop |
+| `paios-ce validate-config` | Validate and display redacted effective configuration |
+| `paios-ce run-task FILE` | Run a typed task or evaluate an action fixture |
+| `paios-ce transcribe FILE` | Experimental local-file transcription (Phase 9A) |
 
 ## Validation
 
-The release candidate is validated on Windows and Ubuntu with Python 3.11 and
-3.12.
-
-| Gate | Current result |
+| Gate | Current baseline |
 | --- | --- |
-| Test matrix | Windows + Ubuntu × Python 3.11 + 3.12 |
-| Test cases | 203 per matrix job |
-| Failures / errors / skipped | 0 / 0 / 0 |
-| Line coverage | 86.39% |
-| Branch coverage | 73.50% |
-| Package | Wheel and sdist build, metadata check, and clean-install smoke |
-| Security | Secret-pattern scan, forbidden-content scan, workflow invariant check, and dependency audit |
-| Release | Public pre-release with anonymously downloadable source ZIP and tar.gz |
+| Platforms | Windows + Ubuntu |
+| Python | 3.11 + 3.12 |
+| Existing test baseline | 261 tests per matrix job |
+| Line / branch coverage | 87.09% / 74.63% |
+| Package | Wheel, sdist and clean-install smoke |
+| Security | Credential scan, forbidden-content scan and dependency audit |
+| Release | Public pre-release with anonymous source downloads |
 
-The authoritative support claims are maintained in
-[`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md).
-
-## Project layout
-
-```text
-src/paios_ce/
-├── audit/          redaction helpers and structured audit logger
-├── channels/       channel contracts and CLI channel
-├── cli/            command-line entry point
-├── config/         public/private/runtime models and loader
-├── demo/           deterministic local demo
-├── health/         safe health and diagnostic checks
-├── orchestrator/   minimal orchestration loop
-├── permissions/    deny-by-default policy and risk engine
-├── protocols/      typed task/action/result/audit contracts
-├── providers/      Provider contract and Mock Provider
-├── routing/        minimal router
-├── secrets/        SecretRef abstractions
-├── state/          state-adapter contract
-├── tools/          schema helpers
-└── workers/        Worker contract and Mock Worker
-
-examples/           non-secret public fixtures
-schemas/            generated JSON Schemas
-tests/              unit, integration, and security tests
-docs/               project documentation
-```
+Phase 9A preserves all existing gates and adds Local ASR-specific tests
+without weakening coverage or workflow policy.
 
 ## Documentation
 
-- [Documentation index](docs/INDEX.md)
+- [Getting started and demo](docs/DEMO.md)
+- [Local ASR](docs/LOCAL_ASR.md)
+- [Capability admission](docs/CAPABILITY_ADMISSION.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security model](docs/SECURITY_MODEL.md)
-- [Demo guide](docs/DEMO.md)
 - [FAQ](docs/FAQ.md)
 - [Roadmap](docs/ROADMAP.md)
-- [Security policy](SECURITY.md)
 - [Support matrix](SUPPORT_MATRIX.md)
-- [Public release boundary](PUBLIC_RELEASE_BOUNDARY.md)
-- [Contributing guide](CONTRIBUTING.md)
-- [Changelog](CHANGELOG.md)
-- [Citation metadata](CITATION.cff)
+- [Contributing](CONTRIBUTING.md)
 
-## Roadmap
+## Next milestones
 
-Near-term work remains deliberately incremental:
+The recommended order is:
 
-1. improve documentation and contributor ergonomics;
-2. strengthen public protocol examples and contract tests;
-3. define adapter acceptance gates before adding any live integration;
-4. add integrations only when their permission, secret, audit, and rollback
-   boundaries are independently testable.
+1. Local ASR (Phase 9A branch: contracts, policy, adapter, CLI, tests);
+2. one real text Provider;
+3. Feishu owner-only private messages;
+4. local TTS;
+5. a read-only file worker;
+6. browser read-only research;
+7. reversible, confirmed external actions;
+8. structured Windows workers.
 
-A roadmap item is not a support claim. See [`docs/ROADMAP.md`](docs/ROADMAP.md).
-
-## Contributing
-
-Bug reports, documentation corrections, tests, and narrowly scoped pull
-requests are welcome.
-
-Before contributing:
-
-1. read [`CONTRIBUTING.md`](CONTRIBUTING.md);
-2. follow [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md);
-3. never submit real secrets, personal data, production paths, or production
-   logs;
-4. include tests for behavior changes; and
-5. discuss live integrations before implementation.
-
-## Release
-
-The current public pre-release is
-[`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1).
-
-It is a release candidate and makes no claim of production readiness, SLA, or
-fitness for a particular deployment.
+Personal WeChat and high-risk system permissions remain later research items.
 
 ## License
 
 Apache License 2.0. Copyright 2026 Cheng Cheng.
-
-See [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

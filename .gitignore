@@ -39,3 +39,12 @@ Thumbs.db
 .git/
 /audit/
 *.audit.jsonl
+
+# Phase 9A speech: model weights and caches are never committed
+models/
+*.bin
+*.ct2
+.cache/huggingface/
+huggingface/
+*.safetensors
+*.onnx

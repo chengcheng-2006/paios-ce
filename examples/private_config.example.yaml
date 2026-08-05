@@ -29,11 +29,20 @@ channels:
 
 speech:
   enabled: false
-  asr_backend: disabled
+  asr_backend: local_faster_whisper
   raw_audio_storage: false
   temp_audio_delete: true
   transcript_retention_days: 0
   cloud_asr_opt_in: false
+  # Phase 9A local ASR defaults (safe, local-files-only, read-only input).
+  local_files_only: true
+  max_file_size_mb: 100
+  max_duration_seconds: 3600
+  allowed_extensions: [wav, mp3, m4a, flac, ogg, opus, webm]
+  vad_filter: true
+  device: cpu
+  compute_type: int8
+  default_model: tiny
 
 state:
   sqlite_path: "<USER_HOME>/.paios_ce/paios.db"
