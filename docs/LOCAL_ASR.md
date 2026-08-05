@@ -1,4 +1,4 @@
-﻿# Local ASR
+# Local ASR
 
 Local ASR is the first real capability admitted after the Mock-only release.
 It is an experimental (EXPERIMENTAL (real-model smoke passed)) local

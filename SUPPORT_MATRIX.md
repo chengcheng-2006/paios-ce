@@ -1,4 +1,4 @@
-﻿# Support Matrix
+# Support Matrix
 
 This document records the supported Python versions and the support status of
 each PAIOS CE component. It is the authoritative source for support claims;

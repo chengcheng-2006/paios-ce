@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to PAIOS CE are documented in this file.
 

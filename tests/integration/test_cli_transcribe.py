@@ -119,3 +119,98 @@ def test_cli_transcribe_error_never_leaks_absolute_path(capsys, tmp_path):
     assert code == 2
     assert str(tmp_path) not in out
     assert "secret_audio.wav" in out  # basename only
+
+
+def _make_private_config_multi_owner(tmp_path) -> Path:
+    cfg = {
+        "schema": "https://paios.ce/schemas/private-config/v0.1.json",
+        "owner_allowlist": [
+            "principal:example.invalid/owner-1",
+            "principal:example.invalid/owner-2",
+        ],
+        "speech": {
+            "enabled": True,
+            "asr_backend": "local_faster_whisper",
+            "local_files_only": True,
+            "device": "cpu",
+            "compute_type": "int8",
+        },
+    }
+    p = tmp_path / "private_multi.yaml"
+    import yaml
+
+    p.write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
+    return p
+
+
+def test_cli_transcribe_ambiguous_multi_owner_denied(capsys, tmp_path):
+    """R1-F2: with multiple owners and no --principal-id, the caller is
+    ambiguous and the command denies before any model construction."""
+    f = _small_wav(tmp_path)
+    cfg = _make_private_config_multi_owner(tmp_path)
+    code, out = _run(["transcribe", str(f), "--private-config", str(cfg)], capsys)
+    assert code == 4
+    payload = json.loads(out)
+    assert payload["error_code"] == "E_SPEECH_PERMISSION_DENIED"
+
+
+def test_cli_transcribe_explicit_principal_single_owner_inference(capsys, tmp_path, monkeypatch):
+    """R1-F2: a single-owner allowlist infers the owner; with the speech
+    dependency absent the request then fails at the dependency step (proving
+    the permission gate passed)."""
+    import builtins
+
+    f = _small_wav(tmp_path)
+    cfg = _make_private_config(tmp_path, enabled=True)
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "faster_whisper":
+            raise ImportError("no module named faster_whisper")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+    code, out = _run(["transcribe", str(f), "--private-config", str(cfg)], capsys)
+    # Permission passes (single owner inferred); dependency missing is next.
+    assert code == 6
+    payload = json.loads(out)
+    assert payload["error_code"] == "E_SPEECH_DEPENDENCY_MISSING"
+
+
+def test_cli_transcribe_explicit_principal_id_accepted(capsys, tmp_path, monkeypatch):
+    """R1-F2: --principal-id is accepted for a multi-owner config; the
+    permission gate passes and the dependency step is reached."""
+    import builtins
+
+    f = _small_wav(tmp_path)
+    cfg = _make_private_config_multi_owner(tmp_path)
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "faster_whisper":
+            raise ImportError("no module named faster_whisper")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+    code, out = _run(
+        ["transcribe", str(f), "--private-config", str(cfg),
+         "--principal-id", "principal:example.invalid/owner-1"],
+        capsys,
+    )
+    assert code == 6
+    payload = json.loads(out)
+    assert payload["error_code"] == "E_SPEECH_DEPENDENCY_MISSING"
+
+
+def test_cli_transcribe_non_owner_principal_denied(capsys, tmp_path):
+    """R1-F2: an explicit non-owner principal is denied."""
+    f = _small_wav(tmp_path)
+    cfg = _make_private_config(tmp_path, enabled=True)
+    code, out = _run(
+        ["transcribe", str(f), "--private-config", str(cfg),
+         "--principal-id", "principal:example.invalid/user-1"],
+        capsys,
+    )
+    assert code == 4
+    payload = json.loads(out)
+    assert payload["error_code"] == "E_SPEECH_PERMISSION_DENIED"

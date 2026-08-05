@@ -1,4 +1,4 @@
-﻿"""Phase 9A 鈥?speech input policy tests (extension/size/duration/read-only).
+"""Phase 9A —speech input policy tests (extension/size/duration/read-only).
 
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng

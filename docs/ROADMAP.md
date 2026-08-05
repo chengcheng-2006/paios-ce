@@ -1,4 +1,4 @@
-﻿# Roadmap
+# Roadmap
 
 This roadmap describes intended areas of work. It is not a support promise.
 

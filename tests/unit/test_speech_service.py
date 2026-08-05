@@ -1,4 +1,4 @@
-﻿"""Phase 9A 鈥?SpeechService orchestration and audit-boundary tests.
+"""Phase 9A —SpeechService orchestration and audit-boundary tests.
 
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng

@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # PAIOS CE
 
@@ -40,7 +40,7 @@ PAIOS CE 是一个可以实际运行的小型底座，用来逐步构建个人 A
 - 校验公共配置、私有配置和环境变量优先级；
 - 通过 CLI 提交类型化 Task 与 Action；
 - 观察权限决策和经过脱敏的 AuditEvent；
-- 在 Phase 9A 开发线或之后的版本中，通过可选 Local ASR Adapter 转录本地音频文件。
+- 在当前 main 开发线或之后的版本中，通过可选 Local ASR Adapter 转录本地音频文件。
 
 它的产品路线是：
 
@@ -91,7 +91,7 @@ paios-ce run-task examples/demo_task.json
 
 ### 本地语音识别预览
 
-在 Phase 9A 开发线上，安装可选语音依赖：
+在当前 main 开发线上，安装可选语音依赖：
 
 ```bash
 pip install -e ".[dev,speech]"

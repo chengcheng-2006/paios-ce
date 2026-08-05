@@ -125,6 +125,7 @@ class FakeModel:
         self._info = info or FakeInfo()
         self._raise_on_transcribe = raise_on_transcribe
         self.transcribe_calls: list[dict] = []
+        self.constructor_calls: list[dict] = []
 
     def transcribe(self, source, language=None, vad_filter=True, word_timestamps=False):
         self.transcribe_calls.append({
@@ -139,9 +140,23 @@ class FakeModel:
 
 
 def make_fake_model_factory(model):
-    """Return a ModelFactory callable returning ``model``."""
+    """Return a ModelFactory callable returning ``model`` and recording the
+    effective constructor values (device, compute_type, local_files_only).
 
-    def factory(model_size_or_path: str, *, local_files_only: bool = True):
+    Inline test doubles without a ``constructor_calls`` attribute are
+    tolerated (the record is skipped) so simple stub models keep working.
+    """
+
+    def factory(model_size_or_path: str, *, device: str = "cpu",
+                compute_type: str = "int8", local_files_only: bool = True):
+        record = getattr(model, "constructor_calls", None)
+        if record is not None:
+            record.append({
+                "model": model_size_or_path,
+                "device": device,
+                "compute_type": compute_type,
+                "local_files_only": local_files_only,
+            })
         return model
 
     return factory
