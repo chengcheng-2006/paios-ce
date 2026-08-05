@@ -313,17 +313,27 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
                "safe_source_label": safe_source_label(args.file)})
         return _EXIT_INTERNAL
 
+    # R2-F2 output contract:
+    #   --format text + stdout   -> transcript text + newline (direct write)
+    #   --format json + stdout   -> structured JSON envelope (permission included)
+    #   --format text --output F -> F = transcript + newline; stdout = status envelope
+    #   --format json --output F -> F = structured JSON result; stdout = status envelope
     if args.format == "text":
-        output = result.text
+        payload = result.text
     else:
         payload = result.model_dump()
         if service.last_permission is not None:
             payload["permission"] = service.last_permission
-        output = json.dumps(payload, ensure_ascii=True, indent=2, sort_keys=True)
 
     if args.output:
         try:
-            Path(args.output).write_text(output + "\n", encoding="utf-8")
+            if args.format == "text":
+                Path(args.output).write_text(str(payload) + "\n", encoding="utf-8")
+            else:
+                Path(args.output).write_text(
+                    json.dumps(payload, ensure_ascii=True, indent=2, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
         except OSError as exc:
             _emit({"command": "transcribe", "status": "error",
                    "error_code": "E_OUTPUT_WRITE_FAILED",
@@ -333,8 +343,15 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
         _emit({"command": "transcribe", "status": "ok",
                "output_file": args.output,
                "safe_source_label": result.safe_source_label})
-    else:
-        _emit({"command": "transcribe", "status": "ok", "result": json.loads(output)})
+        return _EXIT_OK
+
+    if args.format == "text":
+        # Direct stdout write; never wrap the transcript in a JSON envelope.
+        sys.stdout.write(str(payload) + "\n")
+        sys.stdout.flush()
+        return _EXIT_OK
+
+    _emit({"command": "transcribe", "status": "ok", "result": payload})
     return _EXIT_OK
 
 

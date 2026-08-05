@@ -103,6 +103,7 @@ def test_single_owner_inference_succeeds(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),  # principal defaults to the sole owner
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     result = service.transcribe(_request(source=str(f)))
     assert result.status == "success"
@@ -116,6 +117,7 @@ def test_explicit_owner_principal_succeeds(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(principal=OWNER),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     result = service.transcribe(_request(source=str(f)))
     assert result.status == "success"
@@ -128,6 +130,7 @@ def test_authorized_request_reaches_adapter_once(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     assert len(fake_model.transcribe_calls) == 1
@@ -166,6 +169,7 @@ def test_permission_decision_and_risk_in_audit(tmp_path, fake_model):
         audit_logger=logger,
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     details = logger.events()[0].redacted_details
@@ -182,6 +186,7 @@ def test_permission_decision_present_in_result_evidence(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     result = service.transcribe(_request(source=str(f)))
     assert service.last_permission["decision"] == "allow"
@@ -201,6 +206,7 @@ def test_retain_audio_false_when_raw_audio_storage_false(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     assert cfg.retain_audio is False
@@ -214,6 +220,7 @@ def test_retain_audio_true_when_raw_audio_storage_true(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     assert cfg.retain_audio is True
@@ -227,6 +234,7 @@ def test_persist_transcript_false_when_retention_zero(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     assert cfg.persist_transcript is False
@@ -240,6 +248,7 @@ def test_persist_transcript_true_when_retention_positive(tmp_path, fake_model):
         adapter=FasterWhisperAdapterFacade(fake_model),
         permission_engine=_engine(),
         principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     assert cfg.persist_transcript is True

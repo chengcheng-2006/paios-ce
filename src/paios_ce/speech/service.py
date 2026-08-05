@@ -55,12 +55,18 @@ class SpeechService:
     provided, one metadata-only AuditEvent is emitted per attempt (success or
     failure).
 
-    ``permission_engine`` (optional) is the existing
-    :class:`~paios_ce.permissions.PermissionEngine`; when provided, every
-    transcription passes a fail-closed capability/owner decision *before*
-    the adapter or model is constructed. ``principal_id`` and
-    ``owner_allowlist`` are used only to build that gate. When no engine is
-    provided (unit-level adapter tests), the gate is skipped.
+    Authorization is mandatory and fail-closed. ``permission_engine`` must be
+    the existing :class:`~paios_ce.permissions.PermissionEngine`;
+    ``principal_id`` must name an allowlisted owner and
+    ``owner_allowlist`` must be non-empty. An enabled service that is missing
+    the engine, missing a principal, has an empty owner allowlist, lacks the
+    SPEECH_TRANSCRIBE_LOCAL capability, or receives a non-owner caller denies
+    with :data:`E_SPEECH_PERMISSION_DENIED` *before* file validation,
+    adapter call or model construction.
+
+    There are no example default owner/principal values that could silently
+    authorize a library caller. Adapter behavior is tested through the
+    adapter directly; service tests inject an explicit authorized engine.
     """
 
     def __init__(
@@ -70,8 +76,8 @@ class SpeechService:
         audit_logger: Optional[RedactedAuditLogger] = None,
         validator: Optional[AudioFileValidator] = None,
         permission_engine: Optional[PermissionEngine] = None,
-        principal_id: str = "principal:example.invalid/user-1",
-        owner_allowlist: Sequence[str] = ("principal:example.invalid/owner-1",),
+        principal_id: Optional[str] = None,
+        owner_allowlist: Sequence[str] = (),
     ) -> None:
         self._config = runtime_config or SpeechRuntimeConfig()
         self._adapter = adapter
@@ -145,6 +151,22 @@ class SpeechService:
 
     # -- permission gate ---------------------------------------------------
 
+    def _deny(self, label: str, reason: str) -> None:
+        """Record a denial and raise the stable permission-denied error."""
+        self._last_permission = {
+            "decision": "deny",
+            "risk_level": "LOW",
+            "reason": reason,
+            "hard_blocked": "false",
+        }
+        self._audit_event("denied", label, None,
+                          error_code=SpeechErrorCode.E_SPEECH_PERMISSION_DENIED)
+        raise SpeechError(
+            SpeechErrorCode.E_SPEECH_PERMISSION_DENIED,
+            "speech permission denied",
+            safe_source_label=label,
+        )
+
     def _authorize(self, label: str) -> None:
         """Fail-closed capability/owner decision before model construction.
 
@@ -153,25 +175,21 @@ class SpeechService:
         owner-gated: the caller must be in the owner allowlist (enforced
         here, since READ_LOCAL policy is not owner_only by itself) and must
         hold the SPEECH_TRANSCRIBE_LOCAL capability (enforced by the engine).
+
+        Missing engine, missing principal, empty owner allowlist, missing
+        capability and non-owner callers all deny before any file validation,
+        adapter call or model construction.
         """
         if self._permission_engine is None:
-            return  # adapter-level unit tests without a gate
+            self._deny(label, "permission engine not configured")
+        if not self._principal_id:
+            self._deny(label, "caller principal not configured")
+        if not self._owner_allowlist:
+            self._deny(label, "owner allowlist is empty")
 
         # Owner-only local CLI rule: the caller must be an allowlisted owner.
         if self._principal_id not in self._owner_allowlist:
-            self._last_permission = {
-                "decision": "deny",
-                "risk_level": "LOW",
-                "reason": "caller not in owner allowlist",
-                "hard_blocked": "false",
-            }
-            self._audit_event("denied", label, None,
-                              error_code=SpeechErrorCode.E_SPEECH_PERMISSION_DENIED)
-            raise SpeechError(
-                SpeechErrorCode.E_SPEECH_PERMISSION_DENIED,
-                "speech permission denied: caller not in owner allowlist",
-                safe_source_label=label,
-            )
+            self._deny(label, "caller not in owner allowlist")
 
         request = ActionRequest(
             action_id="speech_" + label.replace(".", "_")[:48],
