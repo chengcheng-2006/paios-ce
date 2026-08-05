@@ -146,6 +146,13 @@ class PrivateChannels(BaseModel):
 
 
 class PrivateSpeech(BaseModel):
+    """Private speech configuration (Phase 9A).
+
+    Defaults are privacy-first: the capability is disabled, model access is
+    local-files-only, audio is read in place and never copied or retained,
+    transcripts are not persisted and not placed in audit events.
+    """
+
     model_config = ConfigDict(extra="forbid")
 
     enabled: bool = False
@@ -154,6 +161,17 @@ class PrivateSpeech(BaseModel):
     temp_audio_delete: bool = True
     transcript_retention_days: int = Field(default=0, ge=0)
     cloud_asr_opt_in: bool = False
+    # Phase 9A local ASR defaults (contract ARCHITECTURE_AND_CONTRACT_SPEC §5)
+    local_files_only: bool = True
+    max_file_size_mb: int = Field(default=100, ge=1, le=10240)
+    max_duration_seconds: int = Field(default=3600, ge=1, le=86400)
+    allowed_extensions: List[str] = Field(
+        default_factory=lambda: ["wav", "mp3", "m4a", "flac", "ogg", "opus", "webm"]
+    )
+    vad_filter: bool = True
+    device: Literal["cpu", "cuda", "auto"] = "cpu"
+    compute_type: str = "int8"
+    default_model: str = "tiny"
 
 
 class PrivateState(BaseModel):

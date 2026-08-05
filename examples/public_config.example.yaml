@@ -32,7 +32,9 @@ capabilities:
   channels:
     - id: cli
       support_level: v0_1_supported
-  speech: []
+  speech:
+    - id: local_asr
+      support_level: experimental
 
 audit:
   redact_secret_values: true

@@ -1,4 +1,4 @@
-# Roadmap
+﻿# Roadmap
 
 This roadmap describes intended areas of work. It is not a support promise.
 
@@ -32,6 +32,18 @@ experimental adapter at a time.
 
 An adapter remains experimental until its end-to-end evidence passes. Its
 existence in a branch or skeleton does not mean it is supported.
+
+### Phase 9A — Local ASR (development line)
+
+- typed speech contracts (`TranscriptionRequest` / `TranscriptionResult` / ...);
+- audio input policy (extension / size / duration allowlists, read-only);
+- optional faster-whisper adapter with lazy import and `local_files_only`;
+- `paios-ce transcribe` CLI command;
+- metadata-only audit events;
+- status: EXPERIMENTAL (real-model smoke passed on Windows, CPU int8, tiny model).
+
+Remaining work before EXPERIMENTAL: real-model smoke on a runtime where
+faster-whisper/CTranslate2 can load, plus any fixes it reveals.
 
 ## Stage 4 — Operational hardening
 

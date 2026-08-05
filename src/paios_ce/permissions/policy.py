@@ -192,6 +192,10 @@ class ActionRiskPolicy:
         # permission string. This ensures upload_*, download_*, sync_* and other
         # unregistered prefixes are correctly classified as UNKNOWN_ACTION rather
         # than silently coerced to a known action class.
+        #
+        # Phase 9A: "speech.transcribe_local" is a local read-only operation
+        # (no network, no microphone, no channel). It is classified as READ_LOCAL
+        # so the release-gated capability check and LOW-risk audit path apply.
         if (ActionRiskPolicy._token_match(operation, ("admin", "elevate", "install_service", "elevation"))
                 or any(ActionRiskPolicy._token_match(p, ("admin", "elevate", "install_service", "elevation"))
                        for p in (permissions or frozenset()))):
@@ -213,7 +217,7 @@ class ActionRiskPolicy:
         # only; an operation with no keyword at all is UNKNOWN_ACTION regardless
         # of network_mode. This also stops read ops under egress being forced to
         # NETWORK_WRITE.
-        if ActionRiskPolicy._token_match(operation, ("read", "list", "stat", "get", "fetch", "load")):
+        if ActionRiskPolicy._token_match(operation, ("read", "list", "stat", "get", "fetch", "load", "transcribe")):
             return ActionClass.NETWORK_READ if network_mode != "none" else ActionClass.READ_LOCAL
         if ActionRiskPolicy._token_match(operation, ("write", "append", "create", "overwrite", "save", "put", "store")):
             return ActionClass.NETWORK_WRITE if network_mode == "cloud_egress" else ActionClass.WRITE_LOCAL

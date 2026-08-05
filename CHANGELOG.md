@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 All notable changes to PAIOS CE are documented in this file.
 
@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 for its release tags.
 
 ## [Unreleased]
+
+### Added (Phase 9A development line)
+- Local file ASR capability: typed speech contracts, audio input policy,
+  optional faster-whisper adapter, and orchestration service.
+- CLI command `paios-ce transcribe FILE` with stable structured error codes
+  (`E_SPEECH_DISABLED`, `E_SPEECH_DEPENDENCY_MISSING`, ...).
+- Optional `speech` extra (`faster-whisper>=1.1.0,<1.3`); base install
+  unaffected.
+- Product-experience README rebalance: value-first reading order, 60-second
+  tour, two concrete workflows, capability status table, concise boundaries.
+- `docs/LOCAL_ASR.md` and `docs/CAPABILITY_ADMISSION.md`.
+- 58 new deterministic tests (fake-model backend; no network, no weights).
+
+### Changed
+- Speech capability status: PLANNED -> EXPERIMENTAL (real-model smoke passed on
+  a runtime where faster-whisper/CTranslate2 can load).
+- Development version `0.1.0rc2.dev0` (no rc.2 tag or Release created).
+
+### Security
+- Transcript text and absolute source paths are structurally absent from
+  audit events; model-cache paths never appear in output.
 
 ## [0.1.0-rc.1] - 2026-08-04
 

@@ -1,4 +1,4 @@
-# Support Matrix
+﻿# Support Matrix
 
 This document records the supported Python versions and the support status of
 each PAIOS CE component. It is the authoritative source for support claims;
@@ -8,8 +8,8 @@ no other documentation may overclaim support beyond what is listed here.
 
 | Python version | Status | Notes |
 | --- | --- | --- |
-| 3.11 | **Validated** (Windows + Ubuntu) | Reference runtime for the public tree. All 203 tests pass and coverage gates are met on Windows and Ubuntu (remote CI matrix). |
-| 3.12 | **Validated** (Windows + Ubuntu) | Validated on Windows and Ubuntu in remote CI: 203 tests pass, coverage gates met, CLI and package build PASS. |
+| 3.11 | **Validated** (Windows + Ubuntu) | Reference runtime for the public tree. All 261 tests pass and coverage gates are met on Windows and Ubuntu (remote CI matrix). |
+| 3.12 | **Validated** (Windows + Ubuntu) | Validated on Windows and Ubuntu in remote CI: 261 tests pass, coverage gates met, CLI and package build PASS. |
 | 3.13 | Supplementary only | Validated opportunistically; not a release gate. |
 
 The `requires-python` field in `pyproject.toml` is `>=3.11`.
@@ -18,19 +18,21 @@ The `requires-python` field in `pyproject.toml` is `>=3.11`.
 
 Remote CI runs on GitHub Actions for every push to `main`:
 
-- 4 matrix jobs (Windows + Ubuntu × Python 3.11 + 3.12) × 203 tests,
-  0 failures / 0 errors / 0 skipped.
-- line coverage 86.39%, branch coverage 73.50% (gates: 86.2% / 66.7%).
+- 4 matrix jobs (Windows + Ubuntu × Python 3.11 + 3.12) × 261 tests,
+  0 failures / 0 errors / 0 skipped (1 symlink test is skipped on Windows
+  where it requires elevation; it runs on Ubuntu).
+- line coverage 87.09%, branch coverage 74.63% (gates: 86.2% / 66.7%).
 
 ## Capability support status
 
 | Capability | Support status | Notes |
 | --- | --- | --- |
 | Mock Provider | EXPERIMENTAL | Fully local, deterministic, no network, no API key. |
-| CLI | EXPERIMENTAL | `paios-ce demo|health|validate-config|run-task`. |
+| CLI | EXPERIMENTAL | `paios-ce demo|health|validate-config|run-task|transcribe`. |
+| Local file ASR | EXPERIMENTAL | `speech.transcribe_local`; disabled by default; optional faster-whisper adapter; real-model smoke passed (Windows, CPU int8, tiny model). See docs/LOCAL_ASR.md. |
+| Speech (general) | EXPERIMENTAL | Only local file transcription is implemented; live speech/channel remains PLANNED. |
 | Live Provider | PLANNED | Not implemented; contract skeletons only. |
 | Live Channel | PLANNED | Not implemented; channel skeletons only. |
-| Speech | PLANNED | Not implemented. |
 | Hermes/OpenClaw | planned adapter/dependency boundary | No integration shipped; no dependency on either runtime. |
 
 ## Component support status
@@ -49,7 +51,8 @@ Remote CI runs on GitHub Actions for every push to `main`:
 | `paios_ce.routing` | Scaffold | Router skeleton. |
 | `paios_ce.health` | EXPERIMENTAL | Health check and diagnostics with redaction. |
 | `paios_ce.demo` | EXPERIMENTAL | Demo task fixture. |
-| `paios_ce.cli` | EXPERIMENTAL | `paios-ce` entry point. |
+| `paios_ce.cli` | EXPERIMENTAL | `paios-ce` entry point (including `transcribe`). |
+| `paios_ce.speech` | EXPERIMENTAL | Typed contracts, policy, adapter and service for local file ASR. |
 | `paios_ce.tools` | EXPERIMENTAL | Schema generation and validation helpers. |
 
 ## Out-of-scope items

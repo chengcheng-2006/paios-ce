@@ -34,6 +34,18 @@ These three packages are borrowed read-only for the **offline build only**
 They appear in the Delivery ZIP only as build-environment evidence, with their
 license files intact. See the build-time table above.
 
+## Optional runtime dependencies (Phase 9A `speech` extra)
+
+| Component | Version constraint | Purpose | License |
+|---|---|---|---|
+| faster-whisper | >=1.1.0,<1.3 | Optional local speech-to-text adapter (CPU int8 reference mode) | MIT |
+| ctranslate2 | pulled by faster-whisper | CTranslate2 inference engine for faster-whisper | MIT |
+| av (PyAV) | pulled by faster-whisper | Audio decoding (bundles FFmpeg libraries) | BSD-3-Clause |
+
+These are **optional** (`pip install paios-ce[speech]`); the base install does
+not include them. No model weights are bundled; the user is responsible for
+reviewing the license and terms of the model they select.
+
 ## Not introduced in the current release candidate
 
 The following components are intentionally NOT listed as runtime dependencies of the release candidate.
@@ -42,8 +54,7 @@ Their future introduction is governed by the PAIOS CE license and distribution p
 - Hermes (planned: version-pinned dependency + adapter boundary; not vendored)
 - OpenClaw / @openclaw/* (planned: dependency-only, pinned)
 - GSAP (excluded from v0.1 by default; separate non-OSI license)
-- faster-whisper (weights are install-time download only; not vendored)
 - Ollama models (weights are install-time download only; not vendored)
 
-the release candidate introduces NO live Provider, Channel, or Speech integrations, so no provider SDK,
-channel SDK, or speech SDK is a runtime dependency.
+the release candidate introduces NO live Provider, Channel, or Speech
+integrations, so no provider SDK or channel SDK is a runtime dependency.
