@@ -33,11 +33,20 @@ DEFAULT_ALLOWED_EXTENSIONS = ["wav", "mp3", "m4a", "flac", "ogg", "opus", "webm"
 
 
 def safe_source_label(source: str) -> str:
-    """Return only the basename of a source path (never an absolute path)."""
-    try:
-        name = Path(source).name
-    except (TypeError, ValueError):  # pragma: no cover - defensive
+    """Return only the basename of a source path (never an absolute path).
+
+    Handles both POSIX (``/``) and Windows (``\\``) separators so the same
+    code behaves identically on Windows and Ubuntu CI.
+    """
+    if not isinstance(source, str) or not source:
         return "audio"
+    # Strip any trailing separators first so a bare separator yields "audio".
+    text = source.rstrip("/\\")
+    # POSIX: Path(...).name handles "/" natively.
+    name = Path(text).name
+    # Windows separators: Path on a POSIX host does not split on "\\".
+    if "\\" in name:
+        name = name.split("\\")[-1]
     return name if name else "audio"
 
 
