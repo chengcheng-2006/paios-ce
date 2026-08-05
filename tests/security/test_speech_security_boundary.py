@@ -1,4 +1,4 @@
-﻿"""Phase 9A 鈥?security-boundary tests for the local speech capability.
+"""Phase 9A —security-boundary tests for the local speech capability.
 
 Covers: no implicit network, no audio persistence, transcript never in audit,
 absolute path never in audit, no secret-like keys in audit, dependency-absent

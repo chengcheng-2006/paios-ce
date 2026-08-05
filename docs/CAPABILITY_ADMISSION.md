@@ -1,4 +1,4 @@
-﻿# Progressive Capability Admission
+# Progressive Capability Admission
 
 PAIOS CE grows by admitting one narrowly scoped capability at a time. A new
 capability is not accepted merely because it works once; it must pass a

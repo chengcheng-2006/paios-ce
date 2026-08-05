@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # PAIOS CE
 
@@ -43,7 +43,7 @@ Today you can:
 - submit typed task and action fixtures through the CLI;
 - observe permission decisions and redacted audit events;
 - transcribe a local audio file through the optional Local ASR adapter
-  **when using the Phase 9A development branch or a later release**.
+  **when using the current main development line or a later release**.
 
 The point is not to expose every tool at once. The point is to provide a clean
 path from a local demo to a useful personal assistant:
@@ -95,7 +95,7 @@ No API key is required for the bundled Mock Provider.
 
 ### Local speech preview
 
-On the Phase 9A development line, install the optional speech dependency:
+On the current main development line, install the optional speech dependency:
 
 ```bash
 pip install -e ".[dev,speech]"
@@ -274,7 +274,7 @@ without weakening coverage or workflow policy.
 
 The recommended order is:
 
-1. Local ASR (Phase 9A branch: contracts, policy, adapter, CLI, tests);
+1. Local ASR (Phase 9A: contracts, policy, adapter, CLI, tests);
 2. one real text Provider;
 3. Feishu owner-only private messages;
 4. local TTS;

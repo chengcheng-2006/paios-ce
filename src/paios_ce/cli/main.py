@@ -205,6 +205,7 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
     """
     from ..audit import RedactedAuditLogger
     from ..config import load_runtime
+    from ..permissions import PermissionEngine
     from ..speech import (
         SpeechError,
         SpeechErrorCode,
@@ -241,6 +242,21 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
             exit_code=_EXIT_DENIED,
         ))
 
+    # Permission gate: owner-only local CLI rule. The caller must be a single
+    # explicit owner (--principal-id) or the sole owner from the allowlist.
+    owners = list(rt.owner_allowlist or [])
+    if args.principal_id:
+        principal_id = args.principal_id
+    elif len(owners) == 1:
+        principal_id = owners[0]
+    else:
+        return _fail(SpeechError(
+            SpeechErrorCode.E_SPEECH_PERMISSION_DENIED,
+            "ambiguous caller: pass --principal-id or configure exactly one owner_allowlist entry",
+            safe_source_label=safe_source_label(args.file),
+            exit_code=_EXIT_DENIED,
+        ))
+
     # --vad-filter / --no-vad-filter default to None; fall back to config.
     vad_filter = args.vad_filter if args.vad_filter is not None else speech_cfg.vad_filter
 
@@ -256,23 +272,34 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
     )
 
     adapter = FasterWhisperAdapter()
+    # Privacy mapping (R1): retain_audio follows raw_audio_storage directly;
+    # persist_transcript follows transcript_retention_days.
+    runtime_config = SpeechRuntimeConfig(
+        enabled=speech_cfg.enabled,
+        local_files_only=speech_cfg.local_files_only,
+        retain_audio=speech_cfg.raw_audio_storage,
+        persist_transcript=speech_cfg.transcript_retention_days > 0,
+        audit_transcript=False,
+        max_file_size_mb=speech_cfg.max_file_size_mb,
+        max_duration_seconds=speech_cfg.max_duration_seconds,
+        allowed_extensions=speech_cfg.allowed_extensions,
+        vad_filter=speech_cfg.vad_filter,
+        device=speech_cfg.device,
+        compute_type=speech_cfg.compute_type,
+        default_model=speech_cfg.default_model,
+    )
+    permission_engine = PermissionEngine(
+        capabilities={"SPEECH_TRANSCRIBE_LOCAL"},
+        owner_allowlist=owners,
+        principal_id=principal_id,
+    )
     service = SpeechService(
-        runtime_config=SpeechRuntimeConfig(
-            enabled=speech_cfg.enabled,
-            local_files_only=speech_cfg.local_files_only,
-            retain_audio=speech_cfg.raw_audio_storage is False and speech_cfg.temp_audio_delete,
-            persist_transcript=speech_cfg.transcript_retention_days > 0,
-            audit_transcript=False,
-            max_file_size_mb=speech_cfg.max_file_size_mb,
-            max_duration_seconds=speech_cfg.max_duration_seconds,
-            allowed_extensions=speech_cfg.allowed_extensions,
-            vad_filter=speech_cfg.vad_filter,
-            device=speech_cfg.device,
-            compute_type=speech_cfg.compute_type,
-            default_model=speech_cfg.default_model,
-        ),
+        runtime_config=runtime_config,
         adapter=adapter,
         audit_logger=RedactedAuditLogger(),
+        permission_engine=permission_engine,
+        principal_id=principal_id,
+        owner_allowlist=owners,
     )
 
     try:
@@ -289,7 +316,10 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
     if args.format == "text":
         output = result.text
     else:
-        output = json.dumps(result.model_dump(), ensure_ascii=True, indent=2, sort_keys=True)
+        payload = result.model_dump()
+        if service.last_permission is not None:
+            payload["permission"] = service.last_permission
+        output = json.dumps(payload, ensure_ascii=True, indent=2, sort_keys=True)
 
     if args.output:
         try:
@@ -304,7 +334,7 @@ def _cmd_transcribe(args: argparse.Namespace) -> int:
                "output_file": args.output,
                "safe_source_label": result.safe_source_label})
     else:
-        _emit({"command": "transcribe", "status": "ok", "result": result.model_dump()})
+        _emit({"command": "transcribe", "status": "ok", "result": json.loads(output)})
     return _EXIT_OK
 
 
@@ -347,6 +377,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_tr.add_argument("--output", default=None, help="write output to a file instead of stdout")
     p_tr.add_argument("--public-config", default=None, help="path to public config YAML")
     p_tr.add_argument("--private-config", default=None, help="path to private config YAML")
+    p_tr.add_argument("--principal-id", default=None,
+                      help="caller principal (default: sole owner_allowlist entry)")
     p_tr.set_defaults(func=_cmd_transcribe)
 
     return parser

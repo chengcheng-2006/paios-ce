@@ -46,6 +46,11 @@ class FasterWhisperAdapter(SpeechToTextAdapter):
     ``model_factory`` may be injected for tests (a callable with the same
     signature as ``faster_whisper.WhisperModel``). When omitted, the real
     ``WhisperModel`` is imported lazily on first use.
+
+    The effective constructor values (``device``, ``compute_type``,
+    ``local_files_only``) come from the request; nothing is hard-coded except
+    the defaults on :class:`TranscriptionRequest`. The returned result and
+    audit metadata describe the effective constructor configuration.
     """
 
     def __init__(
@@ -63,10 +68,17 @@ class FasterWhisperAdapter(SpeechToTextAdapter):
         if self._model_factory is not None:
             return self._model_factory(
                 request.model,
+                device=request.device,
+                compute_type=request.compute_type,
                 local_files_only=request.local_files_only,
             )
         factory = self._real_model_factory()
-        return factory(request.model, local_files_only=request.local_files_only)
+        return factory(
+            request.model,
+            device=request.device,
+            compute_type=request.compute_type,
+            local_files_only=request.local_files_only,
+        )
 
     def _real_model_factory(self) -> ModelFactory:
         """Return a factory bound to the real (lazily imported) WhisperModel."""
@@ -79,25 +91,21 @@ class FasterWhisperAdapter(SpeechToTextAdapter):
                 safe_source_label=None,
             ) from exc
 
-        def _factory(model_size_or_path: str, *, local_files_only: bool = True) -> Any:
+        def _factory(
+            model_size_or_path: str,
+            *,
+            device: str = "cpu",
+            compute_type: str = "int8",
+            local_files_only: bool = True,
+        ) -> Any:
             return WhisperModel(
                 model_size_or_path,
-                device=self._device,
-                compute_type=self._compute_type,
+                device=device,
+                compute_type=compute_type,
                 local_files_only=local_files_only,
             )
 
         return _factory
-
-    # -- request context ---------------------------------------------------
-
-    @property
-    def _device(self) -> str:
-        return "cpu"
-
-    @property
-    def _compute_type(self) -> str:
-        return "int8"
 
     # -- transcription -----------------------------------------------------
 

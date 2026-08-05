@@ -47,9 +47,17 @@ class ModelFactory:
     """Callable that builds a model object from a model identifier/path.
 
     ``model_size_or_path`` may be a model identifier (e.g. ``tiny``) or a
-    local converted model directory. ``local_files_only`` forces the use of a
-    local cache and prevents download.
+    local converted model directory. Effective constructor values
+    (``device``, ``compute_type``, ``local_files_only``) are passed through so
+    tests can record exactly what the real adapter would construct.
     """
 
-    def __call__(self, model_size_or_path: str, *, local_files_only: bool = True):
+    def __call__(
+        self,
+        model_size_or_path: str,
+        *,
+        device: str = "cpu",
+        compute_type: str = "int8",
+        local_files_only: bool = True,
+    ):
         raise NotImplementedError  # pragma: no cover - abstract

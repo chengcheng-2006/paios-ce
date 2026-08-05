@@ -1,4 +1,4 @@
-﻿"""Phase 9A 鈥?faster-whisper adapter tests (fake model, no network).
+"""Phase 9A —faster-whisper adapter tests (fake model, no network).
 
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng
@@ -45,13 +45,41 @@ def test_fake_model_success_result(fake_model):
 def test_local_files_only_forwarded_to_factory(fake_model):
     calls = []
 
-    def factory(model_size_or_path, *, local_files_only=True):
-        calls.append((model_size_or_path, local_files_only))
+    def factory(model_size_or_path, *, device="cpu", compute_type="int8", local_files_only=True):
+        calls.append((model_size_or_path, device, compute_type, local_files_only))
         return fake_model
 
     adapter = FasterWhisperAdapter(model_factory=factory)
     adapter.transcribe(_request(local_files_only=True))
-    assert calls == [("tiny", True)]
+    assert calls == [("tiny", "cpu", "int8", True)]
+
+
+def test_device_compute_propagated_to_factory(fake_model):
+    """R1-F1: effective device/compute_type reach the model constructor."""
+    adapter = FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model))
+    adapter.transcribe(_request(device="cuda", compute_type="float16"))
+    assert fake_model.constructor_calls == [{
+        "model": "tiny", "device": "cuda",
+        "compute_type": "float16", "local_files_only": True,
+    }]
+
+
+def test_device_auto_default_propagated(fake_model):
+    """R1-F1: auto/default values are forwarded, not hard-coded."""
+    adapter = FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model))
+    adapter.transcribe(_request(device="auto", compute_type="int8_float16"))
+    assert fake_model.constructor_calls[0]["device"] == "auto"
+    assert fake_model.constructor_calls[0]["compute_type"] == "int8_float16"
+
+
+def test_result_metadata_matches_effective_constructor(fake_model):
+    """R1-F1: returned metadata equals the effective constructor configuration."""
+    adapter = FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model))
+    result = adapter.transcribe(_request(device="cuda", compute_type="float16"))
+    assert result.device == "cuda"
+    assert result.compute_type == "float16"
+    assert fake_model.constructor_calls[0]["device"] == "cuda"
+    assert fake_model.constructor_calls[0]["compute_type"] == "float16"
 
 
 def test_vad_and_language_forwarded(fake_model):

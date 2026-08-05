@@ -18,6 +18,7 @@ class SpeechErrorCode(str, Enum):
     """Stable error codes for the ``paios-ce transcribe`` command and service."""
 
     E_SPEECH_DISABLED = "E_SPEECH_DISABLED"
+    E_SPEECH_PERMISSION_DENIED = "E_SPEECH_PERMISSION_DENIED"
     E_SPEECH_DEPENDENCY_MISSING = "E_SPEECH_DEPENDENCY_MISSING"
     E_SPEECH_MODEL_NOT_AVAILABLE_OFFLINE = "E_SPEECH_MODEL_NOT_AVAILABLE_OFFLINE"
     E_AUDIO_FILE_NOT_FOUND = "E_AUDIO_FILE_NOT_FOUND"
@@ -32,6 +33,7 @@ class SpeechErrorCode(str, Enum):
 # contract: 0 ok / 2 usage / 3 config / 4 denied / 5 blocked / 6 internal).
 _SPEECH_EXIT_CODES = {
     SpeechErrorCode.E_SPEECH_DISABLED: 4,
+    SpeechErrorCode.E_SPEECH_PERMISSION_DENIED: 4,
     SpeechErrorCode.E_SPEECH_DEPENDENCY_MISSING: 6,
     SpeechErrorCode.E_SPEECH_MODEL_NOT_AVAILABLE_OFFLINE: 6,
     SpeechErrorCode.E_AUDIO_FILE_NOT_FOUND: 2,
