@@ -1,5 +1,9 @@
 """Phase 9A —SpeechService orchestration and audit-boundary tests.
 
+R2: authorization is mandatory and fail-closed. Success-path tests inject an
+explicit configured PermissionEngine with a real owner allowlist; adapter
+behavior is tested through the adapter directly.
+
 SPDX-License-Identifier: Apache-2.0
 Copyright 2026 Cheng Cheng
 """
@@ -11,11 +15,14 @@ import json
 import pytest
 
 from paios_ce.audit import RedactedAuditLogger
+from paios_ce.permissions import PermissionEngine
 from paios_ce.speech.contracts import SpeechRuntimeConfig, TranscriptionRequest
 from paios_ce.speech.errors import SpeechError, SpeechErrorCode
 from paios_ce.speech.service import SPEECH_CAPABILITY_ID, SPEECH_OPERATION, SpeechService
 
 from conftest import FakeModel, make_fake_model_factory, write_small_wav
+
+OWNER = "principal:example.invalid/owner-1"
 
 
 def _cfg(**kw):
@@ -32,6 +39,14 @@ def _request(source="sample.wav", **kw):
     return TranscriptionRequest(source=source, **defaults)
 
 
+def _engine() -> PermissionEngine:
+    return PermissionEngine(
+        capabilities={SPEECH_CAPABILITY_ID},
+        owner_allowlist=[OWNER],
+        principal_id=OWNER,
+    )
+
+
 def test_disabled_by_default_raises():
     service = SpeechService(runtime_config=_cfg(enabled=False))
     with pytest.raises(SpeechError) as ei:
@@ -44,8 +59,28 @@ def test_enabled_property():
     assert SpeechService(runtime_config=_cfg(enabled=True)).enabled is True
 
 
+def test_missing_engine_denies_before_policy(tmp_path, fake_model):
+    """R2-F1: enabled service without a PermissionEngine denies before file
+    validation or adapter/model construction."""
+    f = write_small_wav(tmp_path / "ok.wav")
+    service = SpeechService(
+        runtime_config=_cfg(enabled=True),
+        adapter=FasterWhisperAdapterFacade(fake_model),
+    )  # no engine
+    with pytest.raises(SpeechError) as ei:
+        service.transcribe(_request(source=str(f)))
+    assert ei.value.code == SpeechErrorCode.E_SPEECH_PERMISSION_DENIED
+    assert fake_model.constructor_calls == []
+    assert fake_model.transcribe_calls == []
+
+
 def test_missing_file_raises_policy_error(tmp_path):
-    service = SpeechService(runtime_config=_cfg(enabled=True))
+    service = SpeechService(
+        runtime_config=_cfg(enabled=True),
+        permission_engine=_engine(),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
+    )
     with pytest.raises(SpeechError) as ei:
         service.transcribe(_request(source=str(tmp_path / "missing.wav")))
     assert ei.value.code == SpeechErrorCode.E_AUDIO_FILE_NOT_FOUND
@@ -53,7 +88,12 @@ def test_missing_file_raises_policy_error(tmp_path):
 
 def test_dependency_missing_when_no_adapter(tmp_path):
     f = write_small_wav(tmp_path / "ok.wav")
-    service = SpeechService(runtime_config=_cfg(enabled=True))  # no adapter
+    service = SpeechService(
+        runtime_config=_cfg(enabled=True),
+        permission_engine=_engine(),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
+    )  # no adapter
     with pytest.raises(SpeechError) as ei:
         service.transcribe(_request(source=str(f)))
     assert ei.value.code == SpeechErrorCode.E_SPEECH_DEPENDENCY_MISSING
@@ -64,6 +104,9 @@ def test_success_path_with_fake_adapter(tmp_path, fake_model):
     service = SpeechService(
         runtime_config=_cfg(enabled=True),
         adapter=FasterWhisperAdapterFacade(fake_model),
+        permission_engine=_engine(),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     result = service.transcribe(_request(source=str(f)))
     assert result.status == "success"
@@ -78,6 +121,9 @@ def test_success_audit_is_metadata_only(tmp_path, fake_model):
         runtime_config=_cfg(enabled=True),
         adapter=FasterWhisperAdapterFacade(fake_model),
         audit_logger=logger,
+        permission_engine=_engine(),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     result = service.transcribe(_request(source=str(f)))
     events = logger.events()
@@ -102,6 +148,9 @@ def test_success_audit_never_contains_absolute_path(tmp_path, fake_model):
         runtime_config=_cfg(enabled=True),
         adapter=FasterWhisperAdapterFacade(fake_model),
         audit_logger=logger,
+        permission_engine=_engine(),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(_request(source=str(f)))
     dumped = json.dumps(logger.events()[0].model_dump())
@@ -111,8 +160,6 @@ def test_success_audit_never_contains_absolute_path(tmp_path, fake_model):
 
 def test_failure_audit_absent_forbidden_fields(tmp_path, fake_model):
     """Even on decode failure, forbidden fields are structurally absent."""
-    import builtins
-
     class Boom:
         def transcribe(self, source, language=None, vad_filter=True, word_timestamps=False):
             raise RuntimeError("boom")
@@ -123,6 +170,9 @@ def test_failure_audit_absent_forbidden_fields(tmp_path, fake_model):
         runtime_config=_cfg(enabled=True),
         adapter=FasterWhisperAdapterFacade(Boom()),
         audit_logger=logger,
+        permission_engine=_engine(),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     with pytest.raises(SpeechError) as ei:
         service.transcribe(_request(source=str(f)))

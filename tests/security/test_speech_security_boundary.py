@@ -15,12 +15,15 @@ import json
 import pytest
 
 from paios_ce.audit import RedactedAuditLogger
+from paios_ce.permissions import PermissionEngine
 from paios_ce.config import load_runtime
 from paios_ce.speech.contracts import SpeechRuntimeConfig, TranscriptionRequest
 from paios_ce.speech.errors import SpeechError, SpeechErrorCode
-from paios_ce.speech.service import SpeechService
+from paios_ce.speech.service import SPEECH_CAPABILITY_ID, SpeechService
 
 from conftest import FakeModel, make_fake_model_factory, write_small_wav
+
+OWNER = "principal:example.invalid/owner-1"
 
 
 def _enabled_cfg():
@@ -43,6 +46,13 @@ def test_no_network_calls_in_service(tmp_path, fake_model, monkeypatch):
     service = SpeechService(
         runtime_config=_enabled_cfg(),
         adapter=FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model)),
+        permission_engine=PermissionEngine(
+            capabilities={SPEECH_CAPABILITY_ID},
+            owner_allowlist=[OWNER],
+            principal_id=OWNER,
+        ),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     result = service.transcribe(TranscriptionRequest(source=str(f)))
     assert result.status == "success"
@@ -57,6 +67,13 @@ def test_no_audio_copy_or_persistence(tmp_path, fake_model):
     service = SpeechService(
         runtime_config=_enabled_cfg(),
         adapter=FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model)),
+        permission_engine=PermissionEngine(
+            capabilities={SPEECH_CAPABILITY_ID},
+            owner_allowlist=[OWNER],
+            principal_id=OWNER,
+        ),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(TranscriptionRequest(source=str(f)))
     after = sorted(p.name for p in tmp_path.iterdir())
@@ -72,6 +89,13 @@ def test_audit_has_no_secret_like_keys(tmp_path, fake_model):
         runtime_config=_enabled_cfg(),
         adapter=FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model)),
         audit_logger=logger,
+        permission_engine=PermissionEngine(
+            capabilities={SPEECH_CAPABILITY_ID},
+            owner_allowlist=[OWNER],
+            principal_id=OWNER,
+        ),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(TranscriptionRequest(source=str(f)))
     payload = json.loads(logger.getvalue().strip().splitlines()[0])
@@ -95,6 +119,13 @@ def test_audit_event_schema_compliant(tmp_path, fake_model):
         runtime_config=_enabled_cfg(),
         adapter=FasterWhisperAdapter(model_factory=make_fake_model_factory(fake_model)),
         audit_logger=logger,
+        permission_engine=PermissionEngine(
+            capabilities={SPEECH_CAPABILITY_ID},
+            owner_allowlist=[OWNER],
+            principal_id=OWNER,
+        ),
+        principal_id=OWNER,
+        owner_allowlist=[OWNER],
     )
     service.transcribe(TranscriptionRequest(source=str(f)))
     events = logger.events()
