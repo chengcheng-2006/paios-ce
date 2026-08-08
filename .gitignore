@@ -56,3 +56,8 @@ huggingface/
 
 # Local validation renders (Chrome-headless review exports), never public
 docs/assets/diagrams/*-review.png
+
+# Local audit-round tooling and visual placement notes, never public
+/tools/r1_*.py
+/tools/r2_*.py
+/docs/README_VISUAL_PLACEMENT_PLAN.md

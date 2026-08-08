@@ -8,8 +8,8 @@ no other documentation may overclaim support beyond what is listed here.
 
 | Python version | Status | Notes |
 | --- | --- | --- |
-| 3.11 | **Validated** (Windows + Ubuntu) | Reference runtime for the public tree. All 261 tests pass and coverage gates are met on Windows and Ubuntu (remote CI matrix). |
-| 3.12 | **Validated** (Windows + Ubuntu) | Validated on Windows and Ubuntu in remote CI: 261 tests pass, coverage gates met, CLI and package build PASS. |
+| 3.11 | **Validated** (Windows + Ubuntu) | Reference runtime for the public tree. 298 tests pass + 1 Windows filesystem skip, and coverage gates are met on Windows and Ubuntu (remote CI matrix). |
+| 3.12 | **Validated** (Windows + Ubuntu) | Validated on Windows and Ubuntu in remote CI: 298 tests pass + 1 Windows filesystem skip, coverage gates met, CLI and package build PASS. |
 | 3.13 | Supplementary only | Validated opportunistically; not a release gate. |
 
 The `requires-python` field in `pyproject.toml` is `>=3.11`.
@@ -18,10 +18,10 @@ The `requires-python` field in `pyproject.toml` is `>=3.11`.
 
 Remote CI runs on GitHub Actions for every push to `main`:
 
-- 4 matrix jobs (Windows + Ubuntu × Python 3.11 + 3.12) × 261 tests,
-  0 failures / 0 errors / 0 skipped (1 symlink test is skipped on Windows
+- 4 matrix jobs (Windows + Ubuntu × Python 3.11 + 3.12) × 299 tests,
+  0 failures / 0 errors (1 symlink test is skipped on Windows
   where it requires elevation; it runs on Ubuntu).
-- line coverage 87.09%, branch coverage 74.63% (gates: 86.2% / 66.7%).
+- line coverage 87.83%, branch coverage 76.62% (gates: 86.2% / 66.7%).
 
 ## Capability support status
 

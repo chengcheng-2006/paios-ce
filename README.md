@@ -271,8 +271,8 @@ summary short so the runnable experience remains visible.
 | --- | --- |
 | Platforms | Windows + Ubuntu |
 | Python | 3.11 + 3.12 |
-| Existing test baseline | 261 tests per matrix job |
-| Line / branch coverage | 87.09% / 74.63% |
+| Existing test baseline | 298 passed + 1 filesystem skip |
+| Line / branch coverage | 87.83% / 76.62% |
 | Package | Wheel, sdist and clean-install smoke |
 | Security | Credential scan, forbidden-content scan and dependency audit |
 | Release | Public pre-release with anonymous source downloads |
