@@ -3,8 +3,26 @@
 ## Reporting
 
 This project is a release candidate. Do not open public issues for
-vulnerabilities. Use GitHub Security Advisories / private vulnerability
-reporting when available.
+vulnerabilities. When the public repository is launched, use GitHub's private
+vulnerability-reporting channel (Security Advisories) if it is enabled for the
+repository. Do not disclose exploitable details in a public issue.
+
+### What to include in a report
+
+- affected component and version or commit;
+- reproducible steps (placeholders only);
+- expected vs actual behavior;
+- impact assessment;
+- environment (OS, Python version, optional speech backend if relevant);
+- minimal sanitized evidence.
+
+## Security model scope
+
+PAIOS CE is an execution-control reference runtime. It does not claim to be a
+universal sandbox: it does not promise zero-risk execution, complete
+isolation, or absolute prevention of every failure mode. Its explicit
+fail-closed gate is described in detail in
+docs/SECURITY_MODEL.md and in the README security-boundary diagram.
 
 ## Security defaults (frozen)
 

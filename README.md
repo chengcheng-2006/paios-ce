@@ -292,6 +292,13 @@ without weakening coverage or workflow policy.
 - [Support matrix](SUPPORT_MATRIX.md)
 - [Contributing](CONTRIBUTING.md)
 
+## Community
+
+- [Contributing](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security policy](SECURITY.md)
+- [Support](SUPPORT.md)
+
 ## Next milestones
 
 The recommended order is:

@@ -281,6 +281,13 @@ Phase 9A保留全部既有门禁，并增加Local ASR专项测试，未削弱cov
 - [支持矩阵](SUPPORT_MATRIX.md)
 - [贡献指南](CONTRIBUTING.md)
 
+## 社区
+
+- [贡献指南](CONTRIBUTING.md)
+- [行为准则](CODE_OF_CONDUCT.md)
+- [安全政策](SECURITY.md)
+- [支持](SUPPORT.md)
+
 ## 下一里程碑
 
 建议顺序：

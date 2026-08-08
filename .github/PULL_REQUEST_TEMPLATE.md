@@ -28,6 +28,7 @@ paios-ce demo
 - [ ] Support claims do not exceed `SUPPORT_MATRIX.md`.
 - [ ] Live Provider, Channel, Speech, Hermes, or OpenClaw support is not implied unless separately accepted.
 - [ ] Redaction and deny-by-default behavior are preserved.
+- [ ] Generated JSON Schemas (if affected) were regenerated through the official generator: `python -m paios_ce.tools.generate_schemas --out schemas`; no hand-patched generated files.
 - [ ] Documentation links and Markdown render correctly.
 
 ## Release impact
