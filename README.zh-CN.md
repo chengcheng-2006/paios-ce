@@ -2,10 +2,11 @@
 
 # PAIOS CE
 
-### 一次只开放一项能力，逐步构建个人 AI Runtime
+**面向 AI Agent 开发者的本地优先执行控制参考运行时。**
 
-**今天先运行本地任务闭环。以后再加入语音、渠道、模型和 Worker——但每一项能力都
-必须有类型化合同、明确权限和可审计结果。**
+执行需要一道显式闸门。
+
+让决策可见，记录批准，然后执行——或停止。
 
 [![CI](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml)
 [![Package](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml)
@@ -195,28 +196,6 @@ flowchart LR
 
 ## 架构
 
-```mermaid
-flowchart LR
-    INPUT["CLI / 未来Channel"] --> CONTRACT["类型化输入合同"]
-    CONTRACT --> ORCH["Orchestrator"]
-    CONFIG["Runtime Config"] --> ORCH
-    SREF["SecretRef"] -. "只传引用" .-> CONFIG
-
-    ORCH --> ROUTER["Router"]
-    ROUTER --> MOCK["Mock Provider"]
-    ROUTER --> SPEECH["可选Local ASR"]
-
-    MOCK --> RESULT["类型化结果"]
-    SPEECH --> RESULT
-
-    ORCH --> POLICY["Capability与风险策略"]
-    POLICY -->|"在Scope内允许"| WORKER["限域Worker"]
-    POLICY -->|"拒绝 / 确认 / 阻断"| AUDIT["脱敏Audit"]
-
-    WORKER --> RESULT
-    RESULT --> AUDIT
-```
-
 ### 请求流程
 
 ![PAIOS CE 架构](docs/assets/diagrams/paios-ce-architecture.svg)
@@ -252,7 +231,7 @@ flowchart LR
 | `paios-ce demo` | 确定性本地文本闭环 |
 | `paios-ce validate-config` | 校验并显示脱敏有效配置 |
 | `paios-ce run-task FILE` | 运行类型化Task或评估Action |
-| `paios-ce transcribe FILE` | Phase 9A实验性本地文件转录 |
+| `paios-ce transcribe FILE` | 实验性本地文件转录 |
 
 ## 验证基线
 
@@ -266,8 +245,8 @@ flowchart LR
 | 安全 | 凭据扫描、禁止内容扫描与依赖审计 |
 | Release | 公开Pre-release，源码包可匿名下载 |
 
-Phase 9A保留全部既有门禁，并增加Local ASR专项测试，未削弱coverage scope
-或工作流策略。
+本地语音验证在保留全部既有门禁和工作流策略的同时，增加了 Local ASR 专项测试，
+未削弱 coverage 范围。
 
 ## 文档
 
@@ -288,20 +267,11 @@ Phase 9A保留全部既有门禁，并增加Local ASR专项测试，未削弱cov
 - [安全政策](SECURITY.md)
 - [支持](SUPPORT.md)
 
-## 下一里程碑
+## 路线图
 
-建议顺序：
+PAIOS CE 按能力逐步演进，同时保持类型化合同、显式权限闸门和可审计结果。
 
-1. Local ASR（Phase 9A分支：合同、策略、Adapter、CLI、测试）；
-2. 一个真实文本Provider；
-3. 飞书Owner-only私聊；
-4. 本地TTS；
-5. 只读文件Worker；
-6. 浏览器只读研究；
-7. 经过确认的可逆外部操作；
-8. 结构化Windows Worker。
-
-个人微信与高风险系统权限继续放在更后面的研究阶段。
+计划中的能力请参阅 [ROADMAP.md](docs/ROADMAP.md)。
 
 ## 许可证
 

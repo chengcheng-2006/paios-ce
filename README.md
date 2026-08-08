@@ -2,11 +2,11 @@
 
 # PAIOS CE
 
-### Build a personal AI runtime one capability at a time
+**Local-first execution-control reference runtime for AI agent builders.**
 
-**Run a local task loop today. Add speech, channels, providers and workers only
-when each capability has a typed contract, explicit permission and auditable
-result.**
+Execution needs an explicit gate.
+
+Make the decision visible. Record the approval. Execute—or stop.
 
 [![CI](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml)
 [![Package](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml)
@@ -205,28 +205,6 @@ See [`docs/CAPABILITY_ADMISSION.md`](docs/CAPABILITY_ADMISSION.md).
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    INPUT["CLI / future channel"] --> CONTRACT["Typed input contract"]
-    CONTRACT --> ORCH["Orchestrator"]
-    CONFIG["Runtime config"] --> ORCH
-    SREF["SecretRef"] -. "reference only" .-> CONFIG
-
-    ORCH --> ROUTER["Router"]
-    ROUTER --> MOCK["Mock Provider"]
-    ROUTER --> SPEECH["Optional Local ASR"]
-
-    MOCK --> RESULT["Typed result"]
-    SPEECH --> RESULT
-
-    ORCH --> POLICY["Capability & risk policy"]
-    POLICY -->|"allow within scope"| WORKER["Scoped worker"]
-    POLICY -->|"deny / confirm / block"| AUDIT["Redacted audit"]
-
-    WORKER --> RESULT
-    RESULT --> AUDIT
-```
-
 ### Request flow
 
 ![PAIOS CE architecture](docs/assets/diagrams/paios-ce-architecture.svg)
@@ -263,7 +241,7 @@ summary short so the runnable experience remains visible.
 | `paios-ce demo` | Deterministic local text-task loop |
 | `paios-ce validate-config` | Validate and display redacted effective configuration |
 | `paios-ce run-task FILE` | Run a typed task or evaluate an action fixture |
-| `paios-ce transcribe FILE` | Experimental local-file transcription (Phase 9A) |
+| `paios-ce transcribe FILE` | Experimental local-file transcription |
 
 ## Validation
 
@@ -277,8 +255,8 @@ summary short so the runnable experience remains visible.
 | Security | Credential scan, forbidden-content scan and dependency audit |
 | Release | Public pre-release with anonymous source downloads |
 
-Phase 9A preserves all existing gates and adds Local ASR-specific tests
-without weakening coverage or workflow policy.
+Local ASR validation adds speech-specific tests while preserving all existing
+gates and workflow policy.
 
 ## Documentation
 
@@ -299,20 +277,12 @@ without weakening coverage or workflow policy.
 - [Security policy](SECURITY.md)
 - [Support](SUPPORT.md)
 
-## Next milestones
+## Roadmap
 
-The recommended order is:
+PAIOS CE evolves capability by capability while keeping typed contracts,
+explicit permission gates, and auditable results.
 
-1. Local ASR (Phase 9A: contracts, policy, adapter, CLI, tests);
-2. one real text Provider;
-3. Feishu owner-only private messages;
-4. local TTS;
-5. a read-only file worker;
-6. browser read-only research;
-7. reversible, confirmed external actions;
-8. structured Windows workers.
-
-Personal WeChat and high-risk system permissions remain later research items.
+See [ROADMAP.md](docs/ROADMAP.md) for planned capabilities.
 
 ## License
 
