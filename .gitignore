@@ -48,3 +48,11 @@ models/
 huggingface/
 *.safetensors
 *.onnx
+
+# Phase evidence packages: internal audit artifacts, never public
+/phase9a_evidence/
+/phase9a_evidence_r1/
+/phase9a_evidence_r2/
+
+# Local validation renders (Chrome-headless review exports), never public
+docs/assets/diagrams/*-review.png
