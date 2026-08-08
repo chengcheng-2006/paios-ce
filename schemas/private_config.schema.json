@@ -107,6 +107,7 @@
     },
     "PrivateSpeech": {
       "additionalProperties": false,
+      "description": "Private speech configuration (Phase 9A).\n\nDefaults are privacy-first: the capability is disabled, model access is\nlocal-files-only, audio is read in place and never copied or retained,\ntranscripts are not persisted and not placed in audit events.",
       "properties": {
         "enabled": {
           "default": false,
@@ -143,6 +144,57 @@
           "default": false,
           "title": "Cloud Asr Opt In",
           "type": "boolean"
+        },
+        "local_files_only": {
+          "default": true,
+          "title": "Local Files Only",
+          "type": "boolean"
+        },
+        "max_file_size_mb": {
+          "default": 100,
+          "maximum": 10240,
+          "minimum": 1,
+          "title": "Max File Size Mb",
+          "type": "integer"
+        },
+        "max_duration_seconds": {
+          "default": 3600,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Max Duration Seconds",
+          "type": "integer"
+        },
+        "allowed_extensions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Extensions",
+          "type": "array"
+        },
+        "vad_filter": {
+          "default": true,
+          "title": "Vad Filter",
+          "type": "boolean"
+        },
+        "device": {
+          "default": "cpu",
+          "enum": [
+            "cpu",
+            "cuda",
+            "auto"
+          ],
+          "title": "Device",
+          "type": "string"
+        },
+        "compute_type": {
+          "default": "int8",
+          "title": "Compute Type",
+          "type": "string"
+        },
+        "default_model": {
+          "default": "tiny",
+          "title": "Default Model",
+          "type": "string"
         }
       },
       "title": "PrivateSpeech",

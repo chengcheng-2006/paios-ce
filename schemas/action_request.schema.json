@@ -113,6 +113,7 @@
       "type": "string"
     },
     "parameters": {
+      "additionalProperties": true,
       "title": "Parameters",
       "type": "object"
     },
