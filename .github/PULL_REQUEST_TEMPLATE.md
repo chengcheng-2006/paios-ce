@@ -34,6 +34,6 @@ paios-ce demo
 ## Release impact
 
 - [ ] No release required
-- [ ] Candidate for a future release after separate Owner authorization
+- [ ] Candidate for a future release after maintainer approval
 
 Do not move an existing tag or publish PyPI/Zenodo as part of this pull request.

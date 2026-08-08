@@ -68,8 +68,10 @@ Potential future work:
 
 ## Versioning
 
-The current public release is `v0.1.0-rc.1`.
+Published release candidates are available from
+[GitHub Releases](https://github.com/chengcheng-2006/paios-ce/releases).
+The `main` branch remains the development line for subsequent work.
 
-Documentation improvements merged after that tag do not change the historical
-source archive of `v0.1.0-rc.1`. A future release may include those improvements
-under a new tag after separate Owner authorization and validation.
+Documentation improvements merged after a tag do not change the historical
+source archive of that release. A future release may include those
+improvements under a new tag after maintainer approval and validation.

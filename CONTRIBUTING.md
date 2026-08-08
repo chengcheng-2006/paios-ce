@@ -3,7 +3,7 @@
 Thank you for your interest in contributing to PAIOS CE. PAIOS CE is a
 local-first execution-control reference runtime for AI agent builders.
 It is currently a public-core release candidate (clean-room scaffold);
-publication and release actions remain Owner-gated.
+publication and release actions remain maintainer-controlled.
 
 ## Ways to contribute
 
