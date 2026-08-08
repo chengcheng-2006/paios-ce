@@ -33,7 +33,7 @@ experimental adapter at a time.
 An adapter remains experimental until its end-to-end evidence passes. Its
 existence in a branch or skeleton does not mean it is supported.
 
-### Phase 9A — Local ASR (development line)
+### Local ASR
 
 - typed speech contracts (`TranscriptionRequest` / `TranscriptionResult` / ...);
 - audio input policy (extension / size / duration allowlists, read-only);

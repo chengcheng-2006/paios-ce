@@ -55,7 +55,7 @@ authoritative status of every capability is recorded in
 [`SUPPORT_MATRIX.md`](../SUPPORT_MATRIX.md); no other document may overclaim
 beyond it.
 
-## Local ASR (Phase 9A)
+## Local ASR
 
 Local file ASR (`SPEECH_TRANSCRIBE_LOCAL` / `speech.transcribe_local`) is the
 first real capability admitted after the Mock-only release.
@@ -83,7 +83,7 @@ first real capability admitted after the Mock-only release.
 
 | Order | Capability | Initial status | Risk |
 | ---: | --- | --- | --- |
-| 1 | Local file ASR | EXPERIMENTAL (Phase 9A) | Low |
+| 1 | Local file ASR | EXPERIMENTAL | Low |
 | 2 | One real text Provider | Planned | Medium |
 | 3 | Feishu owner-only DM | Planned | Medium |
 | 4 | Local TTS | Planned | Low |

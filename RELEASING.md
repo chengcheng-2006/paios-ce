@@ -21,8 +21,8 @@ PAIOS CE follows [Semantic Versioning](https://semver.org/):
 
 Version mapping for the current candidate:
 
-- Git tag / human version: `0.1.0-rc.1`
-- Python package version (PEP 440): `0.1.0rc1`
+- Git tag / human version: `0.1.0-rc.2`
+- Python package version (PEP 440): `0.1.0rc2`
 
 ## Release Steps (publication gate)
 
@@ -35,7 +35,9 @@ Version mapping for the current candidate:
 
 ## Current Status
 
-The current candidate tag is `v0.1.0-rc.1`; the candidate tag exists in the repository.
+The current release-candidate line is `v0.1.0-rc.2` (package `0.1.0rc2`);
+the tag has not been created yet — it will be created at the Owner-authorized
+remote step. The previous candidate tag `v0.1.0-rc.1` exists in the repository.
 
 GitHub Release has not been created. PyPI and Zenodo are not authorized.
 

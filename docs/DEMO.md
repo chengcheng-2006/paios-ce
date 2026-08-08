@@ -82,7 +82,7 @@ Use the repository's negative fixtures and tests to verify that:
 - out-of-scope filesystem or network targets deny execution;
 - replayed actions are detected according to policy.
 
-## Local ASR preview (Phase 9A development line)
+## Local ASR preview
 
 Install the optional speech dependency:
 

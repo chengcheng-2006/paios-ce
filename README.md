@@ -24,10 +24,8 @@ Make the decision visible. Record the approval. Execute—or stop.
 </div>
 
 > [!NOTE]
-> The latest published source release is
-> [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1).
-> The `main` branch is the development line for the next candidate and may
-> contain newer experimental capabilities.
+> The `main` branch is the development line. Stable release candidates are
+> available from GitHub Releases.
 
 ---
 

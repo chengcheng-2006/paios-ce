@@ -40,7 +40,7 @@ Thumbs.db
 /audit/
 *.audit.jsonl
 
-# Phase 9A speech: model weights and caches are never committed
+# Local ASR speech: model weights and caches are never committed
 models/
 *.bin
 *.ct2

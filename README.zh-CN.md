@@ -24,9 +24,7 @@
 </div>
 
 > [!NOTE]
-> 当前已发布版本仍为
-> [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1)。
-> `main` 是下一个候选版本的开发线，可能包含更新的实验能力。
+> `main` 为开发分支；已发布的候选版本请参阅 GitHub Releases。
 
 ---
 

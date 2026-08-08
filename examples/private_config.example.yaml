@@ -34,7 +34,7 @@ speech:
   temp_audio_delete: true
   transcript_retention_days: 0
   cloud_asr_opt_in: false
-  # Phase 9A local ASR defaults (safe, local-files-only, read-only input).
+  # Local ASR defaults (safe, local-files-only, read-only input).
   local_files_only: true
   max_file_size_mb: 100
   max_duration_seconds: 3600

@@ -33,7 +33,7 @@ release candidate.
 
 ## Can it transcribe local audio?
 
-On the Phase 9A development line, `paios-ce transcribe FILE` can transcribe a
+On the current development line, `paios-ce transcribe FILE` can transcribe a
 local audio file through the optional faster-whisper adapter (install with
 `pip install -e ".[dev,speech]"`). Speech is disabled by default
 (`speech.enabled = false`) and defaults to local-files-only. See
