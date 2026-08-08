@@ -203,6 +203,10 @@ flowchart LR
     RESULT --> AUDIT
 ```
 
+### 请求流程
+
+![PAIOS CE 架构](docs/assets/diagrams/paios-ce-architecture.svg)
+
 ## 产品边界
 
 当前项目仍是Release Candidate和公共核心脚手架，不包含：
@@ -217,6 +221,10 @@ flowchart LR
 - 生产版Hermes/OpenClaw集成。
 
 这些是未来Adapter，不是当前支持声明。
+
+### 执行闸门
+
+![PAIOS CE 安全边界](docs/assets/diagrams/paios-ce-security-boundary.svg)
 
 详细安全模型继续放在
 [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md)，README只保留简短边界，让真正可运行

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PAIOS CE — Security Boundary
+  Answers: where is the explicit gate between an agent's decision and real execution?
+  Source of truth: docs/SECURITY_MODEL.md, README.md, SUPPORT_MATRIX.md (main branch)
+  Self-contained SVG. No scripts, no external resources, no embedded HTML.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" role="img" aria-labelledby="title desc">
+  <title id="title">PAIOS CE security boundary</title>
+  <desc id="desc">An agent request or intent passes through an explicit execution gate. Allowed decisions reach scoped execution; denied, unconfirmed or blocked decisions stop with no execution. Every outcome is recorded as a redacted audit event.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#57606a"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a7f37"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#cf222e"/>
+    </marker>
+  </defs>
+
+  <!-- Fixed background layer: readable on both GitHub light and dark themes -->
+  <rect x="0" y="0" width="900" height="640" fill="#ffffff"/>
+
+  <text x="40" y="42" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="20" font-weight="700" fill="#1f2328">PAIOS CE — Security Boundary</text>
+  <text x="40" y="66" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="13" fill="#57606a">Where is the gate between an agent&apos;s decision and real execution?</text>
+
+  <!-- REQUEST / INTENT -->
+  <g>
+    <rect x="290" y="100" width="320" height="70" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="450" y="134" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="16" font-weight="700" fill="#1f2328">REQUEST / INTENT</text>
+    <text x="450" y="156" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">Agent decision, not yet execution</text>
+  </g>
+
+  <line x1="450" y1="170" x2="450" y2="212" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- EXPLICIT EXECUTION GATE (the focal point) -->
+  <g>
+    <rect x="190" y="216" width="520" height="96" rx="12" fill="#fff8c5" stroke="#d4a72c" stroke-width="2.5"/>
+    <text x="450" y="258" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="19" font-weight="800" fill="#5b4400">EXPLICIT EXECUTION GATE</text>
+    <text x="450" y="282" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="12.5" fill="#7d5d00">Permission Engine — capability, scope, risk, confirmation, replay</text>
+  </g>
+
+  <line x1="450" y1="312" x2="450" y2="354" stroke="#57606a" stroke-width="1.5"/>
+
+  <!-- ALLOW / DENY split -->
+  <g>
+    <rect x="120" y="358" width="240" height="64" rx="10" fill="#dafbe1" stroke="#1a7f37" stroke-width="1.5"/>
+    <text x="240" y="390" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="16" font-weight="700" fill="#0f5132">ALLOW</text>
+    <text x="240" y="410" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" fill="#2c7a4b">within declared scope</text>
+  </g>
+  <g>
+    <rect x="540" y="358" width="240" height="64" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+    <text x="660" y="390" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="16" font-weight="700" fill="#82071e">DENY</text>
+    <text x="660" y="410" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" fill="#a40e26">unknown · unconfirmed · blocked</text>
+  </g>
+
+  <!-- Gate to ALLOW (green) -->
+  <path d="M 450 312 L 450 330 L 240 330 L 240 354" fill="none" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <!-- Gate to DENY (red) -->
+  <path d="M 450 312 L 450 330 L 660 330 L 660 354" fill="none" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+
+  <!-- EXECUTION -->
+  <g>
+    <rect x="120" y="452" width="240" height="70" rx="10" fill="#dafbe1" stroke="#1a7f37" stroke-width="1.5"/>
+    <text x="240" y="484" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="16" font-weight="700" fill="#0f5132">EXECUTION</text>
+    <text x="240" y="506" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#2c7a4b">scoped Mock Worker</text>
+  </g>
+
+  <!-- STOP -->
+  <g>
+    <rect x="540" y="452" width="240" height="70" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+    <text x="660" y="484" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="16" font-weight="700" fill="#82071e">STOP</text>
+    <text x="660" y="506" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#a40e26">no execution</text>
+  </g>
+
+  <line x1="240" y1="422" x2="240" y2="448" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <line x1="660" y1="422" x2="660" y2="448" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+
+  <!-- Audit -->
+  <line x1="240" y1="522" x2="240" y2="554" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="660" y1="522" x2="660" y2="554" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="150" y="558" width="600" height="62" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="450" y="587" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Redacted AuditEvent — every decision recorded</text>
+    <text x="450" y="608" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">no raw secrets · no full environment · no private paths</text>
+  </g>
+
+  <!-- Footer note -->
+  <text x="40" y="636" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="10.5" fill="#8c959f">Unknown, critical, administrator and arbitrary-shell operations are hard-blocked before execution (docs/SECURITY_MODEL.md).</text>
+</svg>

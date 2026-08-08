@@ -213,6 +213,10 @@ flowchart LR
     RESULT --> AUDIT
 ```
 
+### Request flow
+
+![PAIOS CE architecture](docs/assets/diagrams/paios-ce-architecture.svg)
+
 ## Product boundaries
 
 The current project is a release candidate and a public-core scaffold. It does
@@ -228,6 +232,10 @@ not ship:
 - production Hermes/OpenClaw integration.
 
 Those are future adapters, not current support claims.
+
+### The execution gate
+
+![PAIOS CE security boundary](docs/assets/diagrams/paios-ce-security-boundary.svg)
 
 Detailed trust boundaries live in
 [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md). The README keeps the safety
