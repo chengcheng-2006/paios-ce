@@ -93,6 +93,13 @@ paios-ce run-task examples/demo_task.json
 
 No API key is required for the bundled Mock Provider.
 
+### Blocked action
+
+A request with an explicitly rejected unknown action is stopped before execution.
+The demo shows `decision: blocked`, `execution_attempted: false`, and a blocked exit result.
+
+![PAIOS CE blocked demo](docs/assets/demo/paios-ce-blocked-demo.gif)
+
 ### Local speech preview
 
 On the current main development line, install the optional speech dependency:
@@ -161,6 +168,13 @@ audit event by default.
 
 The authoritative status is maintained in
 [`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md).
+
+### Allowed action
+
+A low-risk request within the granted scope is allowed to proceed.
+The demo shows `decision: allow`, `risk_level: LOW`, and a successful exit result.
+
+![PAIOS CE allowed demo](docs/assets/demo/paios-ce-allowed-demo.gif)
 
 ## How PAIOS CE grows
 

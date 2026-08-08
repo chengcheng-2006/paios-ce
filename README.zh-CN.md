@@ -89,6 +89,13 @@ paios-ce run-task examples/demo_task.json
 
 内置 Mock Provider 不需要联网和 API Key。
 
+### 被阻止的动作
+
+一个被显式拒绝的未知动作请求会在执行前被拦下。
+这个演示展示了 `decision: blocked`、`execution_attempted: false`，以及阻止后的退出结果。
+
+![PAIOS CE 被阻止演示](docs/assets/demo/paios-ce-blocked-demo.gif)
+
 ### 本地语音识别预览
 
 在当前 main 开发线上，安装可选语音依赖：
@@ -153,6 +160,13 @@ CLI输入
 | 任意Shell/管理员权限 | Blocked | 关闭 | 不作为通用能力 |
 
 权威状态见 [`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md)。
+
+### 被允许的动作
+
+一个处于已授权范围内的低风险请求会被允许执行。
+这个演示展示了 `decision: allow`、`risk_level: LOW`，以及成功退出结果。
+
+![PAIOS CE 被允许演示](docs/assets/demo/paios-ce-allowed-demo.gif)
 
 ## PAIOS CE 如何逐步成长
 
