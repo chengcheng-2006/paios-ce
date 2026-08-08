@@ -21,7 +21,7 @@ AI orchestration.
 ## Capabilities
 
 - [Local ASR (Phase 9A)](LOCAL_ASR.md)
-- [Capability admission](../docs/CAPABILITY_ADMISSION.md)
+- [Capability admission](CAPABILITY_ADMISSION.md)
 
 ## Project governance
 
