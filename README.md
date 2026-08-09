@@ -2,11 +2,11 @@
 
 # PAIOS CE
 
-### Build a personal AI runtime one capability at a time
+**Local-first execution-control reference runtime for AI agent builders.**
 
-**Run a local task loop today. Add speech, channels, providers and workers only
-when each capability has a typed contract, explicit permission and auditable
-result.**
+Execution needs an explicit gate.
+
+Make the decision visible. Record the approval. Execute—or stop.
 
 [![CI](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml)
 [![Package](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml)
@@ -24,10 +24,8 @@ result.**
 </div>
 
 > [!NOTE]
-> The latest published source release is
-> [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1).
-> The `main` branch is the development line for the next candidate and may
-> contain newer experimental capabilities.
+> The `main` branch is the development line. Stable release candidates are
+> available from GitHub Releases.
 
 ---
 
@@ -92,6 +90,13 @@ paios-ce run-task examples/demo_task.json
 ```
 
 No API key is required for the bundled Mock Provider.
+
+### Blocked action
+
+A request with an explicitly rejected unknown action is stopped before execution.
+The demo shows `decision: blocked`, `execution_attempted: false`, and a blocked exit result.
+
+![PAIOS CE blocked demo](docs/assets/demo/paios-ce-blocked-demo.gif)
 
 ### Local speech preview
 
@@ -162,6 +167,13 @@ audit event by default.
 The authoritative status is maintained in
 [`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md).
 
+### Allowed action
+
+A low-risk request within the granted scope is allowed to proceed.
+The demo shows `decision: allow`, `risk_level: LOW`, and a successful exit result.
+
+![PAIOS CE allowed demo](docs/assets/demo/paios-ce-allowed-demo.gif)
+
 ## How PAIOS CE grows
 
 PAIOS CE uses **progressive capability admission**:
@@ -191,27 +203,9 @@ See [`docs/CAPABILITY_ADMISSION.md`](docs/CAPABILITY_ADMISSION.md).
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    INPUT["CLI / future channel"] --> CONTRACT["Typed input contract"]
-    CONTRACT --> ORCH["Orchestrator"]
-    CONFIG["Runtime config"] --> ORCH
-    SREF["SecretRef"] -. "reference only" .-> CONFIG
+### Request flow
 
-    ORCH --> ROUTER["Router"]
-    ROUTER --> MOCK["Mock Provider"]
-    ROUTER --> SPEECH["Optional Local ASR"]
-
-    MOCK --> RESULT["Typed result"]
-    SPEECH --> RESULT
-
-    ORCH --> POLICY["Capability & risk policy"]
-    POLICY -->|"allow within scope"| WORKER["Scoped worker"]
-    POLICY -->|"deny / confirm / block"| AUDIT["Redacted audit"]
-
-    WORKER --> RESULT
-    RESULT --> AUDIT
-```
+![PAIOS CE architecture](docs/assets/diagrams/paios-ce-architecture.svg)
 
 ## Product boundaries
 
@@ -229,6 +223,10 @@ not ship:
 
 Those are future adapters, not current support claims.
 
+### The execution gate
+
+![PAIOS CE security boundary](docs/assets/diagrams/paios-ce-security-boundary.svg)
+
 Detailed trust boundaries live in
 [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md). The README keeps the safety
 summary short so the runnable experience remains visible.
@@ -241,7 +239,7 @@ summary short so the runnable experience remains visible.
 | `paios-ce demo` | Deterministic local text-task loop |
 | `paios-ce validate-config` | Validate and display redacted effective configuration |
 | `paios-ce run-task FILE` | Run a typed task or evaluate an action fixture |
-| `paios-ce transcribe FILE` | Experimental local-file transcription (Phase 9A) |
+| `paios-ce transcribe FILE` | Experimental local-file transcription |
 
 ## Validation
 
@@ -249,14 +247,14 @@ summary short so the runnable experience remains visible.
 | --- | --- |
 | Platforms | Windows + Ubuntu |
 | Python | 3.11 + 3.12 |
-| Existing test baseline | 261 tests per matrix job |
-| Line / branch coverage | 87.09% / 74.63% |
+| Existing test baseline | 298 passed + 1 filesystem skip |
+| Line / branch coverage | 87.83% / 76.62% |
 | Package | Wheel, sdist and clean-install smoke |
 | Security | Credential scan, forbidden-content scan and dependency audit |
 | Release | Public pre-release with anonymous source downloads |
 
-Phase 9A preserves all existing gates and adds Local ASR-specific tests
-without weakening coverage or workflow policy.
+Local ASR validation adds speech-specific tests while preserving all existing
+gates and workflow policy.
 
 ## Documentation
 
@@ -270,20 +268,19 @@ without weakening coverage or workflow policy.
 - [Support matrix](SUPPORT_MATRIX.md)
 - [Contributing](CONTRIBUTING.md)
 
-## Next milestones
+## Community
 
-The recommended order is:
+- [Contributing](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security policy](SECURITY.md)
+- [Support](SUPPORT.md)
 
-1. Local ASR (Phase 9A: contracts, policy, adapter, CLI, tests);
-2. one real text Provider;
-3. Feishu owner-only private messages;
-4. local TTS;
-5. a read-only file worker;
-6. browser read-only research;
-7. reversible, confirmed external actions;
-8. structured Windows workers.
+## Roadmap
 
-Personal WeChat and high-risk system permissions remain later research items.
+PAIOS CE evolves capability by capability while keeping typed contracts,
+explicit permission gates, and auditable results.
+
+See [ROADMAP.md](docs/ROADMAP.md) for planned capabilities.
 
 ## License
 

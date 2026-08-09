@@ -20,8 +20,8 @@ AI orchestration.
 
 ## Capabilities
 
-- [Local ASR (Phase 9A)](LOCAL_ASR.md)
-- [Capability admission](../docs/CAPABILITY_ADMISSION.md)
+- [Local ASR](LOCAL_ASR.md)
+- [Capability admission](CAPABILITY_ADMISSION.md)
 
 ## Project governance
 
@@ -39,6 +39,6 @@ Current public pre-release:
 [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1).
 
 The release candidate includes a Mock Provider and CLI, plus an optional
-Local ASR capability on the Phase 9A development line. It does not ship live
+Local ASR capability on the current development line. It does not ship live
 providers, live channels, production speech, shell execution, remote
 execution, or production Hermes/OpenClaw integration.

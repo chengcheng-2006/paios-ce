@@ -21,26 +21,28 @@ PAIOS CE follows [Semantic Versioning](https://semver.org/):
 
 Version mapping for the current candidate:
 
-- Git tag / human version: `0.1.0-rc.1`
-- Python package version (PEP 440): `0.1.0rc1`
+- Git tag / human version: `0.1.0-rc.2`
+- Python package version (PEP 440): `0.1.0rc2`
 
 ## Release Steps (publication gate)
 
 1. Update version in `pyproject.toml`
 2. Update `CHANGELOG.md`
 3. Create annotated tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
-4. Push tag to remote (requires Owner authorization)
-5. Create GitHub Release (requires Owner authorization)
-6. Upload to PyPI (requires Owner authorization)
+4. Push tag to remote (requires maintainer authorization)
+5. Create GitHub Release (requires maintainer authorization)
+6. Upload to PyPI (requires maintainer authorization)
 
 ## Current Status
 
-The current candidate tag is `v0.1.0-rc.1`; the candidate tag exists in the repository.
+The current release-candidate line is `v0.1.0-rc.2` (package `0.1.0rc2`);
+the tag has not been created yet — it will be created at the maintainer-authorized
+remote step. The previous candidate tag `v0.1.0-rc.1` exists in the repository.
 
 GitHub Release has not been created. PyPI and Zenodo are not authorized.
 
 Publication actions (public transition, GitHub Release, PyPI, Zenodo) require
-explicit Owner authorization.
+explicit maintainer authorization.
 
 ## Security Requirements
 

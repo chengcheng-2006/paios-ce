@@ -20,7 +20,7 @@ are listed. Unused components are NOT listed.
 | coverage | >=7,<8 | Coverage measurement | Apache-2.0 |
 | pytest-cov | >=5,<8 | pytest plugin: `--cov`, `--cov-branch`, `--cov-report` options | MIT |
 
-## Build-time only (R1 closure `_build_tools`, not runtime)
+## Build-time only (`_build_tools`, not runtime)
 
 | Component | Version | Purpose | License |
 |---|---|---|---|
@@ -34,7 +34,7 @@ These three packages are borrowed read-only for the **offline build only**
 They appear in the Delivery ZIP only as build-environment evidence, with their
 license files intact. See the build-time table above.
 
-## Optional runtime dependencies (Phase 9A `speech` extra)
+## Optional runtime dependencies (Local ASR `speech` extra)
 
 | Component | Version constraint | Purpose | License |
 |---|---|---|---|

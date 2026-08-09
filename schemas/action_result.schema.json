@@ -114,6 +114,7 @@
       "default": "failure"
     },
     "outcome": {
+      "additionalProperties": true,
       "title": "Outcome",
       "type": "object"
     },

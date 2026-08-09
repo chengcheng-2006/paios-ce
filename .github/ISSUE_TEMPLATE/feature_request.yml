@@ -25,6 +25,18 @@ body:
       required: true
 
   - type: textarea
+    id: fit
+    attributes:
+      label: Why this belongs in PAIOS CE
+      description: How does this fit the local-first execution-control runtime boundary? Does it require a live integration or a new capability admission?
+
+  - type: textarea
+    id: security
+    attributes:
+      label: Security / permission implications
+      description: What are the permission, redaction, deny-by-default, or fail-closed implications of this feature?
+
+  - type: textarea
     id: alternatives
     attributes:
       label: Alternatives Considered

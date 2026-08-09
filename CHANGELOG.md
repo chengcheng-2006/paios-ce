@@ -6,9 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 for its release tags.
 
-## [Unreleased]
+## [0.1.0-rc.2] - 2026-08-09
 
-### Added (Phase 9A development line)
+### Added
 - Local file ASR capability: typed speech contracts, audio input policy,
   optional faster-whisper adapter, and orchestration service.
 - CLI command `paios-ce transcribe FILE` with stable structured error codes
@@ -23,7 +23,8 @@ for its release tags.
 ### Changed
 - Speech capability status: PLANNED -> EXPERIMENTAL (real-model smoke passed on
   a runtime where faster-whisper/CTranslate2 can load).
-- Development version `0.1.0rc2.dev0` (no rc.2 tag or Release created).
+- Release candidate version `0.1.0rc2` (tag `v0.1.0-rc.2`); supersedes the
+  development line `0.1.0rc2.dev0`.
 
 ### Security
 - Transcript text and absolute source paths are structurally absent from

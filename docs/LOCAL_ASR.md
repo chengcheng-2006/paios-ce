@@ -6,7 +6,7 @@ file-transcription path.
 
 ## Scope
 
-Phase 9A supports:
+Local ASR supports:
 
 ```text
 one existing local audio file
@@ -144,7 +144,8 @@ compute_type = int8
 local_files_only = true
 ```
 
-CUDA may be tested as supplementary behavior but is not required for Phase 9A
+CUDA may be tested as supplementary behavior but is not required for the
+local ASR capability
 acceptance.
 
 ## Model licensing

@@ -2,10 +2,11 @@
 
 # PAIOS CE
 
-### 一次只开放一项能力，逐步构建个人 AI Runtime
+**面向 AI Agent 开发者的本地优先执行控制参考运行时。**
 
-**今天先运行本地任务闭环。以后再加入语音、渠道、模型和 Worker——但每一项能力都
-必须有类型化合同、明确权限和可审计结果。**
+执行需要一道显式闸门。
+
+让决策可见，记录批准，然后执行——或停止。
 
 [![CI](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/ci.yml)
 [![Package](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml/badge.svg)](https://github.com/chengcheng-2006/paios-ce/actions/workflows/package.yml)
@@ -23,9 +24,7 @@
 </div>
 
 > [!NOTE]
-> 当前已发布版本仍为
-> [`v0.1.0-rc.1`](https://github.com/chengcheng-2006/paios-ce/releases/tag/v0.1.0-rc.1)。
-> `main` 是下一个候选版本的开发线，可能包含更新的实验能力。
+> `main` 为开发分支；已发布的候选版本请参阅 GitHub Releases。
 
 ---
 
@@ -88,6 +87,13 @@ paios-ce run-task examples/demo_task.json
 ```
 
 内置 Mock Provider 不需要联网和 API Key。
+
+### 被阻止的动作
+
+一个被显式拒绝的未知动作请求会在执行前被拦下。
+这个演示展示了 `decision: blocked`、`execution_attempted: false`，以及阻止后的退出结果。
+
+![PAIOS CE 被阻止演示](docs/assets/demo/paios-ce-blocked-demo.gif)
 
 ### 本地语音识别预览
 
@@ -154,6 +160,13 @@ CLI输入
 
 权威状态见 [`SUPPORT_MATRIX.md`](SUPPORT_MATRIX.md)。
 
+### 被允许的动作
+
+一个处于已授权范围内的低风险请求会被允许执行。
+这个演示展示了 `decision: allow`、`risk_level: LOW`，以及成功退出结果。
+
+![PAIOS CE 被允许演示](docs/assets/demo/paios-ce-allowed-demo.gif)
+
 ## PAIOS CE 如何逐步成长
 
 ```mermaid
@@ -181,27 +194,9 @@ flowchart LR
 
 ## 架构
 
-```mermaid
-flowchart LR
-    INPUT["CLI / 未来Channel"] --> CONTRACT["类型化输入合同"]
-    CONTRACT --> ORCH["Orchestrator"]
-    CONFIG["Runtime Config"] --> ORCH
-    SREF["SecretRef"] -. "只传引用" .-> CONFIG
+### 请求流程
 
-    ORCH --> ROUTER["Router"]
-    ROUTER --> MOCK["Mock Provider"]
-    ROUTER --> SPEECH["可选Local ASR"]
-
-    MOCK --> RESULT["类型化结果"]
-    SPEECH --> RESULT
-
-    ORCH --> POLICY["Capability与风险策略"]
-    POLICY -->|"在Scope内允许"| WORKER["限域Worker"]
-    POLICY -->|"拒绝 / 确认 / 阻断"| AUDIT["脱敏Audit"]
-
-    WORKER --> RESULT
-    RESULT --> AUDIT
-```
+![PAIOS CE 架构](docs/assets/diagrams/paios-ce-architecture.svg)
 
 ## 产品边界
 
@@ -218,6 +213,10 @@ flowchart LR
 
 这些是未来Adapter，不是当前支持声明。
 
+### 执行闸门
+
+![PAIOS CE 安全边界](docs/assets/diagrams/paios-ce-security-boundary.svg)
+
 详细安全模型继续放在
 [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md)，README只保留简短边界，让真正可运行
 的产品体验更靠前。
@@ -230,7 +229,7 @@ flowchart LR
 | `paios-ce demo` | 确定性本地文本闭环 |
 | `paios-ce validate-config` | 校验并显示脱敏有效配置 |
 | `paios-ce run-task FILE` | 运行类型化Task或评估Action |
-| `paios-ce transcribe FILE` | Phase 9A实验性本地文件转录 |
+| `paios-ce transcribe FILE` | 实验性本地文件转录 |
 
 ## 验证基线
 
@@ -238,14 +237,14 @@ flowchart LR
 | --- | --- |
 | 平台 | Windows + Ubuntu |
 | Python | 3.11 + 3.12 |
-| 现有测试基线 | 每个矩阵任务261项 |
-| 行/分支覆盖率 | 87.09% / 74.63% |
+| 现有测试基线 | 298 通过 + 1 文件系统跳过 |
+| 行/分支覆盖率 | 87.83% / 76.62% |
 | 打包 | Wheel、sdist与干净安装冒烟 |
 | 安全 | 凭据扫描、禁止内容扫描与依赖审计 |
 | Release | 公开Pre-release，源码包可匿名下载 |
 
-Phase 9A保留全部既有门禁，并增加Local ASR专项测试，未削弱coverage scope
-或工作流策略。
+本地语音验证在保留全部既有门禁和工作流策略的同时，增加了 Local ASR 专项测试，
+未削弱 coverage 范围。
 
 ## 文档
 
@@ -259,20 +258,18 @@ Phase 9A保留全部既有门禁，并增加Local ASR专项测试，未削弱cov
 - [支持矩阵](SUPPORT_MATRIX.md)
 - [贡献指南](CONTRIBUTING.md)
 
-## 下一里程碑
+## 社区
 
-建议顺序：
+- [贡献指南](CONTRIBUTING.md)
+- [行为准则](CODE_OF_CONDUCT.md)
+- [安全政策](SECURITY.md)
+- [支持](SUPPORT.md)
 
-1. Local ASR（Phase 9A分支：合同、策略、Adapter、CLI、测试）；
-2. 一个真实文本Provider；
-3. 飞书Owner-only私聊；
-4. 本地TTS；
-5. 只读文件Worker；
-6. 浏览器只读研究；
-7. 经过确认的可逆外部操作；
-8. 结构化Windows Worker。
+## 路线图
 
-个人微信与高风险系统权限继续放在更后面的研究阶段。
+PAIOS CE 按能力逐步演进，同时保持类型化合同、显式权限闸门和可审计结果。
+
+计划中的能力请参阅 [ROADMAP.md](docs/ROADMAP.md)。
 
 ## 许可证
 

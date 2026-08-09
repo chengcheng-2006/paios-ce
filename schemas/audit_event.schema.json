@@ -111,6 +111,7 @@
       "type": "string"
     },
     "redacted_details": {
+      "additionalProperties": true,
       "title": "Redacted Details",
       "type": "object"
     }

@@ -5,5 +5,5 @@ Local Git history is clean-room and isolated from production.
 
 - clean-room Git history
 - remote CI complete (Windows + Ubuntu, Python 3.11/3.12)
-- publication remains Owner-gated
+- publication remains maintainer-controlled
 - no production history or secret material

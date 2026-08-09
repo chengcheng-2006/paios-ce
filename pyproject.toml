@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paios-ce"
-version = "0.1.0rc2.dev0"
+version = "0.1.0rc2"
 description = "PAIOS CE clean-room public core scaffold for a privacy-preserving personal AI orchestrator"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -32,7 +32,7 @@ dev = [
     "coverage>=7,<8",
     "pytest-cov>=5,<8",
 ]
-# Phase 9A: optional local speech-to-text. Kept out of the base install so the
+# Local ASR: optional local speech-to-text. Kept out of the base install so the
 # base package and all existing CLI commands work without it. Verified range:
 # faster-whisper 1.2.1 (current upstream) ships Python 3.11/3.12 wheels and
 # supports WhisperModel(..., local_files_only=True), device cpu/cuda/auto,
