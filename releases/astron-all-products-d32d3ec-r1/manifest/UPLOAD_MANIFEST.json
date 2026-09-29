@@ -1,89 +1,18 @@
 {
-  "upload": {
-    "branch": "delivery/astron-all-products-d32d3ec-r1",
-    "base_remote_main": "c0a60b2cecabd43634992d1b0871881087619d82",
-    "scope": "curated public source plus user-facing competition documents and localized static demo",
-    "is_formal_release": false,
-    "history": "review branch based on the existing public main; curated snapshot stored under releases/, not a clean-room release history",
-    "main_merged": false,
-    "tag_or_github_release_created": false
+  "project": "Astron",
+  "description": "面向 AI Agent 的可恢复、可验证执行治理运行时及其中文展示材料。",
+  "materials": {
+    "product_source": "source/",
+    "technical_and_competition_documents": "competition/docs/",
+    "presentation_materials": "competition/showcase/",
+    "demo_evidence_map": "competition/demo_evidence/",
+    "chinese_visual_demo": "competition/visual/",
+    "review_package": "dist/ASTRON_COMPETITION_REVIEW_PACKAGE_V1.zip"
   },
-  "input_archive": {
-    "filename": "Astron-All-Products-d32d3ec-R1.zip",
-    "size_bytes": 7435829,
-    "sha256": "84fd2e72fc80c8a84a9d1fe08f5fb65256f5369d2007372ee8e0dca1761ff413",
-    "outer_zip_crc": "PASS",
-    "nested_dist_archives": [
-      {
-        "name": "Astron-Competition-Submission-Pack-d32d3ec-R1.zip",
-        "expected_sha256": "de4dae6d350e0f4a1de1c5d619891bc1a5ba72f9e17a6874f2707d2f50807245",
-        "actual_sha256": "de4dae6d350e0f4a1de1c5d619891bc1a5ba72f9e17a6874f2707d2f50807245",
-        "match": true
-      },
-      {
-        "name": "Astron-Competition-Kit-d32d3ec-R1.zip",
-        "expected_sha256": "60c0859dc74144629000cecb8346e3910eebc0f60b437372425628f2fef5699b",
-        "actual_sha256": "60c0859dc74144629000cecb8346e3910eebc0f60b437372425628f2fef5699b",
-        "match": true
-      },
-      {
-        "name": "Astron-Project-Kit-d32d3ec.zip",
-        "expected_sha256": "e2a0419f0f5cdaffbdfd1ecc0d545a602fa6e9dae345b3ea8350a19a4abbeb0a",
-        "actual_sha256": "e2a0419f0f5cdaffbdfd1ecc0d545a602fa6e9dae345b3ea8350a19a4abbeb0a",
-        "match": true
-      },
-      {
-        "name": "Astron-Source-Snapshot-d32d3ec.zip",
-        "expected_sha256": "1f75dc9f9c6cf7a09dce1fc1d44cd889d253bb3e3a121449cc0c08348dfae1c1",
-        "actual_sha256": "1f75dc9f9c6cf7a09dce1fc1d44cd889d253bb3e3a121449cc0c08348dfae1c1",
-        "match": true
-      }
-    ]
-  },
-  "source_snapshot": {
-    "upstream_commit": "d32d3ec1bc49a78d0b14aabb6bf0daf79d3f4d88",
-    "upstream_tree": "c6953180dcd732c425e77b0acd004321a39837ac",
-    "source_path_in_input": "Astron-Delivery/project/",
-    "source_files_in_input_and_upload": 249,
-    "declared_project_files_in_input_inventory": 240,
-    "count_discrepancy": 9,
-    "source_file_checksum_manifest": "SOURCE_SHA256SUMS.txt"
-  },
-  "competition_evidence_scope": {
-    "baseline_commit": "11c6114f6ec0504628f912ebde9ba53821badb03",
-    "baseline_tree": "2d0e6477c7d4e083bbd23e44a7228b7eedb47e24",
-    "applies_to_d32_snapshot": false,
-    "local_absolute_paths_in_publication_copy": "redacted; evidence digests and statements unchanged",
-    "raw_live_evidence_bundle_included": false,
-    "static_frontend_runtime_connected": false
-  },
-  "included": [
-    "source/: 249 curated project files extracted from the input ZIP",
-    "competition/docs/: seven user-facing documents",
-    "competition/showcase/: four reviewed package-provided reviewer/presentation documents plus a README",
-    "competition/evidence/: sanitized publication copy of evidence baseline",
-    "competition/demo_evidence/: six evidence/storyboard mapping files",
-    "competition/visual/: Chinese static frontend, replay JSON, styles, scripts and notes",
-    "dist/ASTRON_COMPETITION_REVIEW_PACKAGE_V1.zip: regenerated from current included materials"
-  ],
-  "excluded": [
-    "internal handoff context Markdown and JSON",
-    "original assembly manifest with local worktree details",
-    "four nested distribution ZIPs: checksums verified, but not copied as they duplicate the readable source/docs and can reintroduce internal handoff and stale variants",
-    "internal independent-review memo",
-    "stale pre-localization review ZIP",
-    "raw evidence directories, SQLite results, benchmark caches and holdout/gold data",
-    ".DS_Store and machine-local files",
-    "package START_HERE.md because its developer route points to the unpublished internal handoff files"
-  ],
   "verification": {
-    "source_file_count": 249,
-    "outer_archive_crc": "PASS",
-    "nested_dist_checksums": "4/4 PASS",
-    "regenerated_review_zip_crc": "PASS",
-    "regenerated_review_zip_sha256": "489182997de3850b39d12cb5c532103acf87417ddab82866611cefa7b5ade94a",
-    "source_tests_rerun_during_upload": false,
-    "prior_package_manifest_reports": "546 passed, 1 skipped; reported, not independently rerun here",
-    "review_zip_files": 32
+    "source_files_with_sha256_entries": 249,
+    "source_sha256_manifest": "SOURCE_SHA256SUMS.txt",
+    "visual_demo_assets": "HTML, CSS, JavaScript, replay data, evidence map, screenshots and cover SVG",
+    "review_package_sha256": "1dfdfd1152537264533b846f8796e9e8d8323cd54a4c09fb45863b9eec058ab0"
   }
 }

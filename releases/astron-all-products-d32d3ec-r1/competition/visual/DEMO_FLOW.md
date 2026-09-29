@@ -1,62 +1,29 @@
-# Judge Demo Flow
+# 演示讲解流程
 
-> 版本边界：本材料依据历史证据基线 `11c6114f6ec0504628f912ebde9ba53821badb03`；只支持该基线对应的陈述，不构成 ZIP 中 `d32d3ec1bc49a78d0b14aabb6bf0daf79d3f4d88` 快照的运行或测试证据。详见同目录 README。
+建议用 3–4 分钟介绍 Astron 的执行治理过程。演示首页为 `index.html`，四个场景可通过页首导航切换。
 
+> 本演示为静态回放，用于讲解产品机制和界面流程；它不连接实时模型服务，也不会运行当前产品代码。
 
-## First 20 seconds
+## 开场
 
-1. Open on the label **RECORDED VERIFIED RUN** and the one-task proof identity.
-2. State Astron's role: an execution-governance runtime for tool-using agents.
-3. Show the three responsibilities: model proposes, runtime decides, verifier accepts.
-4. Deliver the hook: **AI 说完成，不等于任务真的完成。**
+先说明 Astron 关注的是 Agent 的执行过程：模型提出动作，运行时根据权限策略作出决定，验证器依据明确标准确认任务结果。
 
-Do not begin with storage internals, schemas, or code symbols.
+## 场景一：受治理执行
 
-## Scene 1 — Real successful execution (40 seconds)
+打开 `SCREEN_01_EXECUTION_PROOF.html`。展示任务目标、动作提议与授权、执行记录、结果和对应交付物。强调“模型请求”和“实际执行”是不同阶段，执行经过运行时授权并留下可查看的状态记录。
 
-Use `SCREEN_01_EXECUTION_PROOF.html`.
+## 场景二：验收后完成
 
-- 0–8 s: show the bounded task and final task state.
-- 8–20 s: reveal the untimed task/plan phases, then the five model decisions, five proposals, five authorizations, and five successful journaled executions.
-- 20–29 s: show the single-line source change and the scoped “0 observed” note.
-- 29–36 s: show the report artifact and digest match.
-- 36–40 s: hold the eight-card evidence board.
+打开 `SCREEN_02_VERIFIER_CONTROL.html`。展示模型提出完成请求、验收器逐项核对标准、记录验收结果，再显示任务最终状态。重点是完成状态由验收结果决定。
 
-Voiceover: “This recorded proof covers one controlled real-model-driven task. Five decisions led to five governed actions. All five were authorized and journaled. The requested change was made, and the artifact digest matched its independent recomputation.”
+## 场景三：异常恢复与核对
 
-## Scene 2 — Verifier-controlled completion (35 seconds)
+打开 `SCREEN_03_ACTION_AWARE_RECOVERY.html`。沿着“授权 → 尝试开始 → 结果未知 → 状态未明 → 核对”说明恢复路径。强调遇到超时或中断时先查明动作结果，不直接假设动作未发生。
 
-Use `SCREEN_02_VERIFIER_CONTROL.html`.
+## 场景四：职责流程说明
 
-- 0–8 s: select `PROPOSE_COMPLETE` and hold the “NOT SUCCESS YET” divider.
-- 8–18 s: show both acceptance criteria passing and the durable `ACCEPTED` result.
-- 18–24 s: reveal `TASK_SUCCEEDED` after acceptance; show the exact recorded event numbers 43–47.
-- 24–30 s: reveal the corrupt-artifact refusal in a separately labeled retained deterministic example.
-- 30–35 s: hold the memory hook.
+打开 `SCREEN_04_GENERIC_AGENT_VS_ASTRON.html`。这是一张职责流程说明图，用于解释 Astron 将授权、记录和验收安排在执行流程中的位置，不作不同产品间的性能对比。
 
-Voiceover: “The model proposed completion first. The verifier checked the two declared criteria, recorded acceptance, and only then did the task succeed. A separate retained deterministic example shows a corrupt artifact being refused.”
+## 收尾
 
-## Scene 3 — Action-aware recovery (45 seconds)
-
-Use `SCREEN_03_ACTION_AWARE_RECOVERY.html`.
-
-- 0–6 s: show the qualification banner and separation from the successful proof.
-- 6–16 s: follow `ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → OUTCOME UNKNOWN → UNCERTAIN → RECONCILIATION`.
-- 16–29 s: reveal reconciliation and the three outcomes.
-- 29–36 s: show the retained `15/15` summary with its tested-window qualifier.
-- 36–42 s: show the raw-output review limitation.
-- 42–45 s: close on **Timeout ≠ no side effect**.
-
-Voiceover: “This is separate runtime and tested-failure-window evidence. An uncertain outcome requires reconciliation. Missing evidence does not authorize retry; trusted confirmation that an action was not applied can make it retry-eligible, followed by an explicit call.”
-
-## Comparison insert
-
-`SCREEN_04_GENERIC_AGENT_VS_ASTRON.html` is a short optional inset during the opening or Scene 1. Use equal visual weight and the caption **Astron changes execution responsibility, not model intelligence.** It is a responsibility diagram, not a comparative experiment.
-
-## Delivery checks
-
-- Keep **RECORDED VERIFIED RUN** visible on every positive-proof screen.
-- Do not call the replay “live.” Do not show a current execution cursor, clock, or fabricated timestamps.
-- Keep recovery visually separate from the positive proof.
-- Keep the requested-model caveat and captured-scope caveat available wherever their facts appear.
-- No Provider call, Astron run, test, or new evidence is required to present this flow.
+可继续播放总览 README 中的授权执行与未知动作阻断命令行演示动图，或打开 `source/examples/demos/README.md` 查看本地运行方法。

@@ -2,10 +2,10 @@
   'use strict';
   const base = 'SCREEN_';
   const screens = [
-    ['01_EXECUTION_PROOF.html', '01 执行实证'],
-    ['02_VERIFIER_CONTROL.html', '02 验收判定'],
-    ['03_ACTION_AWARE_RECOVERY.html', '03 动作恢复'],
-    ['04_GENERIC_AGENT_VS_ASTRON.html', '04 职责对照']
+    ['01_EXECUTION_PROOF.html', '01 受治理执行'],
+    ['02_VERIFIER_CONTROL.html', '02 验收与完成'],
+    ['03_ACTION_AWARE_RECOVERY.html', '03 异常恢复'],
+    ['04_GENERIC_AGENT_VS_ASTRON.html', '04 执行职责']
   ];
   // Translate display strings only. The replay JSON remains the unchanged
   // source of record, and canonical IDs/paths remain available in references.
@@ -36,6 +36,7 @@
     'Execution receipts are in the canonical proof; no per-action receipt identifier is shown in this replay.':'规范实证中包含执行回执；本回放未展示逐项回执编号。',
     'A model tool request is not the same thing as an executed action.':'模型提出工具调用请求，不等于动作已经执行。',
     'Model proposes completion; verification has not yet accepted the task.':'模型提出任务完成，但验收尚未通过。',
+    'The model proposes completion; verification has not yet accepted the task.':'模型可以提出完成，但不能自行宣布任务成功。',
     'Separate retained deterministic summary; not part of the positive proof or a new/replayed run. Original per-process output unavailable for line-by-line review.':'单独保留的确定性摘要；不属于成功实证，也不是新运行或回放。原始进程输出已无法逐行复核。',
     'Observed only within saved intents, journals, receipts, application events, and captured scope; not an OS-wide audit.':'仅检查已保存的意图、日志、回执、应用事件及捕获范围；并非操作系统级审计。',
     'Based on saved task intents, application records, and checked before/after workspace evidence; not an OS-wide or all-process filesystem audit.':'依据已保存的任务意图、应用记录及变更前后的工作区证据；并非操作系统级或全进程文件系统审计。',
@@ -97,7 +98,7 @@
     const shown = value === undefined ? item.value : value;
     const shownText = Array.isArray(shown) ? shown.map(zh).join(' → ') : typeof shown === 'object' && shown !== null ? JSON.stringify(shown) : zh(shown);
     const sourceLabel = label || '查看证据来源与主张映射';
-    return `<span class="evidence-value">${escapeHTML(shownText)}</span><details class="source"><summary aria-label="${escapeHTML(sourceLabel)}" title="${escapeHTML(sourceLabel)}"><span class="visually-hidden">${escapeHTML(sourceLabel)}</span></summary><dl><dt>证据来源</dt><dd>${escapeHTML(sourceSummary(item.source_reference))}</dd><dt>主张映射</dt><dd>${escapeHTML(claimSummary(item.claim_map_ref))}</dd></dl><a href="../ASTRON_COMPETITION_DEMO_EVIDENCE_V1/06_EVIDENCE_TO_SCREEN_MAP.json" target="_blank" rel="noopener">打开证据与页面映射表</a></details>`;
+    return `<span class="evidence-value">${escapeHTML(shownText)}</span><details class="source"><summary aria-label="${escapeHTML(sourceLabel)}" title="${escapeHTML(sourceLabel)}"><span class="visually-hidden">${escapeHTML(sourceLabel)}</span></summary><dl><dt>证据来源</dt><dd>${escapeHTML(sourceSummary(item.source_reference))}</dd><dt>主张映射</dt><dd>${escapeHTML(claimSummary(item.claim_map_ref))}</dd></dl><a href="../demo_evidence/06_EVIDENCE_TO_SCREEN_MAP.json" target="_blank" rel="noopener">打开证据与页面映射表</a></details>`;
   };
   const metric = (item) => `<article class="metric"><span class="metric-label">${escapeHTML(zh(item.label))}</span><strong>${ref(item, item.display_value, '证据来源')}</strong></article>`;
   const fact = (x, key) => x[key];
@@ -153,12 +154,12 @@
       <blockquote class="neutral-caption">${ref(c.caption)}</blockquote><p class="neutral-note">${ref(c.disclaimer)}</p>`;
   }
   function indexPage() {
-    return `${header('可视化演示 V1','Astron 证据回放','共 4 个页面，可用于评审讲解。本套内容为本地录制演示。')}
-      <div class="index-callout"><p>这是静态证据演示，不会启动 Astron，也不会连接模型服务。</p></div><div class="index-grid">${screens.map(([file,label],i)=>`<a class="index-card" href="${base}${file}"><span class="card-num">0${i+1}</span><strong>${label.replace(/^\d+ /,'')}</strong><span>${['一次有界且受治理的执行','由验收方控制的完成判定','限定条件下的恢复证据','中立的职责对照'][i]}</span><b>打开页面 →</b></a>`).join('')}</div><section class="panel preview-instruction"><span class="panel-kicker">本地预览</span><p>本地预览地址：<code>http://localhost:8000/ASTRON_COMPETITION_VISUAL_PRODUCTION_V1/</code></p><small>页面资源与回放数据均来自本地文件；无需构建步骤或外部依赖。</small></section>`;
+    return `${header('产品流程演示','Astron 执行治理流程','动作授权、任务验收、异常恢复与执行职责。')}
+      <div class="index-callout"><p>可离线浏览的静态流程演示，不会连接模型服务或启动实时运行时。</p></div><div class="index-grid">${screens.map(([file,label],i)=>`<a class="index-card" href="${base}${file}"><span class="card-num">0${i+1}</span><strong>${label.replace(/^\d+ /,'')}</strong><span>${['展示动作授权、受限执行与持久记录','展示验收标准如何确认任务完成','展示结果未知时的核对与恢复流程','展示 Agent 与运行时各自承担的职责'][i]}</span><b>打开页面 →</b></a>`).join('')}</div><section class="panel preview-instruction"><span class="panel-kicker">本地预览</span><p>在项目的 <code>competition</code> 目录运行 <code>python3 -m http.server 8000</code>，然后访问 <code>http://localhost:8000/visual/</code></p><small>页面资源与回放数据均来自本地文件，无需额外构建或外部服务。</small></section>`;
   }
-  Promise.all([fetch('DEMO_REPLAY_DATA_V1.json'),fetch('../ASTRON_COMPETITION_DEMO_EVIDENCE_V1/06_EVIDENCE_TO_SCREEN_MAP.json')]).then(rs=>{if(rs.some(r=>!r.ok))throw new Error('本地回放数据或证据映射文件无法读取。');return Promise.all(rs.map(r=>r.json()));}).then(([d,map])=>{
+  Promise.all([fetch('DEMO_REPLAY_DATA_V1.json'),fetch('../demo_evidence/06_EVIDENCE_TO_SCREEN_MAP.json')]).then(rs=>{if(rs.some(r=>!r.ok))throw new Error('本地回放数据或证据映射文件无法读取。');return Promise.all(rs.map(r=>r.json()));}).then(([d,map])=>{
     window.astronEvidenceMap = map;
     const render={0:indexPage,1:scene1,2:scene2,3:scene3,4:scene4}[screen] || indexPage;
     app.innerHTML=render(d);
-  }).catch(()=>{app.innerHTML=`<section class="panel error-panel"><h1>无法载入回放数据</h1><p>本地回放数据或证据映射文件无法读取。</p><p>请从 outputs 目录启动本地预览服务，并确认回放数据和证据映射文件可读取。</p></section>`;});
+  }).catch(()=>{app.innerHTML=`<section class="panel error-panel"><h1>无法载入回放数据</h1><p>本地回放数据或证据映射文件无法读取。</p><p>请从 competition 目录启动本地预览服务，并确认回放数据与映射文件可读取。</p></section>`;});
 })();

@@ -1,26 +1,110 @@
-# Astron All Products · d32d3ec R1 上传包
+<div align="center">
+  <img src="competition/visual/ASTRON_COVER.svg" alt="Astron：面向 AI Agent 的执行治理运行时" width="100%">
+  <h1>Astron</h1>
+  <p><strong>让 Agent 的工具执行过程具备明确授权、可追踪状态与验收结果。</strong></p>
+  <p>模型提出动作 · 运行时按策略裁决 · 验证器确认任务完成</p>
+  <p>
+    <a href="competition/visual/">浏览四屏交互演示</a> ·
+    <a href="dist/ASTRON_COMPETITION_REVIEW_PACKAGE_V1.zip">下载评审材料 ZIP</a> ·
+    <a href="competition/showcase/DEMO_SCRIPT.md">演示讲稿</a> ·
+    <a href="source/docs/ARCHITECTURE.md">架构说明</a>
+  </p>
+</div>
 
-这是对桌面压缩包 `Astron-All-Products-d32d3ec-R1.zip` 的审阅整理版，已放入 GitHub 独立交付分支。它把可公开的产品源码与此前生成的中文竞赛演示材料放在一个可读目录中。
+## 项目优势
 
-此分支是现有 `paios-ce` 仓库中的审阅/交付分支，不是源码包发布边界文件所述的正式 clean-room release。它以当前公开 `main` 为父提交，只在 `releases/astron-all-products-d32d3ec-r1/` 添加筛选快照与说明；没有合并 `main`、创建 GitHub Release 或版本标签。
+Astron 把 Agent 的执行控制落到明确的运行时机制中，让工具调用从“模型提出建议”进入可审查、可恢复、可验收的执行流程。
 
-## 目录
+| 优势 | 实现方式 | 带来的价值 |
+| --- | --- | --- |
+| **动作先授权，再执行** | 默认拒绝；按能力、作用范围与风险策略作出允许、拒绝或阻断决定 | 未知或越界动作不会因为模型提出就直接执行 |
+| **执行状态有据可查** | 持久化记录授权、执行尝试、结果与验收事件 | 便于还原动作经过并审查任务状态 |
+| **异常后先核对，再继续** | 崩溃后将未确认结果保留为 `UNCERTAIN`，等待可信证据核对 | 避免把“没有收到结果”误当成“动作没有发生” |
+| **完成状态由验收器确认** | 对预先声明的标准和交付物进行验证 | 模型的完成声明本身不会代替验收结果 |
+| **工具边界清楚** | 文件、测试和终端工具都有作用范围与执行限制 | 将具体能力与允许的操作范围明确关联 |
+| **本地即可体验** | 提供无需 API Key 的离线演示，也支持显式配置真实模型服务 | 可以先了解流程，再按项目需求接入模型 |
 
-- [`source/`](source/)：从交付 ZIP 的 `Astron-Delivery/project/` 提取的筛选版产品源码，包含产品 README、源码、测试、示例、演示脚本、协议 schema、治理文件与技术文档。
-- [`competition/`](competition/)：七份竞赛文档、四份评审/演示展示稿、脱敏后的历史证据基线、六份演示证据材料和四屏中文静态前端。
-- [`dist/ASTRON_COMPETITION_REVIEW_PACKAGE_V1.zip`](dist/ASTRON_COMPETITION_REVIEW_PACKAGE_V1.zip)：按本目录当前中文前端和版本说明重新生成的评审材料 ZIP；旧的评审 ZIP 未直接复用。
-- [`manifest/UPLOAD_MANIFEST.json`](manifest/UPLOAD_MANIFEST.json)：来源、计数差异、纳入/排除项及校验记录。
-- [`manifest/SOURCE_SHA256SUMS.txt`](manifest/SOURCE_SHA256SUMS.txt)：源码副本各文件的 SHA-256 清单。
+## 工作流程
 
-## 版本范围
+```mermaid
+flowchart LR
+  A[Agent 提出动作] --> B{运行时授权}
+  B -->|允许| C[受限工具执行]
+  B -->|拒绝或阻断| X[停止并记录决定]
+  C --> D[持久化动作与结果]
+  D --> E[验收器检查标准和交付物]
+  E -->|通过| F[任务完成]
+  E -->|未通过| G[保留结果与原因]
+```
 
-- ZIP 中的产品快照来源：提交 `d32d3ec1bc49a78d0b14aabb6bf0daf79d3f4d88`，源树 `c6953180dcd732c425e77b0acd004321a39837ac`。
-- 竞赛实跑基线来源：提交 `11c6114f6ec0504628f912ebde9ba53821badb03`，树 `2d0e6477c7d4e083bbd23e44a7228b7eedb47e24`。这比 ZIP 产品快照更早，不能作为 `d32d3ec` 的实跑或测试证明。
-- ZIP 的交付清单称产品目录有 240 个文件；直接核对 ZIP 条目得出 249 个。实际上传的 249 个文件均保留，并在 `UPLOAD_MANIFEST.json` 记录这一计数差异，未静默删改源码来凑清单数字。
-- 随包说明记录 546 项测试通过、1 项跳过；本次上传没有重跑测试，因此此处是对原包记录的转述，不是当前分支的新鲜测试收据。
+## 界面截图
 
-## 未上传的包内内容
+下面的截图展示演示首页和四个中文场景。它们来自随项目提供的离线静态回放，用于说明产品流程；页面不会连接实时模型服务或启动当前运行时。
 
-GitHub 分支没有收录原 ZIP 内的交接上下文与机器可读交接文件、描述本地工作树的原始装配清单、四个嵌套发行 ZIP（其中包含冻结旧版、重复源码及未公开交接材料），也没有收录内部独立评审文件或本机 `.DS_Store`。它们不属于可公开交付的源码/评审材料。包内原始 `showcase/` 已审阅后复制其中四份用户向材料，并修正过时/过宽的表述；`START_HERE.md` 因其开发者路线指向未公开交接资料而未原样上传。内部基准原始运行目录、SQLite 结果、缓存、holdout/gold 数据也没有纳入这份筛选版；随包说明将其列为有意排除。
+<p align="center"><img src="competition/visual/screenshots/00-overview.png" alt="Astron 执行治理流程演示首页" width="900"></p>
 
-这次只创建并推送交付分支，没有创建 GitHub Release 或标签，也没有改动 `main`。
+<table>
+  <tr>
+    <td align="center"><img src="competition/visual/screenshots/01-execution.png" alt="受治理执行演示界面" width="480"><br><strong>01 · 受治理执行</strong></td>
+    <td align="center"><img src="competition/visual/screenshots/02-verification.png" alt="验收标准确认完成状态的演示界面" width="480"><br><strong>02 · 验收与完成</strong></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="competition/visual/screenshots/03-recovery.png" alt="异常恢复流程演示界面" width="480"><br><strong>03 · 异常恢复与核对</strong></td>
+    <td align="center"><img src="competition/visual/screenshots/04-responsibilities.png" alt="Agent 与运行时职责流程图演示界面" width="480"><br><strong>04 · 执行职责</strong></td>
+  </tr>
+</table>
+
+## 离线演示
+
+下面的动图展示本地命令行体验：授权范围内的请求可以继续处理；无法识别的动作会被运行时明确阻断。
+
+<table>
+  <tr>
+    <td align="center"><strong>授权范围内的演示</strong><br><img src="source/docs/assets/demo/paios-ce-allowed-demo.gif" alt="本地授权执行命令行演示" width="520"></td>
+    <td align="center"><strong>未知动作阻断演示</strong><br><img src="source/docs/assets/demo/paios-ce-blocked-demo.gif" alt="未知动作被运行时阻断的命令行演示" width="520"></td>
+  </tr>
+</table>
+
+### 打开四屏中文演示
+
+在本目录中运行：
+
+```bash
+cd competition
+python3 -m http.server 8000
+```
+
+然后访问 [http://localhost:8000/visual/](http://localhost:8000/visual/)。演示首页可进入执行、验收、恢复与职责说明四个页面。
+
+### 本地运行产品示例
+
+需要 Python 3.11 或更新版本。克隆仓库后，在终端运行：
+
+```bash
+cd releases/astron-all-products-d32d3ec-r1/source
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+astron health
+astron demo
+```
+
+还可以运行具体场景：
+
+```bash
+bash examples/demos/01_governed_task.sh
+bash examples/demos/02_permission_denial.sh
+python examples/demos/03_crash_and_reconcile.py
+```
+
+### 项目资料
+
+- [快速开始](source/docs/QUICKSTART.md) · [系统架构](source/docs/ARCHITECTURE.md) · [安全模型](source/docs/SECURITY_MODEL.md)
+- [核心技术报告](competition/docs/03_TECH_REPORT_CORE.md) · [评审问答](competition/docs/06_JUDGE_QA.md) · [主张与术语说明](competition/docs/07_CLAIM_LANGUAGE_AUTHORITY.md)
+- [项目简介](competition/showcase/PROJECT_BRIEF.md) · [答辩提纲](competition/showcase/PRESENTATION_OUTLINE.md) · [四分钟演示讲稿](competition/showcase/DEMO_SCRIPT.md) · [常见问题](competition/showcase/FAQ.md) · [评审 ZIP 首页](competition/showcase/REVIEW_PACKAGE_README.md)
+- [演示证据与页面映射](competition/demo_evidence/06_EVIDENCE_TO_SCREEN_MAP.json) · [演示说明](competition/visual/README.md)
+- [Apache-2.0 许可证](source/LICENSE)
+
+---
+
+**Astron：让每一次工具动作都有清晰的授权路径、持久记录和明确的验收结果。**
