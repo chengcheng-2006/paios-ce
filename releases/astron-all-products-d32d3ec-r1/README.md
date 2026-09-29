@@ -78,7 +78,7 @@ python3 -m http.server 8000
 
 ### 本地运行产品示例
 
-需要 Python 3.11 或更新版本。克隆仓库后，在终端运行：
+首次运行前，请按[快速开始](source/docs/QUICKSTART.md)准备 Python 环境。克隆仓库后，在终端运行：
 
 ```bash
 cd releases/astron-all-products-d32d3ec-r1/source
