@@ -1,0 +1,14 @@
+{
+  "manifest_version": "0.1.0",
+  "action_id": "act_unknown_egress_cli_001",
+  "worker_type": "tool",
+  "operation": "zzz_unknown_egress_cli",
+  "parameters": {"trace_id": "trace_redacted_01"},
+  "required_permissions": ["TEXT_CHAT", "TOOL_CALLING"],
+  "filesystem_scope": {"mode": "none", "paths_class": []},
+  "network_scope": {"mode": "cloud_egress", "endpoints_class": []},
+  "timeout": 30,
+  "idempotency_key": "idem_unknown_egress_cli_001",
+  "rollback_supported": false,
+  "approval_required": true
+}

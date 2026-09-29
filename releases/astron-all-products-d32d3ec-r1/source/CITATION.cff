@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "PAIOS CE"
+version: "0.1.0-rc.1"
+repository-code: "https://github.com/chengcheng-2006/paios-ce"
+license: Apache-2.0
+authors:
+  - family-names: "Cheng"
+    given-names: "Cheng"
+abstract: "PAIOS CE is a clean-room public core scaffold for a privacy-preserving personal AI orchestrator."
+keywords:
+  - "ai-agent"
+  - "clean-room"
+  - "secretref"
+  - "permission-engine"

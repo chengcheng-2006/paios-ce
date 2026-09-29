@@ -1,0 +1,74 @@
+{
+  "$defs": {
+    "ErrorClass": {
+      "description": "ErrorEnvelope.error_class (public schema).",
+      "enum": [
+        "unsupported_capability",
+        "rate_limited",
+        "quota_exceeded",
+        "dependency_unavailable",
+        "scope_violation",
+        "permission_denied",
+        "signature_invalid",
+        "replay_detected",
+        "confirmation_timeout",
+        "confirmation_token_mismatch",
+        "temp_audio_delete_failed",
+        "audit_write_failed",
+        "internal"
+      ],
+      "title": "ErrorClass",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Redacted structured error (error_envelope.schema.json).",
+  "properties": {
+    "manifest_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Manifest Version",
+      "type": "string"
+    },
+    "error_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Error Id",
+      "type": "string"
+    },
+    "error_class": {
+      "$ref": "#/$defs/ErrorClass",
+      "default": "internal"
+    },
+    "message": {
+      "maxLength": 512,
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "retryable": {
+      "default": false,
+      "title": "Retryable",
+      "type": "boolean"
+    },
+    "trace_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Trace Id",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    }
+  },
+  "required": [
+    "error_id",
+    "message",
+    "trace_id"
+  ],
+  "title": "ErrorEnvelope",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/errorenvelope/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

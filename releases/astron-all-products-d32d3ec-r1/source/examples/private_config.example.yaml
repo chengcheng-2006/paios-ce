@@ -1,0 +1,53 @@
+# Astron private local config example (competition baseline).
+# NEVER committed to any repository. Secret values never appear; only SecretRef
+# references. Placeholders only.
+schema: "https://paios.ce/schemas/private-config/v0.1.json"
+owner_allowlist:
+  - "principal:example.invalid/owner-1"
+
+providers:
+  primary:
+    id: openai_compatible
+    endpoint: "https://example.invalid/v1"
+    credential_ref:
+      backend: env
+      ref:
+        env_var: PAIOS_PROVIDER_OPENAI_COMPAT_API_KEY
+  fallback:
+    id: mock
+    endpoint: "https://example.invalid/v1"
+    credential_ref: null
+
+channels:
+  local_web:
+    listen: 127.0.0.1
+    port: 8080
+    public_bind: false
+    public_bind_risk_acknowledged: false
+  cli:
+    enabled: true
+
+speech:
+  enabled: false
+  asr_backend: local_faster_whisper
+  raw_audio_storage: false
+  temp_audio_delete: true
+  transcript_retention_days: 0
+  cloud_asr_opt_in: false
+  # Local ASR defaults (safe, local-files-only, read-only input).
+  local_files_only: true
+  max_file_size_mb: 100
+  max_duration_seconds: 3600
+  allowed_extensions: [wav, mp3, m4a, flac, ogg, opus, webm]
+  vad_filter: true
+  device: cpu
+  compute_type: int8
+  default_model: tiny
+
+state:
+  sqlite_path: "<USER_HOME>/.paios_ce/paios.db"
+  model_cache_path: "<USER_HOME>/.paios_ce/models"
+
+group_execution:
+  enabled: false
+  risk_acknowledged: false

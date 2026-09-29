@@ -1,0 +1,19 @@
+# Pre-commit hooks for PAIOS CE
+# Only local hooks that can run offline; no secret-upload behavior.
+
+repos:
+  - repo: local
+    hooks:
+      - id: check-toml
+        name: Check TOML files parse
+        entry: python -c "import tomllib,sys; tomllib.load(open(sys.argv[1],'rb'))"
+        language: system
+        types: [toml]
+        pass_filenames: true
+
+      - id: no-secrets
+        name: Check for secret-shaped literals
+        entry: python tools/pre_commit_no_secrets.py
+        language: system
+        types: [python, yaml, json, toml]
+        pass_filenames: true

@@ -1,0 +1,126 @@
+{
+  "$defs": {
+    "EventKind": {
+      "description": "AuditEvent.event_type (audit protocol contract).",
+      "enum": [
+        "message_received",
+        "identity_denied",
+        "signature_invalid",
+        "replay_detected",
+        "audio_rejected",
+        "action_completed",
+        "action_denied",
+        "unknown_action_rejected",
+        "approval_required",
+        "approval_granted",
+        "approval_denied",
+        "approval_timeout",
+        "routing_decision",
+        "credential_revoked",
+        "temp_audio_delete_failed",
+        "health_event",
+        "audit_write_failed"
+      ],
+      "title": "EventKind",
+      "type": "string"
+    },
+    "RiskLevel": {
+      "description": "Engine risk level used by the Permission/Risk engine (uppercase).\n\nNOT_APPLICABLE marks decisions that carry no actionable risk \u2014 most notably\nthe explicit UNKNOWN_ACTION rejection (R1 closure). It is never an\nactionable risk tier and never licenses execution.",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL",
+        "NOT_APPLICABLE"
+      ],
+      "title": "RiskLevel",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Redacted audit record (contract section 16 + protocol section 9).\n\nMandatory fields follow the contract execution prompt. Forbidden content\n(secret values, raw tokens, cookies, authorization headers, raw audio,\nprivate paths, owner identity detail) is structurally absent: no such\nfield exists on this model and extra=\"forbid\" rejects any attempt to add one.",
+  "properties": {
+    "event_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Event Id",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "trace_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace Id"
+    },
+    "task_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Task Id"
+    },
+    "event_type": {
+      "$ref": "#/$defs/EventKind",
+      "default": "message_received"
+    },
+    "risk_level": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RiskLevel"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "actor_type": {
+      "default": "system",
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Actor Type",
+      "type": "string"
+    },
+    "component": {
+      "default": "paios_ce",
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Component",
+      "type": "string"
+    },
+    "outcome": {
+      "default": "ok",
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Outcome",
+      "type": "string"
+    },
+    "redacted_details": {
+      "additionalProperties": true,
+      "title": "Redacted Details",
+      "type": "object"
+    }
+  },
+  "required": [
+    "event_id"
+  ],
+  "title": "AuditEvent",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/auditevent/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

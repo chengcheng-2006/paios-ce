@@ -1,0 +1,306 @@
+{
+  "$defs": {
+    "CliChannel": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": true,
+          "title": "Enabled",
+          "type": "boolean"
+        }
+      },
+      "title": "CliChannel",
+      "type": "object"
+    },
+    "GroupExecutionConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "risk_acknowledged": {
+          "default": false,
+          "title": "Risk Acknowledged",
+          "type": "boolean"
+        }
+      },
+      "title": "GroupExecutionConfig",
+      "type": "object"
+    },
+    "LocalWebChannel": {
+      "additionalProperties": false,
+      "properties": {
+        "listen": {
+          "default": "127.0.0.1",
+          "title": "Listen",
+          "type": "string"
+        },
+        "port": {
+          "default": 8080,
+          "maximum": 65535,
+          "minimum": 1,
+          "title": "Port",
+          "type": "integer"
+        },
+        "public_bind": {
+          "default": false,
+          "title": "Public Bind",
+          "type": "boolean"
+        },
+        "public_bind_risk_acknowledged": {
+          "default": false,
+          "title": "Public Bind Risk Acknowledged",
+          "type": "boolean"
+        }
+      },
+      "title": "LocalWebChannel",
+      "type": "object"
+    },
+    "PrivateChannels": {
+      "additionalProperties": false,
+      "properties": {
+        "local_web": {
+          "$ref": "#/$defs/LocalWebChannel"
+        },
+        "cli": {
+          "$ref": "#/$defs/CliChannel"
+        }
+      },
+      "title": "PrivateChannels",
+      "type": "object"
+    },
+    "PrivateProviderEntry": {
+      "additionalProperties": false,
+      "description": "Provider entry in private config; credential via SecretRef only.",
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "endpoint": {
+          "default": "https://example.invalid/v1",
+          "maxLength": 1024,
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "credential_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SecretRefDecl"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "PrivateProviderEntry",
+      "type": "object"
+    },
+    "PrivateSpeech": {
+      "additionalProperties": false,
+      "description": "Private speech configuration (Phase 9A).\n\nDefaults are privacy-first: the capability is disabled, model access is\nlocal-files-only, audio is read in place and never copied or retained,\ntranscripts are not persisted and not placed in audit events.",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "asr_backend": {
+          "default": "disabled",
+          "enum": [
+            "local_faster_whisper",
+            "cloud_opt_in",
+            "disabled"
+          ],
+          "title": "Asr Backend",
+          "type": "string"
+        },
+        "raw_audio_storage": {
+          "default": false,
+          "title": "Raw Audio Storage",
+          "type": "boolean"
+        },
+        "temp_audio_delete": {
+          "default": true,
+          "title": "Temp Audio Delete",
+          "type": "boolean"
+        },
+        "transcript_retention_days": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Transcript Retention Days",
+          "type": "integer"
+        },
+        "cloud_asr_opt_in": {
+          "default": false,
+          "title": "Cloud Asr Opt In",
+          "type": "boolean"
+        },
+        "local_files_only": {
+          "default": true,
+          "title": "Local Files Only",
+          "type": "boolean"
+        },
+        "max_file_size_mb": {
+          "default": 100,
+          "maximum": 10240,
+          "minimum": 1,
+          "title": "Max File Size Mb",
+          "type": "integer"
+        },
+        "max_duration_seconds": {
+          "default": 3600,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Max Duration Seconds",
+          "type": "integer"
+        },
+        "allowed_extensions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Extensions",
+          "type": "array"
+        },
+        "vad_filter": {
+          "default": true,
+          "title": "Vad Filter",
+          "type": "boolean"
+        },
+        "device": {
+          "default": "cpu",
+          "enum": [
+            "cpu",
+            "cuda",
+            "auto"
+          ],
+          "title": "Device",
+          "type": "string"
+        },
+        "compute_type": {
+          "default": "int8",
+          "title": "Compute Type",
+          "type": "string"
+        },
+        "default_model": {
+          "default": "tiny",
+          "title": "Default Model",
+          "type": "string"
+        }
+      },
+      "title": "PrivateSpeech",
+      "type": "object"
+    },
+    "PrivateState": {
+      "additionalProperties": false,
+      "properties": {
+        "sqlite_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sqlite Path"
+        },
+        "model_cache_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Cache Path"
+        }
+      },
+      "title": "PrivateState",
+      "type": "object"
+    },
+    "SecretRefDecl": {
+      "additionalProperties": false,
+      "description": "A SecretRef *declaration* (never a value).",
+      "properties": {
+        "backend": {
+          "enum": [
+            "env",
+            "oskeyring",
+            "dpapi",
+            "file",
+            "external_manager",
+            "prompt_once"
+          ],
+          "title": "Backend",
+          "type": "string"
+        },
+        "ref": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Ref",
+          "type": "object"
+        }
+      },
+      "required": [
+        "backend"
+      ],
+      "title": "SecretRefDecl",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Private local config \u2014 created by end user, never committed.",
+  "properties": {
+    "schema": {
+      "const": "https://paios.ce/schemas/private-config/v0.1.json",
+      "default": "https://paios.ce/schemas/private-config/v0.1.json",
+      "title": "Schema",
+      "type": "string"
+    },
+    "owner_allowlist": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Owner Allowlist",
+      "type": "array"
+    },
+    "providers": {
+      "additionalProperties": {
+        "$ref": "#/$defs/PrivateProviderEntry"
+      },
+      "title": "Providers",
+      "type": "object"
+    },
+    "channels": {
+      "$ref": "#/$defs/PrivateChannels"
+    },
+    "speech": {
+      "$ref": "#/$defs/PrivateSpeech"
+    },
+    "state": {
+      "$ref": "#/$defs/PrivateState"
+    },
+    "group_execution": {
+      "$ref": "#/$defs/GroupExecutionConfig"
+    }
+  },
+  "title": "PrivateConfig",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/privateconfig/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

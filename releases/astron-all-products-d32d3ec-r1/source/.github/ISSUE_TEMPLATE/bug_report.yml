@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a reproducible defect in the public release candidate
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a defect. Do not include secrets, private paths,
+        production data, or vulnerability details. Security issues must use
+        private vulnerability reporting.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - CLI
+        - Configuration
+        - Protocols / schemas
+        - Permission engine
+        - SecretRef
+        - Mock Provider
+        - Mock Worker
+        - Audit / redaction
+        - Health / diagnostics
+        - Packaging
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: v0.1.0-rc.1 or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Windows 11 / Ubuntu 24.04, Python 3.11 or 3.12
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Use placeholders only. Remove usernames and absolute private paths.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed secrets, tokens, personal data, and private paths.
+          required: true
+        - label: This is not a vulnerability disclosure.
+          required: true

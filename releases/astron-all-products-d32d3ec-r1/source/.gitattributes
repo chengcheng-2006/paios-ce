@@ -1,0 +1,23 @@
+# Normalize line endings across platforms
+* text=auto eol=lf
+
+# Binary file types
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.whl binary
+*.tar.gz binary
+
+# Ensure JSON/YAML/Markdown sources use LF in the public tree
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+
+# Export-ignore audit-only paths from any archive
+/audit/ export-ignore

@@ -1,0 +1,231 @@
+{
+  "$defs": {
+    "ActionOrigin": {
+      "description": "TaskEnvelope.origin (public schema).",
+      "enum": [
+        "voice",
+        "text",
+        "web",
+        "cli",
+        "webhook"
+      ],
+      "title": "ActionOrigin",
+      "type": "string"
+    },
+    "ApprovalState": {
+      "description": "TaskEnvelope.approval_state (public schema).",
+      "enum": [
+        "not_required",
+        "pending",
+        "approved",
+        "denied",
+        "timeout"
+      ],
+      "title": "ApprovalState",
+      "type": "string"
+    },
+    "AttachmentRef": {
+      "additionalProperties": false,
+      "description": "TaskEnvelope.attachments[] \u2014 opaque handle only, never bytes.",
+      "properties": {
+        "ref": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Ref",
+          "type": "string"
+        },
+        "mime_class": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Mime Class",
+          "type": "string"
+        },
+        "size_class": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Size Class",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref",
+        "mime_class",
+        "size_class"
+      ],
+      "title": "AttachmentRef",
+      "type": "object"
+    },
+    "Capability": {
+      "description": "Provider capability enum (MODEL_PROVIDER_CONTRACT, public schema).",
+      "enum": [
+        "TEXT_CHAT",
+        "REASONING",
+        "TOOL_CALLING",
+        "STRUCTURED_OUTPUT",
+        "VISION",
+        "AUDIO_INPUT",
+        "EMBEDDING",
+        "RERANKING",
+        "LONG_CONTEXT",
+        "STREAMING",
+        "LOCAL_INFERENCE"
+      ],
+      "title": "Capability",
+      "type": "string"
+    },
+    "Constraints": {
+      "additionalProperties": false,
+      "description": "TaskEnvelope.constraints.",
+      "properties": {
+        "max_actions": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Actions"
+        },
+        "max_cost_class": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CostClass"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scope_hints": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Scope Hints",
+          "type": "array"
+        }
+      },
+      "title": "Constraints",
+      "type": "object"
+    },
+    "CostClass": {
+      "description": "Advisory cost class (TaskPlan / ActionResult.usage).",
+      "enum": [
+        "free",
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "CostClass",
+      "type": "string"
+    },
+    "TaskRiskLevel": {
+      "description": "Task envelope risk level (lowercase, public schema parity).",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "unavailable"
+      ],
+      "title": "TaskRiskLevel",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Top-level task container (task_envelope.schema.json).",
+  "properties": {
+    "manifest_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Manifest Version",
+      "type": "string"
+    },
+    "task_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Task Id",
+      "type": "string"
+    },
+    "request_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "origin": {
+      "$ref": "#/$defs/ActionOrigin"
+    },
+    "owner_identity": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Owner Identity",
+      "type": "string"
+    },
+    "intent": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Intent",
+      "type": "string"
+    },
+    "risk_level": {
+      "$ref": "#/$defs/TaskRiskLevel",
+      "default": "low"
+    },
+    "requested_capabilities": {
+      "items": {
+        "$ref": "#/$defs/Capability"
+      },
+      "title": "Requested Capabilities",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "attachments": {
+      "items": {
+        "$ref": "#/$defs/AttachmentRef"
+      },
+      "title": "Attachments",
+      "type": "array"
+    },
+    "constraints": {
+      "$ref": "#/$defs/Constraints"
+    },
+    "deadline_optional": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Deadline Optional"
+    },
+    "approval_state": {
+      "$ref": "#/$defs/ApprovalState",
+      "default": "not_required"
+    },
+    "trace_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "request_id",
+    "origin",
+    "owner_identity",
+    "intent",
+    "trace_id"
+  ],
+  "title": "TaskEnvelope",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/taskenvelope/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

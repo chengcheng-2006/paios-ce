@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ['3.11', '3.12']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run tests
+        run: python -m pytest --cov=paios_ce --cov-branch --cov-report=xml --cov-report=term-missing --junitxml=test-results-${{ matrix.os }}-${{ matrix.python-version }}.xml -ra -q
+
+      - name: Coverage gate
+        run: |
+          python -c "
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('coverage.xml')
+          root = tree.getroot()
+          line_rate = float(root.attrib.get('line-rate', 0))
+          branch_rate = float(root.attrib.get('branch-rate', 0))
+          line_pct = line_rate * 100
+          branch_pct = branch_rate * 100
+          print(f'Line coverage: {line_pct:.2f}% (gate: 86.2%)')
+          print(f'Branch coverage: {branch_pct:.2f}% (gate: 66.7%)')
+          if line_pct < 86.2:
+              raise SystemExit(f'Line coverage {line_pct:.2f}% below gate 86.2%')
+          if branch_pct < 66.7:
+              raise SystemExit(f'Branch coverage {branch_pct:.2f}% below gate 66.7%')
+          print('Coverage gates PASS')
+          "
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.python-version }}
+          path: |
+            coverage.xml
+            test-results-${{ matrix.os }}-${{ matrix.python-version }}.xml
+
+  cli-test:
+    runs-on: ${{ matrix.os }}
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: ['3.11', '3.12']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: CLI health
+        run: paios-ce health
+
+      - name: CLI demo
+        run: paios-ce demo
+
+      - name: Validate config
+        run: paios-ce validate-config

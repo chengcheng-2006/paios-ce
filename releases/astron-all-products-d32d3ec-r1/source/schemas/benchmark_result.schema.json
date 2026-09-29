@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astron.local/schemas/aic2026-benchmark-result-v1.json",
+  "title": "Astron AIC 2026 Benchmark Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "corpus_version",
+    "run_id",
+    "task_id",
+    "configuration",
+    "repetition",
+    "mode",
+    "model_id",
+    "agent_contract_version",
+    "task_fixture_hash",
+    "fixture_hash_before",
+    "workspace_path",
+    "state_path",
+    "baseline_failed_as_expected",
+    "provider_calls",
+    "tool_actions",
+    "action_names",
+    "model_reported_completion",
+    "budget_exhausted",
+    "provider_error",
+    "internal_verifier_status",
+    "external_verified_completion",
+    "evaluator_reason",
+    "artifact_contract_valid",
+    "failure_class",
+    "wall_time_ms",
+    "input_tokens",
+    "output_tokens",
+    "cached_input_tokens",
+    "token_usage_status"
+  ],
+  "properties": {
+    "protocol_version": {"const": "aic2026-benchmark-v1"},
+    "corpus_version": {"const": "aic2026-task-corpus-v1"},
+    "run_id": {"type": "string", "minLength": 1, "maxLength": 160},
+    "task_id": {"type": "string", "minLength": 1, "maxLength": 96},
+    "configuration": {"enum": ["direct", "astron"]},
+    "repetition": {"type": "integer", "minimum": 1, "maximum": 2},
+    "mode": {"enum": ["mock", "live"]},
+    "model_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "agent_contract_version": {"const": "AIC2026_BENCHMARK_BOUNDED_V1"},
+    "task_fixture_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "fixture_hash_before": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "workspace_path": {"type": "string", "minLength": 1},
+    "state_path": {"type": ["string", "null"]},
+    "baseline_failed_as_expected": {"type": "boolean"},
+    "provider_calls": {"type": "integer", "minimum": 0, "maximum": 6},
+    "tool_actions": {"type": "integer", "minimum": 0, "maximum": 24},
+    "action_names": {"type": "array", "maxItems": 24, "items": {"type": "string", "maxLength": 128}},
+    "model_reported_completion": {"type": "boolean"},
+    "budget_exhausted": {"type": "boolean"},
+    "provider_error": {"type": ["string", "null"], "maxLength": 96},
+    "internal_verifier_status": {"enum": ["ACCEPTED", "REJECTED", "N/A"]},
+    "external_verified_completion": {"type": "boolean"},
+    "evaluator_reason": {"type": "string", "minLength": 1, "maxLength": 96},
+    "artifact_contract_valid": {"type": "boolean"},
+    "failure_class": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "PROVIDER_EXTERNAL_FAILURE",
+        "MODEL_TOOL_CONTRACT_FAILURE",
+        "ARTIFACT_CONTRACT_FAILURE",
+        "MODEL_TASK_PERFORMANCE_FAILURE",
+        "BENCHMARK_EVALUATOR_FAILURE"
+      ]
+    },
+    "wall_time_ms": {"type": "integer", "minimum": 0},
+    "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+    "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+    "cached_input_tokens": {"type": ["integer", "null"], "minimum": 0},
+    "token_usage_status": {"enum": ["REPORTED", "NOT_REPORTED"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"token_usage_status": {"const": "REPORTED"}}},
+      "then": {
+        "properties": {
+          "input_tokens": {"type": "integer"},
+          "output_tokens": {"type": "integer"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"token_usage_status": {"const": "NOT_REPORTED"}}},
+      "then": {
+        "properties": {
+          "input_tokens": {"type": "null"},
+          "output_tokens": {"type": "null"},
+          "cached_input_tokens": {"type": "null"}
+        }
+      }
+    }
+  ]
+}

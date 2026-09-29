@@ -1,0 +1,604 @@
+{
+  "dataset_id": {
+    "value": "ASTRON_COMPETITION_DEMO_REPLAY_DATA_V1",
+    "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §16 requests a static normalized replay JSON; the package identifier is presentation metadata assigned for this deliverable."
+  },
+  "dataset_version": {
+    "value": "V1",
+    "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §16; version label for this deliverable package."
+  },
+  "mode": {
+    "value": "offline_static_evidence_replay",
+    "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §§15–16 requires a deterministic, offline, Provider-free normalized replay."
+  },
+  "source_versions": {
+    "baseline": {
+      "value": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1",
+      "source_reference": "outputs/ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md title and version."
+    },
+    "content_pack": {
+      "value": "V1",
+      "source_reference": "outputs/01_POSITIONING.md through outputs/07_CLAIM_LANGUAGE_AUTHORITY.md, supplied as ASTRON Competition Content Pack V1."
+    },
+    "demo_evidence": {
+      "value": "V1",
+      "source_reference": "outputs/ASTRON_COMPETITION_DEMO_EVIDENCE_V1/ supplied V1 package."
+    }
+  },
+  "field_policy": {
+    "value": "Every displayed evidence value under facts has a source_reference and an exact screen_element reference into ASTRON_COMPETITION_DEMO_EVIDENCE_V1/06_EVIDENCE_TO_SCREEN_MAP.json. Timeline labels before sequence 43 are phase labels, not timestamped raw journal events. No wall-clock timestamps are included.",
+    "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §15 and §19."
+  },
+  "timeline_policy": {
+    "value": "TASK_CREATED, PLAN_CREATED, MODEL_DECISION, ACTION_PROPOSED, ACTION_AUTHORIZED, ACTION_SUCCEEDED, and ARTIFACT_REGISTERED are untimed presentation phase labels. Only completion events 43–47 are shown with recorded sequence numbers.",
+    "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §4; recorded completion sequence mapped in outputs/ASTRON_COMPETITION_DEMO_EVIDENCE_V1/06_EVIDENCE_TO_SCREEN_MAP.json."
+  },
+  "facts": {
+    "proof_id": {
+      "value": "ASTRON_REAL_MODEL_END_TO_END_PROOF_V1",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§0, 7",
+      "claim_map_ref": "Scene 1 title and proof identity: ASTRON_REAL_MODEL_END_TO_END_PROOF_V1"
+    },
+    "task_goal": {
+      "value": "Raise limiter MAX_RPS from 10 to 20",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+      "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+    },
+    "task_status": {
+      "value": "SUCCEEDED",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7; §13 Verifier evidence row",
+      "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+    },
+    "completion_label": {
+      "value": "VERIFIED",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7: both declared criteria pass and durable verification is ACCEPTED",
+      "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+    },
+    "requested_model_id": {
+      "value": "deepseek-flash",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+      "claim_map_ref": "Scene 1 optional model-ID footnote"
+    },
+    "provider_returned_model_identity": {
+      "value": "NOT_RECORDED",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+      "claim_map_ref": "Scene 1 optional model-ID footnote"
+    },
+    "real_model_tasks_proven": {
+      "value": 1,
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+      "claim_map_ref": "Scene 1 title and proof identity: ASTRON_REAL_MODEL_END_TO_END_PROOF_V1"
+    },
+    "provider_calls": {
+      "value": 5,
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+      "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+    },
+    "model_decisions": {
+      "value": 5,
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+      "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+    },
+    "proposed_actions": {
+      "value": 5,
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7",
+      "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+    },
+    "authorized_actions": {
+      "value": 5,
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7: all five authoritative decisions are allow",
+      "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+    },
+    "executed_actions": {
+      "value": 5,
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+      "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+    },
+    "journaled_executed_actions": {
+      "value": 5,
+      "total": 5,
+      "display_value": "5 / 5",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table: five successful journal rows, each with authorization, attempt start, and terminal event",
+      "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+    },
+    "harness_bypass_observed": {
+      "value": 0,
+      "scope_note": "Observed only within saved intents, journals, receipts, application events, and captured scope; not an OS-wide audit.",
+      "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+      "claim_map_ref": "Evidence board metric: harness bypass observed = 0"
+    },
+    "source_change": {
+      "before": {
+        "value": "- MAX_RPS = 10",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "after": {
+        "value": "+ MAX_RPS = 20",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "other_two_constants_retained": {
+        "value": true,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "forbidden_mutations_observed": {
+        "value": 0,
+        "scope_note": "Based on saved task intents, application records, and checked before/after workspace evidence; not an OS-wide or all-process filesystem audit.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "display_label": {
+        "value": "Real workspace change",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 source change result; presentation label requested in Visual Production V1 §6",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "forbidden_mutations_label": {
+        "value": "Forbidden mutations observed",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      }
+    },
+    "selected_action_detail": {
+      "action_type": {
+        "value": "One precise patch action in the five-action task",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table: three reads, one precise patch, one deliverable write",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "tool_identity": {
+        "value": "Specific tool name is not included in the public replay sources",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7 and the named content/demo evidence sources",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      "authorization": {
+        "value": "ALLOW",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7: all five authoritative decisions are allow",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      "execution_status": {
+        "value": "SUCCEEDED",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7: five journal rows are SUCCEEDED",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      "journal_status": {
+        "value": "Journaled; per-action record present in canonical proof",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7, 13",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      "scope": {
+        "value": "Change MAX_RPS only, from 10 to 20",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 1 task scope card: MAX_RPS 10 → 20; other two constants retained"
+      },
+      "receipt_note": {
+        "value": "Execution receipts are in the canonical proof; no per-action receipt identifier is shown in this replay.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7, 13",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      "request_execution_distinction": {
+        "value": "A model tool request is not the same thing as an executed action.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§3, 5, 7; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/03_ACTION_AWARE_RECOVERY.md",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      }
+    },
+    "artifact": {
+      "path": {
+        "value": ".astron-artifacts/limiter-report.json",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      "type": {
+        "value": "USER_DELIVERABLE",
+        "source_reference": "Visual Production V1 §7 requests this presentation category; the canonical baseline §7 establishes the delivered report artifact",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      "status": {
+        "value": "VERIFIED",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7: artifact exists, digest matches, and both criteria pass",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      "size_bytes": {
+        "value": 128,
+        "display_value": "128 B",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      "recorded_sha256": {
+        "value": "3c0a0c51248b9f9431bc869d8e6776b8ce882d0479ae9dba33eb4e258652c173",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      "recomputed_sha256": {
+        "value": "3c0a0c51248b9f9431bc869d8e6776b8ce882d0479ae9dba33eb4e258652c173",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      "digest_result": {
+        "value": "MATCH",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      }
+    },
+    "verification": {
+      "criteria": [
+        {
+          "id": "AC-CeilingRaised",
+          "result": "PASS",
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+          "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+        },
+        {
+          "id": "AC-ReportDelivered",
+          "result": "PASS",
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+          "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+        }
+      ],
+      "durable_verification_status": {
+        "value": "ACCEPTED",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+        "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+      },
+      "terminal_task_state": {
+        "value": "TASK_SUCCEEDED",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+        "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+      },
+      "memory_hook": {
+        "value": "AI 说完成，不等于任务真的完成。",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§9, 14",
+        "claim_map_ref": "Scene 2 memory hook: AI 说完成，不等于任务真的完成。"
+      },
+      "supporting_line": {
+        "value": "模型可以提出完成，但不能授予自己成功。",
+        "source_reference": "ASTRON_COMPETITION_DEMO_EVIDENCE_V1/02_VERIFIER_CONTROLLED_COMPLETION.md; ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 9",
+        "claim_map_ref": "Scene 2 memory hook: AI 说完成，不等于任务真的完成。"
+      },
+      "retained_negative_example": {
+        "scenario": {
+          "value": "Corrupt artifact",
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §13 Verifier evidence row; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/02_VERIFIER_CONTROLLED_COMPLETION.md",
+          "claim_map_ref": "Scene 2 separate retained negative example: corrupt artifact → verifier refusal; labeled deterministic fault-matrix example, not a new run"
+        },
+        "verifier_result": {
+          "value": "REFUSED",
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §13 Verifier evidence row: damaged-artifact refusal",
+          "claim_map_ref": "Scene 2 separate retained negative example: corrupt artifact → verifier refusal; labeled deterministic fault-matrix example, not a new run"
+        },
+        "qualification": {
+          "value": "Separate retained deterministic summary; not part of the positive proof or a new/replayed run. Original per-process output unavailable for line-by-line review.",
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 13; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/02_VERIFIER_CONTROLLED_COMPLETION.md",
+          "claim_map_ref": "Scene 2 separate retained negative example: corrupt artifact → verifier refusal; labeled deterministic fault-matrix example, not a new run"
+        }
+      },
+      "proposal_label": {
+        "value": "PROPOSE_COMPLETE",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 recorded event sequence",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      },
+      "not_success_yet_label": {
+        "value": "NOT SUCCESS YET",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 9; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/02_VERIFIER_CONTROLLED_COMPLETION.md",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      },
+      "proposal_detail": {
+        "value": "The model proposes completion; verification has not yet accepted the task.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 9; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/02_VERIFIER_CONTROLLED_COMPLETION.md",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      }
+    },
+    "timeline": [
+      {
+        "label": "TASK_CREATED",
+        "kind": "phase_label",
+        "source_reference": "Presentation-only phase label requested in Visual Production V1 §4; canonical task identity is in ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§0, 7",
+        "claim_map_ref": "Scene 1 title and proof identity: ASTRON_REAL_MODEL_END_TO_END_PROOF_V1"
+      },
+      {
+        "label": "PLAN_CREATED",
+        "kind": "phase_label",
+        "source_reference": "Presentation-only phase label requested in Visual Production V1 §4; the canonical proof is a bounded task in ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 1 title and proof identity: ASTRON_REAL_MODEL_END_TO_END_PROOF_V1"
+      },
+      {
+        "label": "MODEL_DECISION",
+        "kind": "phase_label_with_count",
+        "count": 5,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "ACTION_PROPOSED",
+        "kind": "phase_label_with_count",
+        "count": 5,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "ACTION_AUTHORIZED",
+        "kind": "phase_label_with_count",
+        "count": 5,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 7",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "ACTION_SUCCEEDED",
+        "kind": "phase_label_with_count",
+        "count": 5,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7: five journal rows are SUCCEEDED",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "ARTIFACT_REGISTERED",
+        "kind": "phase_label",
+        "artifact_record": "artifact.path",
+        "source_reference": "Presentation-only phase label requested in Visual Production V1 §4; the canonical proof records the delivered artifact in ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 13",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      {
+        "label": "PROPOSE_COMPLETE",
+        "kind": "recorded_event",
+        "event_number": 43,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 recorded event sequence",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      },
+      {
+        "label": "VERIFICATION_STARTED",
+        "kind": "recorded_event",
+        "event_number": 44,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 recorded event sequence",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      },
+      {
+        "label": "VERIFICATION_RESULT: ACCEPT",
+        "kind": "recorded_event",
+        "event_number": 45,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 recorded event sequence",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      },
+      {
+        "label": "VERIFICATION_ACCEPTED",
+        "kind": "recorded_event",
+        "event_number": 46,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 recorded event sequence",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      },
+      {
+        "label": "TASK_SUCCEEDED",
+        "kind": "recorded_event",
+        "event_number": 47,
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 recorded event sequence",
+        "claim_map_ref": "Scene 2 positive completion timeline: PROPOSE_COMPLETE → VERIFICATION_STARTED → VERIFICATION_RESULT: ACCEPT → VERIFICATION_ACCEPTED → TASK_SUCCEEDED"
+      }
+    ],
+    "recovery": {
+      "evidence_level": {
+        "value": "QUALIFIED_RUNTIME_TESTED_WINDOWS",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 11–12",
+        "claim_map_ref": "Scene 3 persistent qualification banner: QUALIFIED RUNTIME / FAULT-WINDOW EVIDENCE — NOT LIVE PROOF"
+      },
+      "fault_matrix_summary": {
+        "value": "15/15",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 13",
+        "claim_map_ref": "Scene 3 retained fault-matrix summary card: 15/15"
+      },
+      "raw_output_review_limitation": {
+        "value": "Original per-process output directory unavailable for line-by-line reinspection in this review.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 12–13",
+        "claim_map_ref": "Scene 3 raw-output limitation footer"
+      },
+      "states": [
+        {
+          "label": "ACTION_PROPOSED",
+          "description": {
+            "value": "Model proposal; not an executed action.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "AUTHORIZED",
+          "description": {
+            "value": "Runtime authorization precedes the attempt.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§5, 8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "ATTEMPT_STARTED",
+          "description": {
+            "value": "The attempt boundary is durably recorded before execution.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "OUTCOME UNKNOWN",
+          "description": {
+            "value": "Interruption without a trustworthy terminal result.",
+            "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §9; ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §9; ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "UNCERTAIN",
+          "description": {
+            "value": "Keep the action unresolved and reconcile before retrying.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "RECONCILIATION",
+          "description": {
+            "value": "Check trusted external facts before deciding what happens next.",
+            "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §9; ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 11–12",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_VISUAL_PRODUCTION_V1 user brief §9; ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 11–12",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        }
+      ],
+      "explicitly_not_claimed": {
+        "value": "No arbitrary exactly-once or production-scale reliability claim.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 11–12",
+        "claim_map_ref": "Scene 3 persistent qualification banner: QUALIFIED RUNTIME / FAULT-WINDOW EVIDENCE — NOT LIVE PROOF"
+      },
+      "takeaway": {
+        "value": "Timeout ≠ no side effect.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/03_ACTION_AWARE_RECOVERY.md",
+        "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+      },
+      "reconciliation": {
+        "value": "Reconcile against trusted external facts before deciding what happens next.",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8, 11–12",
+        "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+      },
+      "supporting_line": {
+        "value": "恢复的不只是聊天记录，而是真实动作发生到了哪一步。",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§8–9; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/03_ACTION_AWARE_RECOVERY.md",
+        "claim_map_ref": "Scene 3 persistent qualification banner: QUALIFIED RUNTIME / FAULT-WINDOW EVIDENCE — NOT LIVE PROOF"
+      },
+      "outcomes": [
+        {
+          "label": "CONFIRMED_SUCCEEDED",
+          "description": {
+            "value": "Terminal success; do not execute again.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "CONFIRMED_NOT_APPLIED",
+          "description": {
+            "value": "Retry eligible only after trusted confirmation; an explicit call is still required.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        },
+        {
+          "label": "NO_EVIDENCE",
+          "description": {
+            "value": "Remain uncertain; no retry eligibility.",
+            "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+            "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+          },
+          "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §8",
+          "claim_map_ref": "Scene 3 recovery state diagram: ACTION_PROPOSED → AUTHORIZED → ATTEMPT_STARTED → interruption without trusted terminal result → UNCERTAIN → trusted reconciliation; CONFIRMED_SUCCEEDED terminal/no repeat; CONFIRMED_NOT_APPLIED → RETRY_ELIGIBLE then explicit call; NO_EVIDENCE → no retry eligibility. On-screen takeaway: Timeout ≠ no side effect."
+        }
+      ]
+    },
+    "comparison": {
+      "generic_agent_title": {
+        "value": "GENERIC TOOL-CALLING AGENT",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§4, 9",
+        "claim_map_ref": "Scene 1 neutral responsibility comparison inset: generic tool-calling flow beside Astron's explicit authorization, action record, and verifier stages"
+      },
+      "generic_agent_stages": {
+        "value": [
+          "User",
+          "LLM / Agent Loop",
+          "Tool Call",
+          "Tool",
+          "Final Answer"
+        ],
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §4; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/04_JUDGE_EVIDENCE_BOARD.md",
+        "claim_map_ref": "Scene 1 neutral responsibility comparison inset: generic tool-calling flow beside Astron's explicit authorization, action record, and verifier stages"
+      },
+      "astron_title": {
+        "value": "ASTRON",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§1, 4",
+        "claim_map_ref": "Scene 1 neutral responsibility comparison inset: generic tool-calling flow beside Astron's explicit authorization, action record, and verifier stages"
+      },
+      "astron_stages": {
+        "value": [
+          "User",
+          "Agent Intelligence",
+          "Action Proposal",
+          "Runtime Authorization",
+          "Governed Execution",
+          "Durable Facts / Artifact",
+          "Verifier",
+          "Accepted Completion"
+        ],
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§4, 6",
+        "claim_map_ref": "Scene 1 neutral responsibility comparison inset: generic tool-calling flow beside Astron's explicit authorization, action record, and verifier stages"
+      },
+      "caption": {
+        "value": "Astron changes execution responsibility, not model intelligence.",
+        "source_reference": "ASTRON_COMPETITION_DEMO_EVIDENCE_V1/04_JUDGE_EVIDENCE_BOARD.md; ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §4",
+        "claim_map_ref": "Scene 1 neutral responsibility comparison inset: generic tool-calling flow beside Astron's explicit authorization, action record, and verifier stages"
+      },
+      "disclaimer": {
+        "value": "This illustration does not claim generic agents lack authorization, durable records, or verification; no comparative outcome was measured.",
+        "source_reference": "outputs/07_CLAIM_LANGUAGE_AUTHORITY.md opening and PROHIBITED CLAIM; ASTRON_COMPETITION_DEMO_EVIDENCE_V1/06_EVIDENCE_TO_SCREEN_MAP.json neutral comparison entry.",
+        "claim_map_ref": "Scene 1 neutral responsibility comparison inset: generic tool-calling flow beside Astron's explicit authorization, action record, and verifier stages"
+      }
+    },
+    "evidence_board": [
+      {
+        "label": "Real-model tasks proven",
+        "display_value": "1",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+        "claim_map_ref": "Scene 1 title and proof identity: ASTRON_REAL_MODEL_END_TO_END_PROOF_V1"
+      },
+      {
+        "label": "Model decisions",
+        "display_value": "5",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "Executed actions",
+        "display_value": "5",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "Journal coverage",
+        "display_value": "5 / 5",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7 table",
+        "claim_map_ref": "Scene 1 count cards: 5 provider calls; 5 model decisions; 5 proposed/executed actions; 5 authorized; 5 journaled"
+      },
+      {
+        "label": "Harness bypass",
+        "display_value": "0 observed",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11–12",
+        "claim_map_ref": "Evidence board metric: harness bypass observed = 0"
+      },
+      {
+        "label": "Artifact digest",
+        "display_value": "MATCH",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §§7, 11",
+        "claim_map_ref": "Scene 1 artifact card: .astron-artifacts/limiter-report.json; recorded and independently recomputed SHA-256 shown as matching"
+      },
+      {
+        "label": "Acceptance criteria",
+        "display_value": "2 / 2 PASS",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+      },
+      {
+        "label": "Final state",
+        "display_value": "SUCCEEDED",
+        "source_reference": "ASTRON_COMPETITION_EVIDENCE_BASELINE_V1.md §7",
+        "claim_map_ref": "Scene 2 acceptance criteria and durable status: AC-CeilingRaised=PASS; AC-ReportDelivered=PASS; ACCEPTED; TASK_SUCCEEDED"
+      }
+    ]
+  }
+}

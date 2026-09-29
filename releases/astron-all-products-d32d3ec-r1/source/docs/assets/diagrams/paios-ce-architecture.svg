@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PAIOS CE — Architecture
+  Source of truth: README.md, docs/ARCHITECTURE.md, SUPPORT_MATRIX.md (main branch)
+  Local-first execution-control reference runtime for AI agent builders.
+  Self-contained SVG. No scripts, no external resources, no embedded HTML.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">PAIOS CE architecture</title>
+  <desc id="desc">How a task flows from a CLI client through typed contracts, the orchestrator, router, bundled mock provider, permission engine and scoped mock worker to a typed result and a redacted audit event.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#57606a"/>
+    </marker>
+    <marker id="arrow-dashed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9a6700"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#cf222e"/>
+    </marker>
+  </defs>
+
+  <!-- Fixed background layer: readable on both GitHub light and dark themes -->
+  <rect x="0" y="0" width="1200" height="640" fill="#ffffff"/>
+
+  <text x="40" y="42" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="20" font-weight="700" fill="#1f2328">PAIOS CE — Architecture</text>
+  <text x="40" y="66" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="13" fill="#57606a">How a task reaches an explicit execution gate and a typed, auditable result.</text>
+
+  <!-- Row 1: input chain -->
+  <g>
+    <rect x="40" y="110" width="190" height="86" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="135" y="146" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Agent / Client</text>
+    <text x="135" y="168" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">CLI channel</text>
+  </g>
+
+  <line x1="230" y1="153" x2="278" y2="153" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="282" y="110" width="210" height="86" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="387" y="146" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">TaskEnvelope</text>
+    <text x="387" y="168" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">Typed input contract</text>
+  </g>
+
+  <line x1="492" y1="153" x2="540" y2="153" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="544" y="104" width="230" height="98" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+    <text x="659" y="144" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="700" fill="#0a3069">Orchestrator</text>
+    <text x="659" y="166" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#0969da">paios_ce.orchestrator</text>
+    <text x="659" y="186" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" fill="#57606a">Runtime config + SecretRef</text>
+  </g>
+
+  <!-- Row 2: router side -->
+  <line x1="659" y1="202" x2="659" y2="252" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="544" y="256" width="230" height="86" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="659" y="292" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Router</text>
+    <text x="659" y="314" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">paios_ce.routing</text>
+  </g>
+
+  <line x1="544" y1="299" x2="496" y2="299" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="302" y="256" width="190" height="86" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="397" y="292" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Mock Provider</text>
+    <text x="397" y="314" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">Local · deterministic · no network</text>
+  </g>
+
+  <!-- Optional Local ASR (dashed, default off) -->
+  <g>
+    <rect x="302" y="362" width="190" height="78" rx="10" fill="#ffffff" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <text x="397" y="394" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="13.5" font-weight="600" fill="#7d4e00">Local ASR (optional)</text>
+    <text x="397" y="414" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" fill="#7d4e00">default off · local file only</text>
+  </g>
+  <line x1="496" y1="299" x2="497" y2="362" stroke="#9a6700" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arrow-dashed)"/>
+
+  <!-- Row 2: policy side -->
+  <line x1="774" y1="299" x2="826" y2="299" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="830" y="256" width="240" height="86" rx="10" fill="#fff8c5" stroke="#d4a72c" stroke-width="1.5"/>
+    <text x="950" y="292" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="700" fill="#5b4400">Permission Engine</text>
+    <text x="950" y="314" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#7d5d00">Capability &amp; risk policy</text>
+  </g>
+
+  <!-- allow: straight down to Mock Worker -->
+  <line x1="950" y1="342" x2="950" y2="392" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="960" y="372" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="600" fill="#1a7f37">allow within scope</text>
+
+  <g>
+    <rect x="830" y="396" width="240" height="86" rx="10" fill="#dafbe1" stroke="#1a7f37" stroke-width="1.5"/>
+    <text x="950" y="432" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#0f5132">Mock Worker</text>
+    <text x="950" y="454" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#2c7a4b">scoped execution only</text>
+  </g>
+
+  <!-- deny: to the right and down into Redacted AuditEvent -->
+  <path d="M 1070 342 L 1098 342 L 1098 470 L 826 470 L 826 532" fill="none" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow-red)"/>
+  <text x="1106" y="410" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="600" fill="#cf222e">deny / confirm / block</text>
+
+  <!-- Row 3: result -->
+  <line x1="397" y1="342" x2="397" y2="392" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="302" y="396" width="190" height="86" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="397" y="432" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Typed result</text>
+    <text x="397" y="454" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">TaskResult</text>
+  </g>
+
+  <!-- Worker to result -->
+  <line x1="830" y1="439" x2="497" y2="439" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Row 4: audit -->
+  <line x1="397" y1="482" x2="397" y2="532" stroke="#57606a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="252" y="536" width="570" height="72" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="537" y="569" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="15" font-weight="600" fill="#1f2328">Redacted AuditEvent</text>
+    <text x="537" y="591" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11.5" fill="#57606a">paios_ce.audit — redaction invariant enforced · no raw secrets, no full env</text>
+  </g>
+
+  <!-- Footer note -->
+  <text x="40" y="630" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif" font-size="11" fill="#8c959f">Unknown, critical, administrator and arbitrary-shell operations fail closed. Local ASR is optional and disabled by default.</text>
+</svg>

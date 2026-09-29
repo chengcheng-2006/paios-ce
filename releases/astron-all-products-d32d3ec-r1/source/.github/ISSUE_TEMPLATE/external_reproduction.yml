@@ -1,0 +1,83 @@
+name: External reproduction report
+description: Report a clean-install or offline reproduction result for an exact Astron source identity
+title: "[Reproduction]: "
+labels:
+  - validation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for independently testing Astron. Do not include API keys,
+        environment dumps, usernames, private absolute paths, private data, or
+        vulnerability details. Report suspected vulnerabilities privately by
+        following SECURITY.md.
+  - type: input
+    id: source_identity
+    attributes:
+      label: Exact source identity
+      description: Provide the release, full commit SHA, or organizer archive SHA-256.
+      placeholder: Full commit or SHA-256; do not use only a moving branch name
+    validations:
+      required: true
+  - type: dropdown
+    id: package_variant
+    attributes:
+      label: Package variant
+      options:
+        - Identified
+        - Competition-anonymous
+        - Unconfirmed
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS version, architecture, and Python version only.
+      placeholder: macOS 15 arm64, Python 3.12.x
+    validations:
+      required: true
+  - type: dropdown
+    id: overall_status
+    attributes:
+      label: Overall status
+      options:
+        - PASS
+        - FAIL
+        - BLOCKED
+        - NOT_RUN
+    validations:
+      required: true
+  - type: textarea
+    id: result_matrix
+    attributes:
+      label: Result matrix
+      description: Report wheel build, fresh install, both CLI names, health, Mock maintenance, tests, schemas, and scans as PASS, FAIL, BLOCKED, or NOT_RUN.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: sanitized_failure
+    attributes:
+      label: Sanitized failure or blocker evidence
+      description: Preserve exact error categories but replace usernames and private paths with placeholders.
+  - type: textarea
+    id: usability
+    attributes:
+      label: Documentation and usability feedback
+      description: What was unclear, surprising, or unnecessarily difficult?
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety and evidence confirmation
+      options:
+        - label: I tested the exact source identity stated above in a fresh environment.
+          required: true
+        - label: I removed secrets, personal data, usernames, and private paths.
+          required: true
+        - label: The required reproduction made zero live Provider calls.
+          required: true
+        - label: I retained failures and blocked steps and did not relabel them as pass.
+          required: true
+        - label: This is not a public vulnerability disclosure.
+          required: true

@@ -1,0 +1,269 @@
+{
+  "$defs": {
+    "ActionRequest": {
+      "additionalProperties": false,
+      "description": "Single executable unit (action_request.schema.json).",
+      "properties": {
+        "manifest_version": {
+          "const": "0.1.0",
+          "default": "0.1.0",
+          "title": "Manifest Version",
+          "type": "string"
+        },
+        "action_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Action Id",
+          "type": "string"
+        },
+        "worker_type": {
+          "$ref": "#/$defs/WorkerType",
+          "default": "tool"
+        },
+        "operation": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Operation",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "required_permissions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Permissions",
+          "type": "array"
+        },
+        "filesystem_scope": {
+          "$ref": "#/$defs/FsScope"
+        },
+        "network_scope": {
+          "$ref": "#/$defs/NetworkScope"
+        },
+        "process_scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProcessScope"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "timeout": {
+          "default": 30,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Timeout",
+          "type": "integer"
+        },
+        "idempotency_key": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Idempotency Key"
+        },
+        "rollback_supported": {
+          "default": false,
+          "title": "Rollback Supported",
+          "type": "boolean"
+        },
+        "approval_required": {
+          "default": false,
+          "title": "Approval Required",
+          "type": "boolean"
+        },
+        "admin_token": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Admin Token"
+        }
+      },
+      "required": [
+        "action_id",
+        "operation"
+      ],
+      "title": "ActionRequest",
+      "type": "object"
+    },
+    "CostClass": {
+      "description": "Advisory cost class (TaskPlan / ActionResult.usage).",
+      "enum": [
+        "free",
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "CostClass",
+      "type": "string"
+    },
+    "FsScope": {
+      "additionalProperties": false,
+      "description": "ActionRequest.filesystem_scope.",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/FsScopeMode",
+          "default": "none"
+        },
+        "paths_class": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Paths Class",
+          "type": "array"
+        }
+      },
+      "title": "FsScope",
+      "type": "object"
+    },
+    "FsScopeMode": {
+      "description": "ActionRequest.filesystem_scope.mode (public schema).",
+      "enum": [
+        "none",
+        "read",
+        "write",
+        "read_write"
+      ],
+      "title": "FsScopeMode",
+      "type": "string"
+    },
+    "NetworkScope": {
+      "additionalProperties": false,
+      "description": "ActionRequest.network_scope.",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/NetworkScopeMode",
+          "default": "none"
+        },
+        "endpoints_class": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Endpoints Class",
+          "type": "array"
+        }
+      },
+      "title": "NetworkScope",
+      "type": "object"
+    },
+    "NetworkScopeMode": {
+      "description": "ActionRequest.network_scope.mode (public schema).",
+      "enum": [
+        "none",
+        "loopback",
+        "cloud_egress"
+      ],
+      "title": "NetworkScopeMode",
+      "type": "string"
+    },
+    "ProcessScope": {
+      "additionalProperties": false,
+      "description": "ActionRequest.process_scope \u2014 bounded named set, never arbitrary shell.",
+      "properties": {
+        "allowed_executables_class": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Executables Class",
+          "type": "array"
+        }
+      },
+      "title": "ProcessScope",
+      "type": "object"
+    },
+    "WorkerType": {
+      "description": "ActionRequest.worker_type (public schema).",
+      "enum": [
+        "tool",
+        "local_llm",
+        "local_asr",
+        "io_bounded",
+        "compute_bounded"
+      ],
+      "title": "WorkerType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Plan produced by routing/Permission Engine (structural contract).",
+  "properties": {
+    "plan_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "task_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Task Id",
+      "type": "string"
+    },
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/ActionRequest"
+      },
+      "title": "Actions",
+      "type": "array"
+    },
+    "rollback_strategy": {
+      "default": "none",
+      "title": "Rollback Strategy",
+      "type": "string"
+    },
+    "estimated_cost_class": {
+      "$ref": "#/$defs/CostClass",
+      "default": "free"
+    },
+    "routing_decisions": {
+      "items": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object"
+      },
+      "title": "Routing Decisions",
+      "type": "array"
+    },
+    "approval_required_count": {
+      "default": 0,
+      "title": "Approval Required Count",
+      "type": "integer"
+    },
+    "trace_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "plan_id",
+    "task_id",
+    "trace_id"
+  ],
+  "title": "TaskPlan",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/taskplan/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

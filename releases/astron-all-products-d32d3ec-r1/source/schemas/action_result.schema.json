@@ -1,0 +1,171 @@
+{
+  "$defs": {
+    "ActionStatus": {
+      "description": "ActionResult.status (public schema).",
+      "enum": [
+        "success",
+        "failure",
+        "denied",
+        "timeout",
+        "unsupported_capability"
+      ],
+      "title": "ActionStatus",
+      "type": "string"
+    },
+    "ErrorClass": {
+      "description": "ErrorEnvelope.error_class (public schema).",
+      "enum": [
+        "unsupported_capability",
+        "rate_limited",
+        "quota_exceeded",
+        "dependency_unavailable",
+        "scope_violation",
+        "permission_denied",
+        "signature_invalid",
+        "replay_detected",
+        "confirmation_timeout",
+        "confirmation_token_mismatch",
+        "temp_audio_delete_failed",
+        "audit_write_failed",
+        "internal"
+      ],
+      "title": "ErrorClass",
+      "type": "string"
+    },
+    "ErrorEnvelope": {
+      "additionalProperties": false,
+      "description": "Redacted structured error (error_envelope.schema.json).",
+      "properties": {
+        "manifest_version": {
+          "const": "0.1.0",
+          "default": "0.1.0",
+          "title": "Manifest Version",
+          "type": "string"
+        },
+        "error_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Error Id",
+          "type": "string"
+        },
+        "error_class": {
+          "$ref": "#/$defs/ErrorClass",
+          "default": "internal"
+        },
+        "message": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "default": false,
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "trace_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Trace Id",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error_id",
+        "message",
+        "trace_id"
+      ],
+      "title": "ErrorEnvelope",
+      "type": "object"
+    },
+    "RollbackStatus": {
+      "description": "ActionResult.rollback_status (public schema).",
+      "enum": [
+        "not_required",
+        "succeeded",
+        "failed",
+        "partial"
+      ],
+      "title": "RollbackStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Result of executing an ActionRequest (action_result.schema.json).",
+  "properties": {
+    "manifest_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Manifest Version",
+      "type": "string"
+    },
+    "action_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Action Id",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/ActionStatus",
+      "default": "failure"
+    },
+    "outcome": {
+      "additionalProperties": true,
+      "title": "Outcome",
+      "type": "object"
+    },
+    "usage": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Usage"
+    },
+    "rollback_attempted": {
+      "default": false,
+      "title": "Rollback Attempted",
+      "type": "boolean"
+    },
+    "rollback_status": {
+      "$ref": "#/$defs/RollbackStatus",
+      "default": "not_required"
+    },
+    "trace_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Trace Id",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ErrorEnvelope"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "action_id",
+    "trace_id"
+  ],
+  "title": "ActionResult",
+  "type": "object",
+  "$id": "https://paios.ce/schemas/actionresult/v0.1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

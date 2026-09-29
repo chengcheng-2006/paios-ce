@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astron.local/schemas/aic2026-external-repro-receipt-v1.json",
+  "title": "Astron AIC 2026 External Reproduction Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_version",
+    "receipt_id",
+    "source_commit",
+    "source_tree",
+    "archive_sha256",
+    "source_archive_filename",
+    "wheel_filename",
+    "tester_id_pseudonymous",
+    "os_family",
+    "os_version",
+    "architecture",
+    "python_version",
+    "python_requirement",
+    "python_supported",
+    "pip_version",
+    "source_identity_validation",
+    "source_install",
+    "wheel_install",
+    "full_test_status",
+    "test_passed",
+    "test_failed",
+    "test_skipped",
+    "test_xfailed",
+    "failure_manifest",
+    "failure_manifest_count",
+    "failure_manifest_complete",
+    "failure_manifest_missing_count",
+    "failure_manifest_missing_reason",
+    "astron_help",
+    "astron_health",
+    "astron_demo",
+    "maintenance_mock_demo",
+    "legacy_cli",
+    "wheel_astron_help",
+    "wheel_astron_health",
+    "source_modified",
+    "owner_live_help_received",
+    "started_at",
+    "completed_at",
+    "duration_seconds",
+    "final_result",
+    "blocked_reason",
+    "failure_stage",
+    "sanitized_notes",
+    "log_sha256"
+  ],
+  "properties": {
+    "receipt_version": {
+      "const": "aic2026-external-repro-v1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "source_tree": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "archive_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_archive_filename": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\.tar\\.gz$",
+      "maxLength": 160
+    },
+    "wheel_filename": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\.whl$",
+      "maxLength": 160
+    },
+    "tester_id_pseudonymous": {
+      "type": "string",
+      "pattern": "^Tester-[A-Za-z0-9][A-Za-z0-9_-]{0,31}$"
+    },
+    "os_family": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "os_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "architecture": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "python_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+.*$",
+      "maxLength": 80
+    },
+    "python_requirement": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "python_supported": {
+      "type": "boolean"
+    },
+    "pip_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "source_identity_validation": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "source_install": {
+      "$ref": "#/$defs/check_status"
+    },
+    "wheel_install": {
+      "$ref": "#/$defs/check_status"
+    },
+    "full_test_status": {
+      "$ref": "#/$defs/check_status"
+    },
+    "test_passed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "test_failed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "test_skipped": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "test_xfailed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failure_manifest": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["test_nodeid", "outcome"],
+        "properties": {
+          "test_nodeid": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "outcome": {
+            "enum": ["FAILED", "ERROR"]
+          }
+        }
+      }
+    },
+    "failure_manifest_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "failure_manifest_complete": {
+      "type": "boolean"
+    },
+    "failure_manifest_missing_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failure_manifest_missing_reason": {
+      "type": ["string", "null"],
+      "maxLength": 240
+    },
+    "astron_help": {
+      "$ref": "#/$defs/check_status"
+    },
+    "astron_health": {
+      "$ref": "#/$defs/check_status"
+    },
+    "astron_demo": {
+      "$ref": "#/$defs/check_status"
+    },
+    "maintenance_mock_demo": {
+      "$ref": "#/$defs/check_status"
+    },
+    "legacy_cli": {
+      "$ref": "#/$defs/check_status"
+    },
+    "wheel_astron_help": {
+      "$ref": "#/$defs/check_status"
+    },
+    "wheel_astron_health": {
+      "$ref": "#/$defs/check_status"
+    },
+    "source_modified": {
+      "type": "boolean"
+    },
+    "owner_live_help_received": {
+      "type": "boolean"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "final_result": {
+      "enum": [
+        "PASS_CLEAN_REPRODUCTION",
+        "FAIL_INSTALL",
+        "FAIL_TEST",
+        "FAIL_CLI",
+        "FAIL_DEMO",
+        "BLOCKED_ENVIRONMENT",
+        "INVALID_SOURCE_IDENTITY",
+        "INVALID_RECEIPT",
+        "UNQUALIFIED_OWNER_ASSISTED"
+      ]
+    },
+    "blocked_reason": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 240
+    },
+    "failure_stage": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 120
+    },
+    "sanitized_notes": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "log_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "final_result": {
+            "const": "PASS_CLEAN_REPRODUCTION"
+          }
+        },
+        "required": [
+          "final_result"
+        ]
+      },
+      "then": {
+        "properties": {
+          "python_supported": {
+            "const": true
+          },
+          "source_identity_validation": {
+            "const": "PASS"
+          },
+          "source_install": {
+            "const": "PASS"
+          },
+          "wheel_install": {
+            "const": "PASS"
+          },
+          "full_test_status": {
+            "const": "PASS"
+          },
+          "test_failed": {
+            "const": 0
+          },
+          "failure_manifest_count": {
+            "const": 0
+          },
+          "failure_manifest_complete": {
+            "const": true
+          },
+          "failure_manifest_missing_count": {
+            "const": 0
+          },
+          "failure_manifest_missing_reason": {
+            "const": null
+          },
+          "astron_help": {
+            "const": "PASS"
+          },
+          "astron_health": {
+            "const": "PASS"
+          },
+          "astron_demo": {
+            "const": "PASS"
+          },
+          "maintenance_mock_demo": {
+            "const": "PASS"
+          },
+          "legacy_cli": {
+            "const": "PASS"
+          },
+          "wheel_astron_help": {
+            "const": "PASS"
+          },
+          "wheel_astron_health": {
+            "const": "PASS"
+          },
+          "source_modified": {
+            "const": false
+          },
+          "owner_live_help_received": {
+            "const": false
+          },
+          "blocked_reason": {
+            "const": null
+          },
+          "failure_stage": {
+            "const": null
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "check_status": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "NOT_RUN"
+      ]
+    }
+  }
+}
