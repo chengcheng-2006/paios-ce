@@ -2,7 +2,11 @@
   "upload": {
     "branch": "delivery/astron-all-products-d32d3ec-r1",
     "base_remote_main": "c0a60b2cecabd43634992d1b0871881087619d82",
-    "scope": "curated public source plus user-facing competition documents and localized static demo"
+    "scope": "curated public source plus user-facing competition documents and localized static demo",
+    "is_formal_release": false,
+    "history": "review branch based on the existing public main; curated snapshot stored under releases/, not a clean-room release history",
+    "main_merged": false,
+    "tag_or_github_release_created": false
   },
   "input_archive": {
     "filename": "Astron-All-Products-d32d3ec-R1.zip",

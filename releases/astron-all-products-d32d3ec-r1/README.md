@@ -2,6 +2,8 @@
 
 这是对桌面压缩包 `Astron-All-Products-d32d3ec-R1.zip` 的审阅整理版，已放入 GitHub 独立交付分支。它把可公开的产品源码与此前生成的中文竞赛演示材料放在一个可读目录中。
 
+此分支是现有 `paios-ce` 仓库中的审阅/交付分支，不是源码包发布边界文件所述的正式 clean-room release。它以当前公开 `main` 为父提交，只在 `releases/astron-all-products-d32d3ec-r1/` 添加筛选快照与说明；没有合并 `main`、创建 GitHub Release 或版本标签。
+
 ## 目录
 
 - [`source/`](source/)：从交付 ZIP 的 `Astron-Delivery/project/` 提取的筛选版产品源码，包含产品 README、源码、测试、示例、演示脚本、协议 schema、治理文件与技术文档。
